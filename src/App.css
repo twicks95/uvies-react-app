@@ -1,4 +1,4 @@
-.App {
+/* .App {
   text-align: center;
 }
 
@@ -35,4 +35,23 @@
   to {
     transform: rotate(360deg);
   }
+} */
+
+.btn-primary,
+.btn-outline-primary {
+  border: 1px solid #5f2eea !important;
+}
+
+.btn-outline-primary {
+  color: #5f2eea !important;
+}
+
+.btn-primary:hover {
+  background-color: #4d1fcc !important;
+}
+
+.btn-outline-primary:hover,
+.btn-primary {
+  color: #fff !important;
+  background-color: #5f2eea !important;
 }

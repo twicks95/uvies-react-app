@@ -1,25 +1,23 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import Home from "./pages/main/Home/Home";
+import MovieDetail from "./pages/main/MovieDetail/MovieDetail";
+import AdminPage from "./pages/main/AdminPage/AdminPage"
+require('dotenv').config();
+// import OrderPage from "";
+// import PaymentPage from "";
+// import AdminPage from "";
 
-function App() {
+export default function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Switch>
+        <Route path="/" exact component={Home}></Route>
+        <Route path="/movie-detail" exact component={MovieDetail}></Route>
+        <Route path="/admin-page" exact component={AdminPage}></Route>
+      </Switch>
+    </Router>
   );
 }
 
-export default App;
+// export default App;

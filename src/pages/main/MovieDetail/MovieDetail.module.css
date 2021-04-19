@@ -1,0 +1,96 @@
+.mainWrapper {
+  margin-top: 37px;
+  margin-right: 130px;
+  margin-left: 130px;
+}
+
+.moviePoster {
+  padding: 15%;
+  border: 2px solid #dedede;
+  border-radius: 24px;
+}
+
+.moviePoster img {
+  border-radius: 16px;
+}
+
+.movieDescContainer .genre,
+.movieDescContainer .synopsis-desc {
+  color: #4e4b66;
+}
+
+.movieDescContainer,
+.showtimesTicketContainer .titleHead {
+  margin-bottom: 40px;
+  letter-spacing: 0.75px;
+}
+
+
+.showtimes-ticket-container {
+  margin-top: 150px;
+  margin-bottom: 72px;
+}
+
+.dateAndPlacePicker button,
+.dateAndPlacePicker input {
+  width: 284px;
+  height: 56px;
+  border: 0;
+  border-radius: 16px;
+  padding: 19px 24px;
+  background: #eff0f6;
+}
+
+.dateAndPlacePicker {
+  margin-bottom: 72px;
+}
+
+.movieDescContainer h1 {
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.movieDescContainer h6 {
+  color: #8692a6;
+}
+
+.movieDescContainer span {
+  color: #121212;
+}
+
+.movieDescHead {
+  margin-bottom: 5%;
+}
+
+.movieDetails .separator {
+  content: "";
+  border-bottom: 1px solid #dedede;
+  margin: 3% 0;
+}
+
+@media (max-width: 576px) {
+  .mainWrapper {
+    margin-right: 5%;
+    margin-left: 5%;
+  }
+}
+
+@media (max-width: 768px) {
+  .movieDescContainer h1 {
+    font-size: 20px;
+  }
+
+  .moviePoster {
+    margin-bottom: 32px;
+  }
+}
+
+@media (min-width: 768px) {
+  .movieDescContainer {
+    padding-left: 5%;
+  }
+
+  .movieDescContainer h1 {
+    font-size: 32px;
+  }
+}

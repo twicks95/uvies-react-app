@@ -1,0 +1,103 @@
+.joinAMember {
+  height: 372px;
+  border-radius: 24px;
+  margin-top: 138px;
+  margin-bottom: 96px;
+  box-shadow: 0 16px 32px rgba(186, 186, 186, 0.3);
+}
+
+.joinAMember span {
+  color: #5f2eea;
+  font-weight: 700;
+  font-size: 48px;
+}
+
+.inputEmail {
+  width: 306px;
+  margin-right: 16px;
+}
+
+.btnJoinNow {
+  width: 120px;
+  font-weight: 600;
+}
+
+.btnJoinNow,
+.inputEmail {
+  height: 53px;
+  border-radius: 12px;
+}
+
+.inputEmail,
+.joinAMember {
+  letter-spacing: 0.75px;
+}
+
+.btnJoinNow,
+.inputEmail,
+.joinAMember {
+  font-size: 14px;
+}
+
+.joinAMember form {
+  margin: 48px 0 40px;
+}
+
+.joinAMember p:first-child {
+  color: #4e4b66;
+  font-size: 24px;
+  font-weight: 400;
+  letter-spacing: 0.25px;
+  margin-bottom: 0;
+}
+
+.joinAMember p:last-child {
+  color: #6e7191;
+  text-align: center;
+}
+
+@media (max-width: 576px) {
+  .joinAMember {
+    height: 401px;
+  }
+}
+
+@media (max-width: 768px) {
+  .joinAMember .btnJoinNow,
+  .joinAMember .inputEmail {
+    width: 100%;
+  }
+
+  .joinAMember {
+    height: 420px;
+    padding-right: 10%;
+    padding-left: 10%;
+  }
+
+  .joinAMember form {
+    margin: 42px 0 32px;
+  }
+
+  .joinAMember p:first-child {
+    font-size: 14px;
+    text-align: center;
+    line-height: 34px;
+  }
+
+  .joinAMember span {
+    font-size: 32px;
+  }
+
+  .joinAMember .btnJoinNow {
+    margin-top: 16px;
+    font-size: 14px;
+  }
+
+  .joinAMember .inputEmail {
+    font-size: 12px;
+  }
+
+  .joinAMember p:last-child {
+    font-size: 12px;
+  }
+}

@@ -1,0 +1,75 @@
+.contentWrapper {
+  margin-right: 130px;
+  margin-left: 130px;
+}
+
+.heroSection {
+  display: flex;
+  margin-top: 80px;
+  margin-bottom: 205px;
+}
+
+.leftSection p {
+  color: #a0a3bd
+}
+
+.leftSection span {
+  font-weight: 700;
+  font-size: 56px;
+  color: #5f2eea;
+}
+
+.rightSection div,
+.rightSection div,
+.rightSection div {
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  width: 107px;
+  height: 352px;
+  filter: drop-shadow(8px 16px 30px rgba(0, 0, 0, 0.3));
+  border-radius: 10px;
+}
+
+.rightSection .box1 {
+  background-image: url(../../../assets//img/spiderman.png);
+}
+
+.rightSection .box2 {
+  margin-right: 24px;
+  margin-left: 24px;
+  margin-bottom: 72px;
+  background-image: url(../../../assets/img/lion-king.png);
+}
+
+.heroSection .box3 {
+  margin-bottom: 144px;
+  background-image: url(../../../assets/img/Optimized-ad225c70f9deb342f75d7fa7b019f397.png);
+}
+
+@media (max-width: 576px) {
+  .contentWrapper {
+    margin-right: 5%;
+    margin-left: 5%;
+  }
+
+  .leftSection p {
+    font-size: 14px;
+  }
+
+  .leftSection span {
+    font-size: 48px;
+  }
+}
+
+@media (max-width: 768px) {
+  .rightSection {
+    margin-top: 64px;
+  }
+}
+
+@media (max-width: 992px) {
+  .heroSection {
+    flex-direction: column;
+  }
+}

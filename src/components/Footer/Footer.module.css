@@ -1,0 +1,164 @@
+.footer {
+  background-color: #FFFFFF;
+  padding: 96px 130px 48px;
+}
+
+.footer h5 {
+  margin-bottom: 30.54px;
+  font-weight: 700;
+  color: #000;
+}
+
+.copyright,
+.exploreLink a,
+.footer h5,
+.socialUsernames p {
+  letter-spacing: 0.5px;
+}
+
+.sponsorEbu {
+  height: 44.85px;
+}
+
+.sponsorCineOne {
+  height: 26.52px;
+  margin: 25px 0;
+}
+
+.sponsorHiflix {
+  height: 24.51px;
+}
+
+.footerLeft img {
+  width: 183px;
+  margin-bottom: 16px;
+}
+
+.footer h5,
+.footerLeft p {
+  font-size: 16px;
+}
+
+.footerLeft p {
+  line-height: 32px;
+  letter-spacing: 0.75px;
+  color: #6e7191;
+}
+
+.socialUsernames p {
+  color: #6e7191;
+  font-size: 14px;
+}
+
+.exploreLink a {
+  font-size: 14px;
+}
+
+.explore a {
+  margin-bottom: 14.7px;
+}
+
+.container p,
+.explore a {
+  color: #4e4b66;
+}
+
+.footerRight img {
+  margin-bottom: 24px;
+}
+
+.footerRight .socialIcons {
+  margin-right: 15px;
+}
+
+.footerRight .socialIcons img:last-child,
+.footerRight .socialUsernames p:last-child {
+  margin-bottom: 0;
+}
+
+.footerRight .socialUsernames {
+  padding-top: 2px;
+}
+
+.footerRight .socialUsernames p {
+  font-weight: 600;
+  margin-bottom: 28.5px;
+}
+
+.copyright {
+  margin: 50px 0 0;
+}
+
+@media (max-width: 576px) {
+  .footer {
+    padding-right: 5% !important;
+    padding-left: 5% !important;
+  }
+}
+@media (max-width: 768px) {
+  .exploreLink a,
+  .footer .sponsorLogoContainer {
+    margin-bottom: 12px;
+  }
+
+  .footer .sponsorEbu {
+    height: 30px;
+  }
+
+  .footer .sponsorCineOne {
+    height: 17px;
+    margin: 0 24px;
+  }
+
+  .footer .sponsorHiflix {
+    height: 25px;
+  }
+
+  .footerLeft p {
+    margin-bottom: 0;
+  }
+
+  .exploreLink a {
+    margin-right: 40px;
+  }
+}
+
+@media (max-width: 992px) {
+  .footer {
+    padding-top: 64px !important;
+    padding-bottom: 64px !important;
+  }
+
+  .footer h5 {
+    margin-bottom: 16px;
+  }
+
+  .footerRight .socialUsernames p {
+    display: none;
+  }
+
+  .footerRight .socialIcons {
+    width: 100%;
+    margin-right: 0;
+  }
+
+  .footerRight .socialIcons img {
+    margin-bottom: 0;
+    margin-right: 32px;
+  }
+
+  .footerLeft {
+    margin-bottom: 40px;
+  }
+
+  .explore,
+  .sponsor {
+    margin-bottom: 48px;
+  }
+}
+
+@media (min-width: 992px) {
+  .footerLeft p {
+    margin-right: 85px;
+  }
+}

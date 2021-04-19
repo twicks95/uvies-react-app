@@ -1,0 +1,40 @@
+.navigationBar {
+  background-color: #ffffff !important;
+  /* height: 104px; */
+  padding: 19px 70px;
+}
+
+.navigationBrand {
+  width: 130px;
+  margin-right: 36px;
+}
+
+.navigationBar .nav-link {
+  color: red !important;
+}
+
+.menu {
+  font-weight: 600;
+  margin-right: 19px;
+}
+
+@media (max-width: 576px) {
+  .navigationBar {
+    padding-right: 5% !important;
+    padding-left: 5% !important;
+  }
+
+  .btnSignUp {
+    width: 100%;
+  }
+}
+
+@media (min-width: 1366px) {
+  .navbarBrand {
+    margin-right: 72px;
+  }
+
+  .menu {
+    margin-right: 56px;
+  }
+}
