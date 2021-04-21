@@ -5,8 +5,30 @@ import UpcomingMovies from "../../../components/UpcomingMovies/UpcomingMovies";
 import JoinMember from "../../../components/JoinMember/JoinMember";
 import Footer from "../../../components/Footer/Footer";
 import Styles from "./Home.module.css";
+import axios from "axios";
+// require("dotenv").config();
 
 export default class Home extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      data: [],
+    };
+  }
+
+  getData = () => {
+    axios
+      .get(
+        `${process.env.API_BASE_URL}/movie/page=1&limit=10&order=movie_id ASC`
+      )
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err.response);
+      });
+  };
+
   render() {
     return (
       <>
@@ -39,5 +61,3 @@ export default class Home extends Component {
     );
   }
 }
-
-// export default Home

@@ -3,10 +3,9 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Home from "./pages/main/Home/Home";
 import MovieDetail from "./pages/main/MovieDetail/MovieDetail";
 import AdminPage from "./pages/main/AdminPage/AdminPage"
-require('dotenv').config();
 // import OrderPage from "";
 // import PaymentPage from "";
-// import AdminPage from "";
+require('dotenv').config();
 
 export default function App() {
   return (

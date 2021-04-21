@@ -1,4 +1,4 @@
-.contentWrapper {
+.mainWrapper {
   padding-right: 130px;
   padding-left: 130px;
   background-color: #F5F6F8;
@@ -7,4 +7,15 @@
 .wrapper {
   background-color: #FFFFFF;
   border-radius: 24px;
+  padding: 10% 8%;
 }
+
+.premiereLocationImageWidth {
+  width: 50%;
+  border: 1px solid red;
+}
+
+/* .column {
+  margin-right: 5px;
+  margin-left: 5px;
+} */
