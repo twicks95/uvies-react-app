@@ -28,3 +28,73 @@
 .upcomingList::-webkit-scrollbar {
   display: none;
 }
+
+.movieCardContainer {
+  width: 223px;
+  padding: 32px;
+  margin-right: 24px;
+  border-radius: 24px;
+  flex: 0 0 auto;
+}
+
+.movieImg {
+  border-radius: 16px;
+}
+
+.movieTitle {
+  white-space: nowrap;
+  width: 159px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 0.15px;
+}
+
+.movieGenre {
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0.4px;
+}
+
+.movieCardBody button:last-child {
+  margin-top: 8px;
+}
+
+.movieCardBody button {
+  width: 159px;
+  height: 33px;
+  font-size: 14px;
+  margin-top: 40px;
+  border-radius: 8px;
+}
+
+@media (max-width: 576px) {
+  .card-title {
+    font-size: 14px;
+  }
+
+  .movieCardContainer {
+    width: 152px;
+    padding: 16px;
+  }
+
+  .movieTitle {
+    width: 122px;
+    font-weight: 600;
+    letter-spacing: 0.15px;
+  }
+
+  .movieGenre {
+    font-size: 11px;
+    font-weight: 300;
+    letter-spacing: 0.4px;
+  }
+
+  .movieCardBody button {
+    width: 120px;
+    height: 25px;
+    font-size: 10px;
+    margin-top: 24px;
+  }
+}

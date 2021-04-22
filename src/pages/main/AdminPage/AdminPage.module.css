@@ -1,21 +1,90 @@
 .mainWrapper {
-  padding-right: 130px;
-  padding-left: 130px;
-  background-color: #F5F6F8;
+  padding: 56px 70px;
+  background-color: #f5f6f8;
 }
 
 .wrapper {
-  background-color: #FFFFFF;
+  background-color: #ffffff;
   border-radius: 24px;
-  padding: 10% 8%;
+  padding: 7% 5%;
 }
 
 .premiereLocationImageWidth {
-  width: 50%;
+  width: 100%;
   border: 1px solid red;
+}
+
+.premiereLocationImgWrapper {
+  border: 1px solid red;
+  padding: 5px;
+  height: 100%;
 }
 
 /* .column {
   margin-right: 5px;
   margin-left: 5px;
 } */
+
+.moviePoster {
+  padding: 14%;
+  border-radius: 24px;
+  height: 100%;
+}
+
+.moviePoster img {
+  border-radius: 16px;
+  height: 100%;
+  object-fit: cover;
+}
+
+.movieForm {
+  margin-bottom: 68px;
+}
+
+.movieData {
+  margin-bottom: 24px;
+}
+
+.movieData .searchAction button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100px;
+  border: 1px solid rgba(100, 100, 100, 0.24);
+  border-radius: 16px !important;
+  background-color: #ffffff;
+}
+
+.movieData .searchAction button:hover {
+  background-color: #5f2eea;
+}
+
+.movieData .searchAction input {
+  height: 38px !important;
+  border: .5px solid rgba(100, 100, 100, 0.24);
+}
+
+.actionButton button {
+  width: 181px;
+  height: 51px;
+  border-radius: 16px;
+}
+
+.actionButton button:last-child {
+  filter: drop-shadow(0px 8px 16px rgba(95, 46, 234, 0.24));
+}
+
+@media (max-width: 576px) {
+  .mainWrapper {
+    padding-right: 5%;
+    padding-left: 5%;
+  }
+
+  .actionButton {
+    justify-content: space-between !important;
+  }
+
+  .actionButton button {
+    width: 230px;
+  }
+}

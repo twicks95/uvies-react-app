@@ -6,6 +6,7 @@ import Styles from "./MovieCard.module.css";
 
 export default class MovieCard extends Component {
   render() {
+    const{movieName, movieCategory} = this.props
     return (
       <Card
         className={`d-flex align-items-center text-center ${Styles.movieCardContainer}`}
@@ -17,10 +18,10 @@ export default class MovieCard extends Component {
         />
         <Card.Body className={`${Styles.movieCardBody}`}>
           <Card.Title className={`${Styles.movieTitle}`}>
-            Spider-Man: Home Coming
+            {movieName}
           </Card.Title>
           <Card.Text className={`${Styles.movieGenre}`}>
-            Action, Adventure, Sci-Fi
+            {movieCategory}
           </Card.Text>
           <Button variant="outline-primary">Details</Button>
           <Button variant="primary">Book Now</Button>

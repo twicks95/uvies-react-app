@@ -4,6 +4,7 @@ import Styles from "./NowShowing.module.css"
 
 export default class NowShowing extends Component {
   render() {
+    const {dataMovies} = this.props
     return (
       <section className={`d-flex flex-column ${Styles.nowShowing}`}>
         <div className={`d-flex align-items-center justify-content-between w-100`}>
@@ -13,14 +14,12 @@ export default class NowShowing extends Component {
           </a>
         </div>
         <div className={`d-flex overflow-auto ${Styles.nowShowingList}`}>
-          <MovieCard />
-          <MovieCard />
-          <MovieCard />
-          <MovieCard />
-          <MovieCard />
-          <MovieCard />
-          <MovieCard />
-          <MovieCard />
+          {dataMovies.map((item, index) => {
+            return(
+              <MovieCard movieName={item.movie_name} movieCategory={item.movie_category} key={index}/>
+            )
+          })}
+          
         </div>
       </section>
     );

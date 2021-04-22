@@ -5,8 +5,7 @@ import UpcomingMovies from "../../../components/UpcomingMovies/UpcomingMovies";
 import JoinMember from "../../../components/JoinMember/JoinMember";
 import Footer from "../../../components/Footer/Footer";
 import Styles from "./Home.module.css";
-import axios from "axios";
-// require("dotenv").config();
+import axiosApiIntances from "../../../utils/axios";
 
 export default class Home extends Component {
   constructor(props) {
@@ -16,20 +15,29 @@ export default class Home extends Component {
     };
   }
 
-  getData = () => {
-    axios
-      .get(
-        `${process.env.API_BASE_URL}/movie/page=1&limit=10&order=movie_id ASC`
-      )
+  componentDidMount() {
+    this.getMovies();
+  }
+
+  getMovies = () => {
+    axiosApiIntances
+      .get(`movie?limit=5`)
       .then((res) => {
-        console.log(res);
+        this.setState({ data: res.data.data });
+        // console.log(res)
       })
       .catch((err) => {
         console.log(err.response);
       });
   };
 
+  handleParams = (id, event) => {
+    // console.log(event.type)
+    this.props.history.push(`/movie-detail?movieId=${id}`);
+  };
+
   render() {
+    const { data } = this.state;
     return (
       <>
         <Navbar />
@@ -52,8 +60,8 @@ export default class Home extends Component {
               <div className={`${Styles.box3}`}></div>
             </div>
           </div>
-          <NowShowing />
-          <UpcomingMovies />
+          <NowShowing dataMovies={data} />
+          <UpcomingMovies dataMovies={data} handleParams={this.handleParams} />
           <JoinMember />
         </div>
         <Footer />

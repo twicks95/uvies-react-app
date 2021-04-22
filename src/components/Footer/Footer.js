@@ -18,7 +18,7 @@ export default class Footer extends Component {
     return (
       <footer className={Styles.footer}>
         <Container fluid className={`p-0`}>
-          <Row cols xs={1} lg={4} className={`m-0`}>
+          <Row xs={1} lg={4} className={`m-0`}>
             <Col xs={12} lg={4} className={`p-0 ${Styles.footerLeft}`}>
               <img src={BrandLogo} alt="uvies-logo" />
               <p>

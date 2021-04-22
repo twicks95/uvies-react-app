@@ -10,12 +10,18 @@
 }
 
 .navigationBar .nav-link {
-  color: red !important;
+  /* color: red !important; */
 }
 
 .menu {
   font-weight: 600;
-  margin-right: 19px;
+  margin-right: 24px;
+  color: #414141;
+}
+
+.menu:hover {
+  text-decoration: none;
+  color: #1a1a1a;
 }
 
 @media (max-width: 576px) {
@@ -26,6 +32,12 @@
 
   .btnSignUp {
     width: 100%;
+  }
+}
+
+@media (max-width: 992px) {
+  .menu {
+    margin-bottom: 12px;
   }
 }
 

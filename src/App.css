@@ -37,6 +37,18 @@
   }
 } */
 
+input {
+  height: 64px !important;
+}
+
+input, textarea {
+  border-radius: 16px !important;
+}
+
+textarea::-webkit-scrollbar {
+  display: none;
+}
+
 .btn-primary,
 .btn-outline-primary {
   border: 1px solid #5f2eea !important;

@@ -1,19 +1,66 @@
 import React, { Component } from "react";
+import axiosApiIntances from "../../../utils/axios";
 import Navbar from "../../../components/Navbar/Navbar";
 import Footer from "../../../components/Footer/Footer";
 import Styles from "./MovieDetail.module.css";
-import {
-  Card,
-  Col,
-  Container,
-  Dropdown,
-  InputGroup,
-  Row,
-} from "react-bootstrap";
+import { Card, Col, Container, Dropdown, Row } from "react-bootstrap";
 import MovieImage from "../../../assets/img/spiderman-home-coming.png";
+import qs from "query-string";
 
 export default class MovieDetail extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      movieName: "",
+      movieGenre: "",
+      movieRelease: "",
+      movieDirector: "",
+      movieDuration: "",
+      movieCasts: "",
+      movieSynopsis: "",
+    };
+  }
+
+  componentDidMount() {
+    const urlParam = qs.parse(this.props.location.search);
+    const movieId = urlParam.movieId;
+    this.getDataMovie(movieId);
+  }
+
+  getDataMovie = (id) => {
+    axiosApiIntances
+      .get(`movie/${id}`)
+      .then((res) => {
+        this.setState({
+          // data: res.data.data[0],
+          movieName: res.data.data[0].movie_name,
+          movieGenre: res.data.data[0].movie_category,
+          movieRelease: res.data.data[0].movie_release_date,
+          movieDirector: res.data.data[0].movie_director,
+          movieDuration: res.data.data[0].movie_duration,
+          movieCasts: res.data.data[0].movie_casts,
+          movieSynopsis: res.data.data[0].movie_synopsis,
+        });
+      })
+      .catch((err) => {
+        alert(err.message);
+      });
+  };
+
   render() {
+    // const { data } = this.state;
+    // console.log(data.movie_name);
+
+    const {
+      movieName,
+      movieGenre,
+      movieRelease,
+      movieDirector,
+      movieDuration,
+      movieCasts,
+      movieSynopsis,
+    } = this.state;
+
     return (
       <>
         <Navbar />
@@ -33,43 +80,32 @@ export default class MovieDetail extends Component {
                 <div
                   className={`d-flex flex-column align-items-center align-items-md-start ${Styles.movieDescHead}`}
                 >
-                  <h1 className={`text-md-start`}>Spider-Man: Homecoming</h1>
-                  <p className={`m-0 ${Styles.genre}`}>
-                    Adventure, Action, Sci-Fi
-                  </p>
+                  <h1 className={`text-md-start`}>{movieName}</h1>
+                  <p className={`m-0 ${Styles.genre}`}>{movieGenre}</p>
                 </div>
                 <Row xs={2} className={`m-0 gy-4`}>
                   <Col xs={6} md={4} className={`p-0`}>
                     <h6 className=" ">Release date</h6>
-                    <span className=" ">June 28, 2017</span>
+                    <span className=" ">{movieRelease}</span>
                   </Col>
                   <Col xs={6} md={8} className={`p-0`}>
-                    <h6 class=" ">Directed by</h6>
-                    <span class=" ">Jon Watss</span>
+                    <h6 className=" ">Directed by</h6>
+                    <span className=" ">{movieDirector}</span>
                   </Col>
                   <Col md={4} className={`p-0`}>
-                    <h6 class=" ">Duration</h6>
-                    <span class=" ">2 hours 13 minutes </span>
+                    <h6 className=" ">Duration</h6>
+                    <span className=" ">{movieDuration}</span>
                   </Col>
                   <Col md={8} className={`p-0`}>
-                    <h6 class=" ">Casts</h6>
-                    <span class=" ">
-                      Tom Holland, Michael Keaton, Robert Downey Jr., ...
-                    </span>
+                    <h6 className=" ">Casts</h6>
+                    <span className=" ">{movieCasts}</span>
                   </Col>
                 </Row>
                 <div className={`${Styles.separator}`}></div>
-                <div class="">
+                <div className="">
                   <h5>Synopsis</h5>
                   <p className={`m-0 ${Styles.synopsisDesc}`}>
-                    Thrilled by his experience with the Avengers, Peter returns
-                    home, where he lives with his Aunt May, under the watchful
-                    eye of his new mentor Tony Stark, Peter tries to fall back
-                    into his normal daily routine - distracted by thoughts of
-                    proving himself to be more than just your friendly
-                    neighborhood Spider-Man - but when the Vulture emerges as a
-                    new villain, everything that Peter holds most important will
-                    be threatened.
+                    {movieSynopsis}
                   </p>
                 </div>
               </Col>
@@ -83,17 +119,13 @@ export default class MovieDetail extends Component {
             <div
               className={`d-flex flex-column flex-md-row ${Styles.dateAndPlacePicker}`}
             >
-              {/* <InputGroup> */}
               <input
-                class="form-control"
+                className="form-control"
                 id="date"
                 name="date"
                 placeholder=""
                 type="date"
               />
-              {/* </InputGroup> */}
-
-              {/* <InputGroup> */}
               <Dropdown>
                 <Dropdown.Toggle
                   variant="outline-secondary"
@@ -102,7 +134,6 @@ export default class MovieDetail extends Component {
                 >
                   Purwokerto
                 </Dropdown.Toggle>
-
                 <Dropdown.Menu>
                   <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
                   <Dropdown.Item href="#/action-2">
@@ -113,7 +144,6 @@ export default class MovieDetail extends Component {
                   </Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
-              {/* </InputGroup> */}
             </div>
           </section>
         </main>
@@ -122,5 +152,3 @@ export default class MovieDetail extends Component {
     );
   }
 }
-
-// export default MovieDetail;

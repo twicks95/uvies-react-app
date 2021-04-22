@@ -6,6 +6,8 @@ import Styles from "./MovieCard.module.css";
 
 export default class MovieCard extends Component {
   render() {
+    const { movieName, movieCategory, movieId } = this.props;
+    console.log(movieId);
     return (
       <Card
         className={`d-flex align-items-center text-center ${Styles.movieCardContainer}`}
@@ -15,14 +17,21 @@ export default class MovieCard extends Component {
           src={movieImage}
           className={`${Styles.movieImg}`}
         />
-        <Card.Body className={`${Styles.movieCardBody}`}>
+        <Card.Body
+          className={`d-flex flex-column justify-content-between ${Styles.movieCardBody}`}
+        >
           <Card.Title className={`${Styles.movieTitle}`}>
-            Black Widow
+            {movieName}
           </Card.Title>
           <Card.Text className={`${Styles.movieGenre}`}>
-            Action, Adventure, Sci-Fi
+            {movieCategory}
           </Card.Text>
-          <Button variant="outline-primary">Details</Button>
+          <Button
+            variant="outline-primary"
+            onClick={(event) => this.props.handleParams(movieId, event)}
+          >
+            Details
+          </Button>
         </Card.Body>
       </Card>
     );

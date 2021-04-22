@@ -5,6 +5,7 @@ import MovieCard from "./MovieCard/MovieCard";
 
 export default class UpcomingMovies extends Component {
   render() {
+    const { dataMovies, handleParams } = this.props;
     return (
       <section className={`d-flex flex-column ${Styles.upcomingMovies}`}>
         <div
@@ -29,28 +30,18 @@ export default class UpcomingMovies extends Component {
           <Button variant="outline-primary">November</Button>
           <Button variant="outline-primary">Desember</Button>
         </div>
-        <div class={`d-flex overflow-auto ${Styles.upcomingList}`}>
-          {/* <div class="card d-flex align-items-center text-center">
-            <img
-              src="./assets/img/black-widow.png"
-              class="card-img-top"
-              alt="..."
-            />
-            <div class="card-body">
-              <h5 class="card-title">Black Widow</h5>
-              <p class="card-text">Action, Adventure, Sci-Fi</p>
-              <a href="movie-details.html" class="btn btn-outline-primary">
-                Details
-              </a>
-            </div>
-          </div> */}
-          <MovieCard />
-          <MovieCard />
-          <MovieCard />
-          <MovieCard />
-          <MovieCard />
-          <MovieCard />
-          <MovieCard />
+        <div className={`d-flex overflow-auto ${Styles.upcomingList}`}>
+          {dataMovies.map((item, index) => {
+            return (
+              <MovieCard
+                movieName={item.movie_name}
+                movieCategory={item.movie_category}
+                movieId={item.movie_id}
+                handleParams={handleParams}
+                key={index}
+              />
+            );
+          })}
         </div>
       </section>
     );
