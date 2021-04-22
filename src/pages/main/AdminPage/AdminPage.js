@@ -23,7 +23,6 @@ export default class AdminPage extends Component {
     return (
       <>
         <Navbar />
-        {/* <main className={`${Styles.mainWrapper}`}> */}
         <Container fluid as={`main`} className={`${styles.mainWrapper}`}>
           <form>
             <Row xs={1}>
@@ -221,8 +220,6 @@ export default class AdminPage extends Component {
             <div className={`${Styles.salesChartNav} ${Styles.wrapper}`}></div>
           </Row> */}
         </Container>
-
-        {/* </main> */}
         <Footer />
       </>
     );

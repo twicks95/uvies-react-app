@@ -6,6 +6,7 @@ import Styles from "./MovieDetail.module.css";
 import { Card, Col, Container, Dropdown, Row } from "react-bootstrap";
 import MovieImage from "../../../assets/img/spiderman-home-coming.png";
 import qs from "query-string";
+import moment from "moment";
 
 export default class MovieDetail extends Component {
   constructor(props) {
@@ -78,17 +79,17 @@ export default class MovieDetail extends Component {
               </Col>
               <Col md={9} lg={8} className={`${Styles.movieDescContainer}`}>
                 <div
-                  className={`d-flex flex-column align-items-center align-items-md-start ${Styles.movieDescHead}`}
+                  className={`d-flex flex-column align-items-center align-items-md-start mb-5 ${Styles.movieDescHead}`}
                 >
                   <h1 className={`text-md-start`}>{movieName}</h1>
                   <p className={`m-0 ${Styles.genre}`}>{movieGenre}</p>
                 </div>
-                <Row xs={2} className={`m-0 gy-4`}>
-                  <Col xs={6} md={4} className={`p-0`}>
+                <Row xs={2} className={`m-0`}>
+                  <Col xs={6} md={4} className={`mb-3 p-0`}>
                     <h6 className=" ">Release date</h6>
-                    <span className=" ">{movieRelease}</span>
+                    <span className=" ">{moment(movieRelease).format('ll')}</span>
                   </Col>
-                  <Col xs={6} md={8} className={`p-0`}>
+                  <Col xs={6} md={8} className={`mb-3 p-0`}>
                     <h6 className=" ">Directed by</h6>
                     <span className=" ">{movieDirector}</span>
                   </Col>
@@ -113,14 +114,14 @@ export default class MovieDetail extends Component {
           </Container>
 
           <section
-            className={`d-flex flex-column align-items-center ${Styles.showtimesTicketContainer} border`}
+            className={`d-flex flex-column align-items-center ${Styles.showtimesTicketContainer}`}
           >
             <h3 className={`${Styles.titleHead}`}>Showtimes and Tickets</h3>
             <div
               className={`d-flex flex-column flex-md-row ${Styles.dateAndPlacePicker}`}
             >
               <input
-                className="form-control"
+                className="form-control mr-md-4 mb-3 mb-md-0"
                 id="date"
                 name="date"
                 placeholder=""

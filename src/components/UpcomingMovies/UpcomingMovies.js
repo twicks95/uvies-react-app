@@ -4,6 +4,11 @@ import { Button } from "react-bootstrap";
 import MovieCard from "./MovieCard/MovieCard";
 
 export default class UpcomingMovies extends Component {
+
+  handleMovieByMonth = () => {
+    
+  }
+
   render() {
     const { dataMovies, handleParams } = this.props;
     return (
