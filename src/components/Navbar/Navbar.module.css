@@ -1,6 +1,5 @@
 .navigationBar {
   background-color: #ffffff !important;
-  /* height: 104px; */
   padding: 19px 70px;
 }
 
@@ -9,19 +8,10 @@
   margin-right: 36px;
 }
 
-.navigationBar .nav-link {
-  /* color: red !important; */
-}
-
-.menu {
-  font-weight: 600;
-  margin-right: 24px;
-  color: #414141;
-}
-
-.menu:hover {
-  text-decoration: none;
-  color: #1a1a1a;
+.btnSignUp {
+  height: 40px;
+  width: 120px;
+  border-radius: 8px;
 }
 
 @media (max-width: 576px) {
@@ -35,18 +25,8 @@
   }
 }
 
-@media (max-width: 992px) {
-  .menu {
-    margin-bottom: 12px;
-  }
-}
-
 @media (min-width: 1366px) {
   .navbarBrand {
     margin-right: 72px;
-  }
-
-  .menu {
-    margin-right: 56px;
   }
 }

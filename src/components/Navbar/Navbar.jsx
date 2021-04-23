@@ -1,20 +1,12 @@
 import React, { Component } from "react";
 import { Nav, Navbar, Button } from "react-bootstrap";
-import { Link } from "react-router-dom";
-import NavLinkDropdown from "./NavDropdown";
-import NavSearch from "./NavSearch";
+import NavSearch from "./NavSearch/NavSearch";
 import BrandLogo from "../../assets/icons/Tickitz.svg";
 import Styles from "./Navbar.module.css";
+import UserNavigation from "./UserNavigation/UserNavigation";
+import DropdownNavigation from "./DropdownNavigation/DropdownNavigation";
 
 export default class NavigationBar extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isAdmin: false,
-      isLogin: false,
-    };
-  }
-
   render() {
     return (
       <Navbar bg="light" expand="lg" className={`${Styles.navigationBar}`}>
@@ -24,18 +16,10 @@ export default class NavigationBar extends Component {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="mr-auto">
-            <Link to="/" className={`${Styles.menu}`}>
-              Movies
-            </Link>
-            <Link to="/" className={`${Styles.menu}`}>
-              Cinemas
-            </Link>
-            <Link to="/" className={`${Styles.menu}`}>
-              Buy Ticket
-            </Link>
+            <UserNavigation />
           </Nav>
           <Nav>
-            <NavLinkDropdown />
+            <DropdownNavigation />
           </Nav>
           <NavSearch />
           <Button href="/" className={`${Styles.btnSignUp}`}>

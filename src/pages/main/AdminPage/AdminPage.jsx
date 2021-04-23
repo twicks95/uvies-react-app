@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Navbar from "../../../components/Navbar/Navbar";
 import Footer from "../../../components/Footer/Footer";
+import MovieCard from "../../../components/MovieCard/MovieCard";
 import {
   Button,
   Card,
@@ -14,18 +15,104 @@ import {
 import styles from "./AdminPage.module.css";
 
 import movieImage from "../../../assets/img/the-witches.png";
+import axiosApiIntances from "../../../utils/axios";
+import qs from "query-string";
 // import ebvid from "../../../assets/img/ebu-id-logo.svg";
 // import cineOne21 from "../../../assets/img/cine-one-21-logo.svg";
 // import hiflix from "../../../assets/img/hiflix-logo.svg";
 
 export default class AdminPage extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      form: {
+        movieName: "",
+        movieCategory: "",
+        movieReleaseDate: "",
+        movieDuration: "02:01:90",
+        movieDirector: "",
+        movieCasts: "",
+        movieSynopsis: "",
+      },
+      isUpdate: false,
+    };
+  }
+
+  // Method akan dijalankan ketika ada fungsi .setState yang yang akan mengupdate state dijalankan
+  // componentDidUpdate() {
+  //   setTimeout(() => {
+  //     console.log(this.state.form);
+  //   }, 3000);
+  // }
+
+  resetForm = (e) => {
+    e.preventDefault();
+    this.setState = {
+      form: {
+        movieName: "",
+        movieCategory: "",
+        movieReleaseDate: "",
+        movieDuration: "02:01:90",
+        movieDirector: "",
+        movieCasts: "",
+        movieSynopsis: "",
+      },
+    };
+  };
+
+  handleFormChange = (e) => {
+    this.setState({
+      form: {
+        ...this.state.form,
+        [e.target.name]: e.target.value,
+      },
+    });
+  };
+
+  submitMovie = (e, data) => {
+    e.preventDefault();
+    let isContinue = window.confirm("Lanjut submit data ini?");
+    console.log(isContinue);
+
+    if (isContinue) {
+      axiosApiIntances
+        .post("/movie/", qs.stringify(data))
+        .then((res) => {
+          alert(res.data.msg);
+          this.resetForm(e);
+        })
+        .catch((err) => {
+          alert(err.message);
+        });
+    }
+  };
+
+  // setUpdate = () => {
+
+  // }
+
+  // updateMovie;
+
+  // handleSortingMovieBy = (e) => {
+  //   // alert("OK")
+  //   console.log(e)
+
+  // }
+
   render() {
+    const { isUpdate, form } = this.state;
+    console.log(form);
+
     return (
       <>
         <Navbar />
         <Container fluid as={`main`} className={`${styles.mainWrapper}`}>
-          <form>
-            <Row xs={1}>
+          <Row xs={1}>
+            <form
+              onSubmit={
+                isUpdate ? this.updateMovie : (e) => this.submitMovie(e, form)
+              }
+            >
               <Col className={`${styles.movieForm}`}>
                 <h3 className={`mb-3`}>Movie Form</h3>
                 <Row xs={1} md={2} lg={3} className={`${styles.wrapper} m-0`}>
@@ -44,36 +131,74 @@ export default class AdminPage extends Component {
                     lg={5}
                     className={`mt-5 mt-md-0 p-0 pl-md-4 pl-lg-4 ${styles.test}`}
                   >
-                    <Form.Group controlId="title">
+                    <Form.Group controlId="movieName">
                       <Form.Label>Movie Name</Form.Label>
-                      <Form.Control type="text" placeholder="Movie title" />
+                      <Form.Control
+                        type="text"
+                        placeholder="Movie title"
+                        name="movieName"
+                        onChange={(e) => this.handleFormChange(e)}
+                        required
+                      />
                     </Form.Group>
-                    <Form.Group controlId="director">
+                    <Form.Group controlId="movieDirector">
                       <Form.Label>Director</Form.Label>
-                      <Form.Control type="text" placeholder="Movie director" />
+                      <Form.Control
+                        type="text"
+                        placeholder="Movie director"
+                        name="movieDirector"
+                        onChange={(e) => this.handleFormChange(e)}
+                      />
                     </Form.Group>
-                    <Form.Group controlId="release-date">
+                    <Form.Group controlId="movie_release_date">
                       <Form.Label>Release Date</Form.Label>
-                      <Form.Control type="date" />
+                      <Form.Control
+                        type="date"
+                        name="movieReleaseDate"
+                        onChange={(e) => this.handleFormChange(e)}
+                      />
                     </Form.Group>
                   </Col>
                   <Col md={12} lg={5} className={`mt-5 mt-lg-0 p-0 pl-lg-5`}>
-                    <Form.Group controlId="category">
+                    <Form.Group controlId="movieCategory">
                       <Form.Label>Category</Form.Label>
-                      <Form.Control type="text" placeholder="Movie category" />
+                      <Form.Control
+                        type="text"
+                        placeholder="Movie category"
+                        name="movieCategory"
+                        onChange={(e) => this.handleFormChange(e)}
+                      />
                     </Form.Group>
-                    <Form.Group controlId="casts">
+                    <Form.Group controlId="movieCasts">
                       <Form.Label>Casts</Form.Label>
-                      <Form.Control type="text" placeholder="Movie casts" />
+                      <Form.Control
+                        type="text"
+                        placeholder="Movie casts"
+                        name="movieCasts"
+                        onChange={(e) => this.handleFormChange(e)}
+                      />
                     </Form.Group>
                     <div className={`d-flex`}>
-                      <Form.Group controlId="duration-hour" className={`mr-3`}>
+                      <Form.Group
+                        controlId="movieDurationHour"
+                        className={`mr-3`}
+                      >
                         <Form.Label>Duration Hour</Form.Label>
-                        <Form.Control type="text" placeholder="Hour" />
+                        <Form.Control
+                          type="text"
+                          placeholder="Hour"
+                          name="movieHours"
+                          onChange={(e) => this.handleFormChange(e)}
+                        />
                       </Form.Group>
-                      <Form.Group controlId="duration-minute">
+                      <Form.Group controlId="movieDurationMinute">
                         <Form.Label>Duration Minute</Form.Label>
-                        <Form.Control type="text" placeholder="Minute" />
+                        <Form.Control
+                          type="text"
+                          placeholder="Minute"
+                          name="movieMinutes"
+                          onChange={(e) => this.handleFormChange(e)}
+                        />
                       </Form.Group>
                     </div>
                   </Col>
@@ -90,6 +215,8 @@ export default class AdminPage extends Component {
                         as="textarea"
                         rows={3}
                         placeholder="This movie synopsis"
+                        name="movieSynopsis"
+                        onChange={(e) => this.handleFormChange(e)}
                         className={`py-2`}
                       />
                     </Form.Group>
@@ -104,36 +231,60 @@ export default class AdminPage extends Component {
                     <Button variant="outline-primary" className={`mr-4`}>
                       Reset
                     </Button>
-                    <Button variant="primary">Submit</Button>
+                    <Button variant="primary" type="submit">
+                      {isUpdate ? "Update" : "Submit"}
+                    </Button>
                   </Col>
                 </Row>
               </Col>
-              <Col className={`${styles.movieData}`}>
-                <div className={`d-flex justify-content-between align-items-center mb-3 ${styles.movieDataHead}`}>
-                  <h3>Movie Data</h3>
-                  <div className={`d-flex align-items-center ${styles.searchAction}`}>
-                    <DropdownButton
-                      variant="outline-secondary"
-                      title="sort"
-                      id="sort"
-                      className={`mr-3`}
+            </form>
+            <Col className={`${styles.movieData}`}>
+              <div
+                className={`d-flex justify-content-between align-items-center mb-3 ${styles.movieDataHead}`}
+              >
+                <h3>Movie Data</h3>
+                <div
+                  className={`d-flex align-items-center ${styles.searchAction}`}
+                >
+                  <DropdownButton
+                    variant="outline-secondary"
+                    title="sort"
+                    id="sort"
+                    className={`mr-3`}
+                  >
+                    <Dropdown.Item
+                      onClick={() => this.handleSortingMovieBy("movie_name")}
                     >
-                      <Dropdown.Item href="#">By Name</Dropdown.Item>
-                      <Dropdown.Item href="#">By Release Date</Dropdown.Item>
-                      <Dropdown.Divider />
-                      <Dropdown.Item href="#">Separated link</Dropdown.Item>
-                    </DropdownButton>
-                    <Form.Control type="text" placeholder="Search movie name ... "/>
-                  </div>
+                      By Name
+                    </Dropdown.Item>
+                    <Dropdown.Item
+                      onClick={() =>
+                        this.handleSortingMovieBy("movie_release_date")
+                      }
+                    >
+                      By Release Date
+                    </Dropdown.Item>
+                    <Dropdown.Divider />
+                    <Dropdown.Item onClick={() => this.handleSortingMovieBy()}>
+                      Separated link
+                    </Dropdown.Item>
+                  </DropdownButton>
+                  <Form.Control
+                    type="text"
+                    placeholder="Search movie name ... "
+                  />
                 </div>
-                <Row className={`${styles.wrapper} m-0`}>
-                  <Col></Col>
-                </Row>
-              </Col>
-              <Col className={`${styles.pagination}`}>
-                <div>Pagination</div>
-              </Col>
-              {/* <Col lg={5} className={`border p-0`}>
+              </div>
+              <Row className={`${styles.wrapper} m-0`}>
+                <Col>
+                  <MovieCard isAdminMovieData={true} />
+                </Col>
+              </Row>
+            </Col>
+            <Col className={`${styles.pagination}`}>
+              <div>Pagination</div>
+            </Col>
+            {/* <Col lg={5} className={`border p-0`}>
               <div className={` danger`}>
                 <h3>Premiere Location</h3>
                 <div
@@ -213,8 +364,7 @@ export default class AdminPage extends Component {
                 <div className={`${Styles.wrapper} border`}>Content</div>
               </div>
             </Col> */}
-            </Row>
-          </form>
+          </Row>
           {/* <Row xs={1} as={`section`} className={`border`}>
             <h3>Sales Charts</h3>
             <div className={`${Styles.salesChartNav} ${Styles.wrapper}`}></div>

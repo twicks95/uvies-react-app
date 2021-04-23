@@ -7,6 +7,7 @@ import { Card, Col, Container, Dropdown, Row } from "react-bootstrap";
 import MovieImage from "../../../assets/img/spiderman-home-coming.png";
 import qs from "query-string";
 import moment from "moment";
+import "moment-duration-format"
 
 export default class MovieDetail extends Component {
   constructor(props) {
@@ -95,7 +96,7 @@ export default class MovieDetail extends Component {
                   </Col>
                   <Col md={4} className={`p-0`}>
                     <h6 className=" ">Duration</h6>
-                    <span className=" ">{movieDuration}</span>
+                    <span className=" ">{moment.duration(movieDuration).format("h [hour] m [minute]")}</span>
                   </Col>
                   <Col md={8} className={`p-0`}>
                     <h6 className=" ">Casts</h6>

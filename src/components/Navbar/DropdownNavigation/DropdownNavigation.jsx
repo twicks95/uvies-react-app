@@ -1,11 +1,11 @@
-import React, { Component } from "react";
+import React from "react";
 import { NavDropdown } from "react-bootstrap";
+import styles from "./DropdownNavigatioin.module.css"
 
-export default class NavLinkDropdown extends Component {
-  render() {
+const DropdownNavigation = (props) => {
     return (
       <>
-        <NavDropdown title="Location" id="basic-nav-dropdown">
+        <NavDropdown title="Location" id="location" className={`${styles.dropdownButton}`}>
           <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
           <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
           <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
@@ -14,5 +14,6 @@ export default class NavLinkDropdown extends Component {
         </NavDropdown>
       </>
     );
-  }
 }
+
+export default DropdownNavigation;

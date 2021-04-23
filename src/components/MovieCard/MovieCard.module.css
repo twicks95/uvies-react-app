@@ -30,6 +30,14 @@
   margin-top: 8px;
 }
 
+.movieCardBody {
+  display: none;
+}
+
+.movieCardContainer:hover .test {
+  display: inline-block !important;
+}
+
 .movieCardBody button {
   width: 159px;
   height: 33px;

@@ -1,13 +1,10 @@
 import React, { Component } from "react";
 import Styles from "./UpcomingMovies.module.css";
 import { Button } from "react-bootstrap";
-import MovieCard from "./MovieCard/MovieCard";
+import MovieCard from "../MovieCard/MovieCard";
 
 export default class UpcomingMovies extends Component {
-
-  handleMovieByMonth = () => {
-    
-  }
+  handleMovieByMonth = () => {};
 
   render() {
     const { dataMovies, handleParams } = this.props;
