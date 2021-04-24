@@ -1,9 +1,9 @@
-input {
+input, select {
   height: 64px !important;
 }
 
 input,
-textarea {
+textarea, select {
   border-radius: 16px !important;
 }
 

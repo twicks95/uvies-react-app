@@ -1,17 +1,9 @@
 import React, { Component } from "react";
 import Navbar from "../../../components/Navbar/Navbar";
 import Footer from "../../../components/Footer/Footer";
-import MovieCard from "../../../components/MovieCard/MovieCard";
-import {
-  Button,
-  Card,
-  Col,
-  Container,
-  Dropdown,
-  DropdownButton,
-  Form,
-  Row,
-} from "react-bootstrap";
+import SelectOptionButton from "./SelectOptionButton";
+import AdminMovieData from "../../../components/AdminMovieData/AdminMovieData";
+import { Button, Card, Col, Container, Form, Row } from "react-bootstrap";
 import styles from "./AdminPage.module.css";
 
 import movieImage from "../../../assets/img/the-witches.png";
@@ -29,12 +21,15 @@ export default class AdminPage extends Component {
         movieName: "",
         movieCategory: "",
         movieReleaseDate: "",
-        movieDuration: "02:01:90",
+        movieHours: "00",
+        movieMinutes: "00",
+        movieDuration: "",
         movieDirector: "",
         movieCasts: "",
         movieSynopsis: "",
       },
       isUpdate: false,
+      movieId: "",
     };
   }
 
@@ -47,17 +42,19 @@ export default class AdminPage extends Component {
 
   resetForm = (e) => {
     e.preventDefault();
-    this.setState = {
+    this.setState({
       form: {
         movieName: "",
         movieCategory: "",
         movieReleaseDate: "",
-        movieDuration: "02:01:90",
+        movieHours: "00",
+        movieMinutes: "00",
+        movieDuration: "",
         movieDirector: "",
         movieCasts: "",
         movieSynopsis: "",
       },
-    };
+    });
   };
 
   handleFormChange = (e) => {
@@ -69,14 +66,23 @@ export default class AdminPage extends Component {
     });
   };
 
-  submitMovie = (e, data) => {
+  createMovie = (e, data) => {
     e.preventDefault();
-    let isContinue = window.confirm("Lanjut submit data ini?");
-    console.log(isContinue);
+    let isContinue;
+    if (this.state.isUpdate) {
+      isContinue = window.confirm("Lanjut update data ini?");
+    } else {
+      isContinue = window.confirm("Lanjut submit data ini?");
+    }
+
+    const dataToBePosted = {
+      ...data,
+      movieDuration: `${this.state.form.movieHours}:${this.state.form.movieMinutes}:00`,
+    };
 
     if (isContinue) {
       axiosApiIntances
-        .post("/movie/", qs.stringify(data))
+        .post("/movie/", qs.stringify(dataToBePosted))
         .then((res) => {
           alert(res.data.msg);
           this.resetForm(e);
@@ -87,9 +93,44 @@ export default class AdminPage extends Component {
     }
   };
 
-  // setUpdate = () => {
+  setUpdate = (data) => {
+    this.setState({
+      form: {
+        movieName: data.movie_name,
+        movieCategory: data.movie_category,
+        movieReleaseDate: data.movie_release_date.slice(0, 10),
+        movieHours: data.movie_duration.slice(0, 2),
+        movieMinutes: data.movie_duration.slice(3, 5),
+        movieDuration: "",
+        movieDirector: data.movie_director,
+        movieCasts: data.movie_casts,
+        movieSynopsis: data.movie_synopsis,
+      },
+      isUpdate: true,
+      movieId: data.movie_id,
+    });
+  };
 
-  // }
+  updateMovie = (e, data) => {
+    e.preventDefault();
+    const dataToBeUpdated = {
+      ...data,
+      movieDuration: `${this.state.form.movieHours}:${this.state.form.movieMinutes}:00`,
+    };
+
+    console.log(dataToBeUpdated);
+    // const id = this.state.movieId
+    // axiosApiIntances.patch(`/movie/${id}`, {dataToBeUpdated, id}).then((res) => {
+
+    // }).catch((err) => {
+
+    // })
+
+    // this.setState({ isUpdate: false });
+    this.resetForm(e);
+  };
+
+  deleteMovie = (id) => {};
 
   // updateMovie;
 
@@ -101,8 +142,19 @@ export default class AdminPage extends Component {
 
   render() {
     const { isUpdate, form } = this.state;
-    console.log(form);
+    const {
+      movieName,
+      movieCategory,
+      movieReleaseDate,
+      movieHours,
+      movieMinutes,
+      movieDirector,
+      movieCasts,
+      movieSynopsis,
+    } = this.state.form;
+    // console.log(form);
 
+    console.log(this.state);
     return (
       <>
         <Navbar />
@@ -110,8 +162,11 @@ export default class AdminPage extends Component {
           <Row xs={1}>
             <form
               onSubmit={
-                isUpdate ? this.updateMovie : (e) => this.submitMovie(e, form)
+                isUpdate
+                  ? (e) => this.updateMovie(e, form)
+                  : (e) => this.createMovie(e, form)
               }
+              onReset={this.resetForm}
             >
               <Col className={`${styles.movieForm}`}>
                 <h3 className={`mb-3`}>Movie Form</h3>
@@ -137,6 +192,7 @@ export default class AdminPage extends Component {
                         type="text"
                         placeholder="Movie title"
                         name="movieName"
+                        value={movieName}
                         onChange={(e) => this.handleFormChange(e)}
                         required
                       />
@@ -147,6 +203,7 @@ export default class AdminPage extends Component {
                         type="text"
                         placeholder="Movie director"
                         name="movieDirector"
+                        value={movieDirector}
                         onChange={(e) => this.handleFormChange(e)}
                       />
                     </Form.Group>
@@ -155,6 +212,7 @@ export default class AdminPage extends Component {
                       <Form.Control
                         type="date"
                         name="movieReleaseDate"
+                        value={movieReleaseDate}
                         onChange={(e) => this.handleFormChange(e)}
                       />
                     </Form.Group>
@@ -166,6 +224,7 @@ export default class AdminPage extends Component {
                         type="text"
                         placeholder="Movie category"
                         name="movieCategory"
+                        value={movieCategory}
                         onChange={(e) => this.handleFormChange(e)}
                       />
                     </Form.Group>
@@ -175,31 +234,25 @@ export default class AdminPage extends Component {
                         type="text"
                         placeholder="Movie casts"
                         name="movieCasts"
+                        value={movieCasts}
                         onChange={(e) => this.handleFormChange(e)}
                       />
                     </Form.Group>
-                    <div className={`d-flex`}>
-                      <Form.Group
-                        controlId="movieDurationHour"
-                        className={`mr-3`}
-                      >
-                        <Form.Label>Duration Hour</Form.Label>
-                        <Form.Control
-                          type="text"
-                          placeholder="Hour"
-                          name="movieHours"
-                          onChange={(e) => this.handleFormChange(e)}
-                        />
-                      </Form.Group>
-                      <Form.Group controlId="movieDurationMinute">
-                        <Form.Label>Duration Minute</Form.Label>
-                        <Form.Control
-                          type="text"
-                          placeholder="Minute"
-                          name="movieMinutes"
-                          onChange={(e) => this.handleFormChange(e)}
-                        />
-                      </Form.Group>
+                    <div className={`d-flex ${styles.movieDuration}`}>
+                      <SelectOptionButton selectedIndex="3"
+                        label={`Duration Hour`}
+                        name={`movieHours`}
+                        isMovieHours={true}
+                        stateFormHours={movieHours}
+                        handleChange={this.handleFormChange}
+                      />
+                      <SelectOptionButton
+                        label={`Duration Minutes`}
+                        name={`movieMinutes`}
+                        isMovieHours={false}
+                        stateFormMinutes={movieMinutes}
+                        handleChange={this.handleFormChange}
+                      />
                     </div>
                   </Col>
                   <Col
@@ -216,6 +269,7 @@ export default class AdminPage extends Component {
                         rows={3}
                         placeholder="This movie synopsis"
                         name="movieSynopsis"
+                        value={movieSynopsis}
                         onChange={(e) => this.handleFormChange(e)}
                         className={`py-2`}
                       />
@@ -228,7 +282,11 @@ export default class AdminPage extends Component {
                     lg={12}
                     className={`d-flex justify-content-end p-0 mt-5 ${styles.actionButton}`}
                   >
-                    <Button variant="outline-primary" className={`mr-4`}>
+                    <Button
+                      variant="outline-primary"
+                      type="reset"
+                      className={`mr-4 ${styles.resetButton}`}
+                    >
                       Reset
                     </Button>
                     <Button variant="primary" type="submit">
@@ -239,47 +297,7 @@ export default class AdminPage extends Component {
               </Col>
             </form>
             <Col className={`${styles.movieData}`}>
-              <div
-                className={`d-flex justify-content-between align-items-center mb-3 ${styles.movieDataHead}`}
-              >
-                <h3>Movie Data</h3>
-                <div
-                  className={`d-flex align-items-center ${styles.searchAction}`}
-                >
-                  <DropdownButton
-                    variant="outline-secondary"
-                    title="sort"
-                    id="sort"
-                    className={`mr-3`}
-                  >
-                    <Dropdown.Item
-                      onClick={() => this.handleSortingMovieBy("movie_name")}
-                    >
-                      By Name
-                    </Dropdown.Item>
-                    <Dropdown.Item
-                      onClick={() =>
-                        this.handleSortingMovieBy("movie_release_date")
-                      }
-                    >
-                      By Release Date
-                    </Dropdown.Item>
-                    <Dropdown.Divider />
-                    <Dropdown.Item onClick={() => this.handleSortingMovieBy()}>
-                      Separated link
-                    </Dropdown.Item>
-                  </DropdownButton>
-                  <Form.Control
-                    type="text"
-                    placeholder="Search movie name ... "
-                  />
-                </div>
-              </div>
-              <Row className={`${styles.wrapper} m-0`}>
-                <Col>
-                  <MovieCard isAdminMovieData={true} />
-                </Col>
-              </Row>
+              <AdminMovieData handleUpdate={this.setUpdate.bind(this)} />
             </Col>
             <Col className={`${styles.pagination}`}>
               <div>Pagination</div>

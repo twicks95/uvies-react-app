@@ -1,3 +1,16 @@
+.resetButton {
+  border: 0px solid !important;
+  /* color: #5f2eea !important; */
+  color: rgb(167, 167, 167) !important;
+  transition: 0.12s ease-in-out;
+}
+
+.resetButton:hover {
+  border: 2px solid rgb(185, 185, 185) !important;
+  background-color: transparent !important;
+  color: rgb(136, 136, 136) !important;
+}
+
 .mainWrapper {
   padding: 56px 70px;
   background-color: #f5f6f8;
@@ -45,23 +58,8 @@
   margin-bottom: 24px;
 }
 
-.movieData .searchAction button {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100px;
-  border: 1px solid rgba(100, 100, 100, 0.24);
-  border-radius: 16px !important;
-  background-color: #ffffff;
-}
-
-.movieData .searchAction button:hover {
-  background-color: #5f2eea;
-}
-
-.movieData .searchAction input {
-  height: 38px !important;
-  border: .5px solid rgba(100, 100, 100, 0.24);
+.movieDuration div:first-child {
+  margin-right: 20px;
 }
 
 .actionButton button {

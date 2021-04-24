@@ -6,13 +6,8 @@ import "./MovieCard.module.css";
 import movieImage from "../../assets/img/john-wick-3.png";
 
 const MovieCard = (props) => {
-  const {
-    isNowShowing,
-    isAdminMovieData,
-    movieName,
-    movieCategory,
-    movieId,
-  } = props;
+  const { isNowShowing, isAdminMovieData, data } = props;
+  const { movieName, movieCategory, movieId } = props.data;
 
   const renderMovieCardButton = () => {
     if (isNowShowing) {
@@ -37,14 +32,11 @@ const MovieCard = (props) => {
         <>
           <Button
             variant="outline-secondary"
-            onClick={(event) => props.handleParams(movieId, event)}
+            onClick={() => props.handleUpdate(data)}
           >
             Update
           </Button>
-          <Button
-            variant="danger"
-            onClick={(event) => props.handleParams(movieId, event)}
-          >
+          <Button variant="danger" onClick={() => props.deleteMovie(movieId)}>
             Delete
           </Button>
         </>
@@ -53,7 +45,7 @@ const MovieCard = (props) => {
       return (
         <Button
           variant="outline-primary"
-          onClick={(event) => props.handleParams(movieId, event)}
+          onClick={(event) => props.handleParams(data.movieId, event)}
         >
           Details
         </Button>
@@ -63,7 +55,9 @@ const MovieCard = (props) => {
 
   return (
     <Card
-      className={`d-flex align-items-center text-center ${styles.movieCardContainer}`}
+      className={`d-flex align-items-center text-center ${
+        isAdminMovieData ? "mr-0 mb-5" : "mr-5"
+      }  ${styles.movieCardContainer}`}
     >
       <Card.Img
         variant="top"
@@ -87,7 +81,7 @@ const MovieCard = (props) => {
 
 MovieCard.defaultProps = {
   movieName: "Title here",
-  movieCategory: "category"
-}
+  movieCategory: "category",
+};
 
 export default MovieCard;
