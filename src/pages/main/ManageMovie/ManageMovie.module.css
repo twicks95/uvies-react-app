@@ -54,6 +54,18 @@
   margin-bottom: 68px;
 }
 
+.movieForm input,
+.movieForm select,
+.movieForm textarea {
+  background-color: #fcfdfe;
+}
+
+.movieForm input:focus,
+.movieForm select:focus,
+.movieForm textarea:focus {
+  background-color: #eeeeee;
+}
+
 .movieData {
   margin-bottom: 24px;
 }

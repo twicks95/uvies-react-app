@@ -4,7 +4,7 @@ import Home from "./pages/main/Home/Home";
 import MovieDetail from "./pages/main/MovieDetail/MovieDetail";
 // import OrderPage from "";
 import PaymentPage from "./pages/main/PaymentPage/PaymentPage";
-import AdminPage from "./pages/main/AdminPage/AdminPage"
+import ManageMovie from "./pages/main/ManageMovie/ManageMovie"
 // require("dotenv").config();
 
 export default function App() {
@@ -14,7 +14,7 @@ export default function App() {
         <Route path="/" exact component={Home}></Route>
         <Route path="/movie-detail" exact component={MovieDetail}></Route>
         <Route path="/payment-page" exact component={PaymentPage}></Route>
-        <Route path="/admin-page" exact component={AdminPage}></Route>
+        <Route path="/manage-movie" exact component={ManageMovie}></Route>
       </Switch>
     </Router>
   );

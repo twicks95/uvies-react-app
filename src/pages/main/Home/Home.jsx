@@ -21,7 +21,7 @@ export default class Home extends Component {
 
   getMovies = () => {
     axiosApiIntances
-      .get(`movie?limit=5`)
+      .get(`movie?limit=10`)
       .then((res) => {
         this.setState({ data: res.data.data });
         // console.log(res)
@@ -30,6 +30,14 @@ export default class Home extends Component {
         console.log(err.response);
       });
   };
+
+  getUpcomingMovies = (month) => {
+    axiosApiIntances.get(`movie/upcoming/${month}`).then((res) => {
+      this.setState({data: res.data.data})
+    }).catch((err) => {
+      alert(err.response)
+    })
+  }
 
   handleParams = (id, event) => {
     // console.log(event.type)

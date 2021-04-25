@@ -6,8 +6,15 @@ import "./MovieCard.module.css";
 import movieImage from "../../assets/img/john-wick-3.png";
 
 const MovieCard = (props) => {
-  const { isNowShowing, isAdminMovieData, data } = props;
-  const { movieName, movieCategory, movieId } = props.data;
+  const {
+    isNowShowing,
+    isAdminMovieData,
+    handleParams,
+    handleUpdate,
+    handleDelete,
+    data,
+  } = props;
+  const { movie_name, movie_category, movie_id } = data;
 
   const renderMovieCardButton = () => {
     if (isNowShowing) {
@@ -15,13 +22,13 @@ const MovieCard = (props) => {
         <>
           <Button
             variant="outline-primary"
-            onClick={(event) => props.handleParams(movieId, event)}
+            onClick={(event) => handleParams(movie_id, event)}
           >
             Details
           </Button>
           <Button
             variant="primary"
-            onClick={(event) => props.handleParams(movieId, event)}
+            onClick={(event) => handleParams(movie_id, event)}
           >
             Book Now
           </Button>
@@ -32,11 +39,11 @@ const MovieCard = (props) => {
         <>
           <Button
             variant="outline-secondary"
-            onClick={() => props.handleUpdate(data)}
+            onClick={() => handleUpdate(data)}
           >
             Update
           </Button>
-          <Button variant="danger" onClick={() => props.deleteMovie(movieId)}>
+          <Button variant="danger" onClick={() => handleDelete(movie_id)}>
             Delete
           </Button>
         </>
@@ -45,7 +52,7 @@ const MovieCard = (props) => {
       return (
         <Button
           variant="outline-primary"
-          onClick={(event) => props.handleParams(data.movieId, event)}
+          onClick={(event) => handleParams(movie_id, event)}
         >
           Details
         </Button>
@@ -69,9 +76,9 @@ const MovieCard = (props) => {
           isNowShowing ? "test" : null
         } ${styles.movieCardBody}`}
       >
-        <Card.Title className={`${styles.movieTitle}`}>{movieName}</Card.Title>
+        <Card.Title className={`${styles.movieTitle}`}>{movie_name}</Card.Title>
         <Card.Text className={`${styles.movieGenre}`}>
-          {movieCategory}
+          {movie_category}
         </Card.Text>
         <div>{renderMovieCardButton()}</div>
       </Card.Body>

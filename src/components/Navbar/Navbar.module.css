@@ -14,6 +14,16 @@
   border-radius: 8px;
 }
 
+.btnProfile, .userAvatar {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+}
+
+.userAvatar {
+  object-fit: cover;
+}
+
 @media (max-width: 576px) {
   .navigationBar {
     padding-right: 5% !important;

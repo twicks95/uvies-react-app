@@ -3,8 +3,6 @@ import MovieCard from "../MovieCard/MovieCard";
 import Styles from "./NowShowing.module.css";
 
 export default class NowShowing extends Component {
-  
-
   render() {
     const { dataMovies } = this.props;
     return (
@@ -23,12 +21,7 @@ export default class NowShowing extends Component {
         <div className={`d-flex overflow-auto ${Styles.nowShowingList}`}>
           {dataMovies.map((item, index) => {
             return (
-              <MovieCard
-                isNowShowing={true}
-                movieName={item.movie_name}
-                movieCategory={item.movie_category}
-                key={index}
-              />
+              <MovieCard data={item} isNowShowing={true} key={index} />
             );
           })}
         </div>
