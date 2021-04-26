@@ -1,0 +1,24 @@
+.seatRow {
+  margin-bottom: 5px;
+}
+
+.seat {
+  /* display: inline-block; */
+  cursor: pointer;
+  width: 25px;
+  height: 25px;
+  border-radius: 25%;
+  border: 1px solid gainsboro;
+}
+
+.seatAvailable {
+  background-color: #D6D8E7;
+}
+
+.selectedSeat {
+  background-color: #5f2eea;
+}
+
+.soldSeat {
+  background-color: #6e7191;
+}

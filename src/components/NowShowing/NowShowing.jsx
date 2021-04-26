@@ -1,10 +1,34 @@
 import React, { Component } from "react";
+import axiosApiIntances from "../../utils/axios";
 import MovieCard from "../MovieCard/MovieCard";
 import Styles from "./NowShowing.module.css";
 
-export default class NowShowing extends Component {
+class NowShowing extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      data: [],
+    };
+  }
+
+  componentDidMount() {
+    this.getNowShowingMovie();
+  }
+
+  getNowShowingMovie = () => {
+    axiosApiIntances
+      .get("movie?limit")
+      .then((res) => {
+        this.setState({ data: res.data.data });
+      })
+      .catch((err) => {
+        alert(err.msg);
+      });
+  };
+
   render() {
-    const { dataMovies } = this.props;
+    const { data } = this.state;
+    const { handleDetail } = this.props;
     return (
       <section className={`d-flex flex-column ${Styles.nowShowing}`}>
         <div
@@ -19,9 +43,14 @@ export default class NowShowing extends Component {
           </a>
         </div>
         <div className={`d-flex overflow-auto ${Styles.nowShowingList}`}>
-          {dataMovies.map((item, index) => {
+          {data.map((item, index) => {
             return (
-              <MovieCard data={item} isNowShowing={true} key={index} />
+              <MovieCard
+                data={item}
+                handleDetail={handleDetail}
+                isNowShowing={true}
+                key={index}
+              />
             );
           })}
         </div>
@@ -29,3 +58,5 @@ export default class NowShowing extends Component {
     );
   }
 }
+
+export default NowShowing;

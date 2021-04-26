@@ -31,21 +31,11 @@ export default class Home extends Component {
       });
   };
 
-  getUpcomingMovies = (month) => {
-    axiosApiIntances.get(`movie/upcoming/${month}`).then((res) => {
-      this.setState({data: res.data.data})
-    }).catch((err) => {
-      alert(err.response)
-    })
-  }
-
-  handleParams = (id, event) => {
-    // console.log(event.type)
+  handleDetail = (id) => {
     this.props.history.push(`/movie-detail?movieId=${id}`);
   };
 
   render() {
-    const { data } = this.state;
     return (
       <>
         <Navbar />
@@ -68,8 +58,8 @@ export default class Home extends Component {
               <div className={`${Styles.box3}`}></div>
             </div>
           </div>
-          <NowShowing dataMovies={data} />
-          <UpcomingMovies dataMovies={data} handleParams={this.handleParams} />
+          <NowShowing handleDetail={this.handleDetail} />
+          <UpcomingMovies handleDetail={this.handleDetail} />
           <JoinMember />
         </div>
         <Footer />

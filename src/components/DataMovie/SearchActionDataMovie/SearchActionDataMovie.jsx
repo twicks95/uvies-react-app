@@ -13,7 +13,7 @@ const SearchActionDataMovie = (props) => {
         id="sort"
         className={`mr-3`}
       >
-        <Dropdown.Item onClick={(e) => handleRequestGet(e, "")}>
+        <Dropdown.Item onClick={(e) => handleRequestGet(e)}>
           Show All
         </Dropdown.Item>
         <Dropdown.Item
@@ -34,7 +34,7 @@ const SearchActionDataMovie = (props) => {
         <Dropdown.Divider />
         <Dropdown.Item disabled>Uvies App</Dropdown.Item>
       </DropdownButton>
-      <form
+      <form className={`m-0`}
         onSubmit={(e) => handleRequestGet(e, `&searchByName=${searchKeyword}`)}
       >
         <Form.Control

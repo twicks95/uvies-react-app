@@ -5,6 +5,7 @@ import BrandLogo from "../../assets/icons/Tickitz.svg";
 import styles from "./Navbar.module.css";
 import UserNavigation from "./UserNavigation/UserNavigation";
 import DropdownNavigation from "./DropdownNavigation/DropdownNavigation";
+import { withRouter } from "react-router-dom";
 
 import userAva from "../../assets/img/user-profile-pict.png";
 
@@ -27,9 +28,16 @@ const NavigationBar = (props) => {
     }
   };
 
+  const leadToHomePage = () => {
+    props.history.push("/");
+  };
+
   return (
     <Navbar bg="light" expand="lg" className={`${styles.navigationBar}`}>
-      <Navbar.Brand href="/" className={`${styles.navigationBrand}`}>
+      <Navbar.Brand
+        onClick={leadToHomePage}
+        className={`${styles.navigationBrand}`}
+      >
         <img src={BrandLogo} alt="Uvies Logo" />
       </Navbar.Brand>
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -47,4 +55,4 @@ const NavigationBar = (props) => {
   );
 };
 
-export default NavigationBar;
+export default withRouter(NavigationBar);

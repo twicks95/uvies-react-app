@@ -6,6 +6,7 @@
 .navigationBrand {
   width: 130px;
   margin-right: 36px;
+  cursor: pointer;
 }
 
 .btnSignUp {

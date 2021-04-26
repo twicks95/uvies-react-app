@@ -9,6 +9,7 @@ import styles from "./ManageMovie.module.css";
 import movieImage from "../../../assets/img/the-witches.png";
 import axiosApiIntances from "../../../utils/axios";
 import qs from "query-string";
+import ReactPaginate from "react-paginate";
 
 class ManageMovie extends Component {
   constructor(props) {
@@ -26,20 +27,16 @@ class ManageMovie extends Component {
         movieSynopsis: "",
       },
       data: [],
-      isUpdate: false,
+      pagination: {},
+      page: 1,
+      limit: 8,
       movieId: "",
+      isUpdate: false,
       isAdmin: true,
       isLoggedIn: true,
     };
   }
 
-  // Method akan dijalankan ketika ada fungsi .setState yang yang akan mengupdate state dijalankan
-  // componentDidUpdate() {
-  //   setTimeout(() => {
-  //     console.log(this.state.form);
-  //   }, 3000);
-  // }
-  
   componentDidMount() {
     this.getData();
   }
@@ -49,14 +46,15 @@ class ManageMovie extends Component {
       e.preventDefault();
     }
 
-    if (!path) {
-      path = "";
-    }
+    path = !path ? "" : path;
 
     axiosApiIntances
-      .get(`/movie?limit=8&sort=movie_created_at DESC${path}`)
+      .get(`/movie?limit=${this.state.limit}${path}`)
       .then((res) => {
-        this.setState({ data: res.data.data });
+        this.setState({
+          data: res.data.data,
+          pagination: res.data.pagination,
+        });
       })
       .catch((err) => {
         alert(err);
@@ -92,12 +90,7 @@ class ManageMovie extends Component {
 
   createMovie = (e, data) => {
     e.preventDefault();
-    let isContinue;
-    if (this.state.isUpdate) {
-      isContinue = window.confirm("Lanjut update data ini?");
-    } else {
-      isContinue = window.confirm("Lanjut submit data ini?");
-    }
+    let isContinue = window.confirm("Create this new movie data?");
 
     const dataToBePosted = {
       ...data,
@@ -161,15 +154,27 @@ class ManageMovie extends Component {
   };
 
   deleteMovie = (id) => {
-    axiosApiIntances
-      .delete(`/movie/${id}`)
-      .then((res) => {
-        alert(res.data.msg);
-        this.getData();
-      })
-      .catch((err) => {
-        alert(err);
-      });
+    let isContinue = window.confirm("Delete selected movie?");
+
+    if (isContinue) {
+      axiosApiIntances
+        .delete(`/movie/${id}`)
+        .then((res) => {
+          alert(res.data.msg);
+          this.getData();
+        })
+        .catch((err) => {
+          alert(err);
+        });
+    }
+  };
+
+  handlePageClick = (e) => {
+    console.log(e);
+    // const selectedPage = e.selected + 1;
+    // this.setState({ page: selectedPage }, () => {
+    //   this.getData();
+    // });
   };
 
   render() {
@@ -185,7 +190,7 @@ class ManageMovie extends Component {
       movieSynopsis,
     } = this.state.form;
 
-    console.log(this.state.data);
+    console.log(this.state);
 
     return (
       <>
@@ -203,7 +208,7 @@ class ManageMovie extends Component {
               <Col className={`${styles.movieForm}`}>
                 <h3 className={`mb-3`}>Movie Form</h3>
                 <Row xs={1} md={2} lg={3} className={`${styles.wrapper} m-0`}>
-                  <Col lg={2} className={`p-0`}>
+                  <Col lg={3} className={`p-0`}>
                     <Card
                       className={`d-flex justify-content-center ${styles.moviePoster}`}
                     >
@@ -215,7 +220,7 @@ class ManageMovie extends Component {
                     </Card>
                   </Col>
                   <Col
-                    lg={5}
+                    lg={4}
                     className={`mt-5 mt-md-0 p-0 pl-md-4 pl-lg-4 ${styles.test}`}
                   >
                     <Form.Group controlId="movieName">
@@ -336,8 +341,20 @@ class ManageMovie extends Component {
                 dataState={this.state.data}
               />
             </Col>
-            <Col className={`${styles.pagination}`}>
-              <div>Pagination</div>
+            <Col className={`d-flex justify-content-center ${styles.pagination}`}>
+              <ReactPaginate
+                previousLabel={""}
+                nextLabel={""}
+                breakLabel={"..."}
+                breakClassName={"break-me"}
+                // pageCount={} // Total page
+                marginPagesDisplayed={2}
+                pageRangeDisplayed={2}
+                onPageChange={this.handlePageClick}
+                containerClassName={styles.pagination}
+                subContainerClassName={`${styles.pages} ${styles.pagination}`}
+                activeClassName={styles.active}
+              />
             </Col>
           </Row>
         </Container>

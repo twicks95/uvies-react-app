@@ -1,0 +1,142 @@
+h3 {
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: 0.25px;
+}
+
+.mainWrapper {
+  padding: 72px 70px;
+  background-color: #f5f6f8;
+}
+
+.wrapper {
+  background-color: #ffffff;
+  border-radius: 24px;
+  padding: 7% 5%;
+}
+
+.stickyHeadMovieSelection {
+  padding: 32px 70px;
+  height: 112px;
+  background-color: #5f2eea;
+  border-radius: 0px 0px 32px 32px;
+}
+
+.movieNameSelected {
+  color: #ffffff;
+  font-size: 24px;
+  font-weight: 600;
+  letter-spacing: 0.25px;
+}
+
+.changeMovieButton {
+  width: 162px;
+  height: 48px;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.75px;
+  color: #5f2eea;
+  border-radius: 16px;
+  background-color: rgba(255, 255, 255, 0.8);
+}
+
+.orderInfo {
+  box-shadow: 0px 8px 24px rgba(17, 17, 17, 0.08);
+  border-radius: 16px;
+}
+
+.orderInfo h4 {
+  font-size: 24px;
+  font-weight: 600;
+  letter-spacing: 0.75px;
+}
+
+.seatingKeys p {
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: 0.75px;
+}
+
+.key .availability {
+  height: 26px;
+  width: 26px;
+  border-radius: 8px;
+}
+
+.available {
+  background-color: #d6d8e7 !important;
+}
+.selected {
+  background-color: #5f2eea !important;
+}
+.loveNest {
+  background-color: #f589d7 !important;
+}
+.sold {
+  background-color: #6e7191 !important;
+}
+
+.orderActionButton button {
+  height: 56px;
+  width: 220px;
+  border-radius: 16px;
+}
+
+.divider {
+  display: block;
+  height: 2px;
+  width: 100%;
+  background-color: #E6E6E6;
+}
+
+.orderDetail div {
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: 0.75px;
+  color: #6b6b6b;
+}
+
+.orderDetail div:last-child {
+  font-size: 18px;
+  font-weight: 600;
+  color: #000000;
+}
+
+.orderDetail div:last-child > span {
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: 0.25px;
+  color: #5f2eea;
+}
+
+.orderDetail div span {
+  font-weight: 600;
+  color: #14142b;
+}
+
+/* .cinemaLogoWrapper {
+
+} */
+@media (max-width: 768px) {
+  .orderActionButton button {
+    height: 56px;
+    width: 100% !important;
+    border-radius: 16px;
+  }
+}
+
+@media (max-width: 992px) {
+  .orderActionButton button {
+    height: 56px;
+    width: 320px;
+    border-radius: 16px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .orderActionButton button {
+    height: 56px;
+    width: 300px;
+    border-radius: 16px;
+  }
+}
