@@ -4,54 +4,86 @@ import styles from "./SignUp.module.css";
 import { connect } from "react-redux";
 import { register } from "../../../redux/actions/auth";
 
-import { Button, Col, Container, Form, Row } from "react-bootstrap";
+import { Button, Col, Container, Form, Row, Spinner } from "react-bootstrap";
 import brandLogo from "../../../assets/img/tickitz.png";
 import smallBrandLogo from "../../../assets/icons/Tickitz.svg";
 import googleIcon from "../../../assets/icons/flat-color-icons_google.svg";
 import facebookIcon from "../../../assets/icons/facebook-icon.svg";
 
-export default class SignUp extends Component {
+class SignUp extends Component {
   constructor(props) {
     super(props);
     this.state = {
       form: {
+        userName: "",
         userEmail: "",
         userPassword: "",
-        userAgreement: "",
+        // userAgreement: false,
       },
     };
   }
 
-  changeText = (event) => {
+  changeText = (e) => {
     this.setState({
       form: {
         ...this.state.form,
-        [event.target.name]: event.target.value,
-        [event.target.name]: event.target.checked,
+        [e.target.name]: e.target.value,
+        // userAgreement: e.target.checked,
       },
     });
   };
 
-  handleRegister = (event) => {
-    event.preventDefault();
+  handleRegister = (e) => {
+    e.preventDefault();
     this.props.register(this.state.form).then((result) => {
-      // [1]
-      // console.log(result.value.data.data.token);
-      // [2]
-      // console.log(this.props);
-      console.log(this.props.auth.data.token);
-      // console.log(result);
-      localStorage.setItem("token", this.props.auth.data.token);
-      this.props.history.push("/learning/basic-home");
+      this.props.history.push("/sign-in");
     });
   };
 
+  handleClick = (e) => {
+    e.preventDefault();
+    this.props.history.push("/sign-in");
+  };
+
+  renderButtonState = () => {
+    if (this.props.auth.isLoading) {
+      return (
+        <Button
+          variant="primary"
+          className={`w-100 ${styles.btnJoin}`}
+          disabled
+        >
+          <Spinner
+            as="span"
+            animation="border"
+            size="sm"
+            role="status"
+            aria-hidden="true"
+          />
+          <span className="sr-only">Loading...</span>
+        </Button>
+      );
+    } else {
+      return (
+        <Button
+          variant="primary"
+          type="submit"
+          className={`w-100 ${styles.btnJoin}`}
+        >
+          Join for free now
+        </Button>
+      );
+    }
+  };
+
   render() {
-    console.log(this.state);
-    const { userAgreement } = this.state;
+    // console.log(this.state);
+    // const { userAgreement } = this.state;
+    const { isError, msg } = this.props.auth;
     return (
       <Container fluid>
         <Row className="vh-100">
+          {/* ================== */}
           <Col
             xs={7}
             className={`d-flex flex-column justify-content-center ${styles.leftBanner}`}
@@ -85,6 +117,7 @@ export default class SignUp extends Component {
               </div>
             </div>
           </Col>
+          {/* ================ */}
           <Col
             className={`d-flex flex-column justify-content-center ${styles.formSection}`}
           >
@@ -98,6 +131,19 @@ export default class SignUp extends Component {
                 Fill your additional details
               </h1>
               <Form onSubmit={this.handleRegister}>
+                <Form.Group controlId="name">
+                  <Form.Label className={`${styles.formLabel}`}>
+                    Name
+                  </Form.Label>
+                  <Form.Control
+                    type="text"
+                    placeholder="Enter your name"
+                    name="userName"
+                    className={`${styles.formInput}`}
+                    // value={userName}
+                    onChange={(e) => this.changeText(e)}
+                  />
+                </Form.Group>
                 <Form.Group
                   controlId="email"
                   className={`${styles.inputEmailGroup}`}
@@ -105,13 +151,20 @@ export default class SignUp extends Component {
                   <Form.Label className={`${styles.formLabel}`}>
                     Email address
                   </Form.Label>
+                  {isError && (
+                    <p
+                      className={`d-block mb-2 ml-2 text-danger ${styles.alertEmail}`}
+                    >
+                      {msg}
+                    </p>
+                  )}
                   <Form.Control
                     type="email"
-                    placeholder="Write your email"
+                    placeholder="Enter your email address"
+                    autoComplete="off"
                     name="userEmail"
-                    className={`${styles.formInput}`}
-                    // value={userEmail}
-                    onChange={(event) => this.changeText(event)}
+                    className={`${isError && styles.test} ${styles.formInput}`}
+                    onChange={(e) => this.changeText(e)}
                   />
                 </Form.Group>
                 <Form.Group
@@ -119,38 +172,37 @@ export default class SignUp extends Component {
                   className={`${styles.inputPasswordGroup}`}
                 >
                   <Form.Label className={`${styles.formLabel}`}>
-                    Email address
+                    Password
                   </Form.Label>
                   <Form.Control
                     type="password"
-                    placeholder="Write your password"
-                    name="userEmail"
+                    placeholder="Create your password"
+                    name="userPassword"
                     className={`${styles.formInput}`}
                     // value={userEmail}
-                    onChange={(event) => this.changeText(event)}
+                    onChange={(e) => this.changeText(e)}
                   />
                 </Form.Group>
-                <Form.Group controlId="userAgreement">
+                {/* <Form.Group controlId="userAgreement">
                   <Form.Check
                     type="checkbox"
                     name="userAgreement"
                     label={"I agree to terms & conditions"}
-                    onClick={(event) => this.changeText(event)}
+                    onClick={(e) => this.changeText(e)}
                   />
-                </Form.Group>
-                <Button
-                  variant="primary"
-                  type="submit"
-                  className={`w-100 ${styles.btnSignIn}`}
-                >
-                  Join for free now
-                </Button>
+                </Form.Group> */}
+                {this.renderButtonState()}
               </Form>
               <div
                 className={`d-flex justify-content-center align-items-center ${styles.forgotPassword}`}
               >
                 <p className="m-0 mr-2">Already have an account?</p>
-                <a href="/" className={`${styles.reset}`}>
+                <a
+                  href="/sign-in"
+                  name="signIn"
+                  className={`${styles.signIn}`}
+                  onClick={this.handleClick}
+                >
                   Sign in
                 </a>
               </div>
@@ -203,4 +255,4 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = { register };
 
-connect(mapStateToProps, mapDispatchToProps)(SignUp);
+export default connect(mapStateToProps, mapDispatchToProps)(SignUp);
