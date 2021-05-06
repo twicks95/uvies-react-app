@@ -1,0 +1,227 @@
+.forgotPassword,
+.orBorder,
+.signIn,
+.signInMessage,
+h2 {
+  font-family: "Inter", sans-serif;
+}
+
+button,
+.formLabel,
+.formInput {
+  font-family: "Mulish", sans-serif;
+}
+
+button {
+  font-size: 16px !important;
+}
+
+.signIn {
+  color: #121212;
+  font-size: 48px;
+  margin-bottom: 0;
+}
+
+.signIn,
+h2 {
+  letter-spacing: 0.003em;
+}
+
+.signInMessage {
+  letter-spacing: 0.007em;
+  margin-bottom: 0;
+  margin-top: 12px;
+}
+
+form {
+  margin-top: 49px;
+}
+
+.signInSection {
+  padding: 83px;
+}
+
+.inputEmailGroup {
+  margin-bottom: 25px;
+}
+
+.inputPasswordGroup {
+  margin-bottom: 48px;
+}
+
+.forgotPassword {
+  color: #8692a6;
+  margin-top: 32px;
+  margin-bottom: 40px;
+  text-align: center;
+}
+
+.btnFacebook,
+.btnGoogle {
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.08);
+  border-radius: 16px;
+  padding: 10% 5%;
+}
+
+.btnFacebook,
+.btnGoogle,
+.forgotPassword {
+  letter-spacing: 0.005em;
+}
+
+.btnFacebook,
+.btnGoogle,
+.formInput {
+  color: #a0a3bd;
+}
+
+button,
+.formInput {
+  height: 64px !important;
+  border-radius: 16px !important;
+}
+
+.btnSignIn,
+.formInput {
+  letter-spacing: 0.75px;
+}
+
+/* === */
+.leftBanner {
+  background-image: url(../../../assets//img/image.png);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+  z-index: -2;
+}
+
+.leftBanner::before {
+  content: "";
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: rgba(43, 21, 107, 0.8);
+  z-index: -99;
+}
+
+.leftBanner .uviesLogo,
+.leftBanner h2 {
+  z-index: 99;
+}
+
+.leftBanner h2 {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 48px;
+  font-weight: 400;
+}
+
+.orBorder,
+.signInMessage {
+  color: #aaa;
+}
+
+.formLabel {
+  color: #4e4b66;
+  margin-bottom: 12px;
+}
+
+.formLabel,
+.formInput {
+  font-size: 16px;
+}
+
+.btnFacebook,
+.btnGoogle,
+.signInMessage {
+  font-size: 18px;
+}
+
+.btnFacebook,
+.btnGoogle,
+.reset,
+.signIn {
+  font-weight: 600;
+}
+
+.orBorder::after,
+.orBorder::before {
+  content: "";
+  height: 0.5px;
+  width: 100%;
+  background-color: #dedede;
+}
+
+.orBorder::before {
+  margin-right: 37px;
+}
+
+.orBorder::after {
+  margin-left: 37px;
+}
+
+.socialMediaLogin {
+  margin-top: 48px;
+}
+
+.socialMediaLogin .btn {
+  background-color: #fff;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+}
+
+.socialMediaLogin .btn:hover {
+  background-color: #f0f0f0;
+}
+
+.iFacebook,
+.iGoogle {
+  margin-right: 10%;
+}
+
+.btnSignIn {
+  background-color: #5f2eea;
+  font-weight: 700;
+}
+
+.reset {
+  color: #5f2eea;
+  text-decoration: none !important;
+  border-bottom: 1.5px solid #5f2eea;
+}
+
+@media (max-width: 992px) {
+  .leftBanner {
+    display: none !important;
+  }
+
+  .brandForm {
+    margin-bottom: 40px;
+  }
+
+  .signInMessage {
+    margin-bottom: 49px;
+  }
+}
+
+@media (max-width: 576px) {
+  .signInSection {
+    padding: 10%;
+  }
+
+  .iGoogle,
+  .iFacebook {
+    margin: 0;
+  }
+
+  .socialMediaLogin span {
+    display: none;
+  }
+}
+
+@media (min-width: 992px) {
+  .brandForm {
+    display: none;
+  }
+}
