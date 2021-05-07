@@ -1,0 +1,74 @@
+h4 {
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: 0.75px;
+  margin-top: 34px;
+  margin-bottom: 4px;
+}
+
+.mainWrapper {
+  padding: 72px 70px;
+  background-color: #f5f6f8;
+}
+
+.wrapper {
+  background-color: #ffffff;
+  border-radius: 24px;
+  padding: 7% 5%;
+}
+
+.profileNavigation {
+  height: 84px;
+  padding: 0 5%;
+}
+
+.profileNavigation div a::after {
+  content: "";
+  display: inline-block;
+  width: 100%;
+  height: 2px;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  background-color: black;
+}
+
+.userProfilePictureWrapper {
+  width: 136px;
+  height: 136px;
+  border-radius: 50%;
+  filter: drop-shadow(0px 8px 16px rgba(73, 83, 99, 0.24));
+}
+
+.userPicture {
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.userTitle {
+  font-family: Mulish;
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: 0.75px;
+}
+
+.phoneCodeRegion {
+  background-color: #ffffff;
+  border-radius: 16px 0 0 16px;
+}
+
+.phoneInput {
+  border-top-left-radius: 0 !important;
+  border-bottom-left-radius: 0 !important;
+}
+
+.updateChangesButton {
+  margin: 0 5%;
+  width: 360px;
+  height: 56px;
+  border-radius: 16px;
+}
+
+.imageUpload input {
+  border-radius: 1px !important;
+}
