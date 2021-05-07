@@ -119,7 +119,7 @@ class SignUp extends Component {
           </Col>
           {/* ================ */}
           <Col
-            className={`d-flex flex-column justify-content-center ${styles.formSection}`}
+            className={`d-flex flex-column justify-content-center ${styles.signUpSection}`}
           >
             <Container className={"p-0"}>
               <img

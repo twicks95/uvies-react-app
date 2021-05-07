@@ -26,11 +26,11 @@ h2 {
   letter-spacing: 0.003em;
 }
 
-form {
+.signUpSection form {
   margin-top: 49px;
 }
 
-.formSection {
+.signUpSection {
   padding: 83px;
 }
 
@@ -69,14 +69,10 @@ form {
   color: #a0a3bd;
 }
 
-button,
+.btnJoin,
 .formInput {
   height: 64px !important;
   border-radius: 16px !important;
-}
-
-.btnJoin,
-.formInput {
   letter-spacing: 0.75px;
 }
 
@@ -260,7 +256,7 @@ button,
 }
 
 @media (max-width: 576px) {
-  .formSection {
+  .signUpSection {
     padding: 10%;
   }
 
