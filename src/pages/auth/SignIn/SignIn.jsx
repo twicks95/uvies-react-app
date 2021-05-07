@@ -21,31 +21,40 @@ class SignIn extends Component {
     };
   }
 
-  changeText = (event) => {
+  changeText = (e) => {
     this.setState({
       form: {
         ...this.state.form,
-        [event.target.name]: event.target.value,
+        [e.target.name]: e.target.value,
       },
     });
   };
 
-  handleLogin = (event) => {
-    event.preventDefault();
-    // console.log(this.props);
+  handleLogin = (e) => {
+    e.preventDefault();
     this.props.login(this.state.form).then((result) => {
-      // [1]
-      // console.log(result.value.data.data.token);
-      // [2]
-      // console.log(this.props);
-      // console.log(this.props.auth.data.token);
-      // console.log(result);
+      localStorage.setItem("userId", this.props.auth.data.user_id);
       localStorage.setItem("token", this.props.auth.data.token);
       this.props.history.push("/");
     });
   };
 
+  handleClick = (e) => {
+    e.preventDefault();
+    switch (e.target.name) {
+      case "reset":
+        this.props.history.push("/reset-password");
+        break;
+      case "register":
+        this.props.history.push("/sign-up");
+        break;
+      default:
+        break;
+    }
+  };
+
   render() {
+    console.log(this.state);
     return (
       <Container fluid>
         <Row className="vh-100">
@@ -87,7 +96,7 @@ class SignIn extends Component {
                     name="userEmail"
                     className={`${styles.formInput}`}
                     // value={userEmail}
-                    onChange={(event) => this.changeText(event)}
+                    onChange={(e) => this.changeText(e)}
                   />
                 </Form.Group>
                 <Form.Group
@@ -103,7 +112,7 @@ class SignIn extends Component {
                     name="userPassword"
                     className={`${styles.formInput}`}
                     // value={userEmail}
-                    onChange={(event) => this.changeText(event)}
+                    onChange={(e) => this.changeText(e)}
                   />
                 </Form.Group>
                 <Button
@@ -118,8 +127,26 @@ class SignIn extends Component {
                 className={`d-flex justify-content-center align-items-center ${styles.forgotPassword}`}
               >
                 <p className="m-0 mr-2">Forgot password?</p>
-                <a href="/" className={`${styles.reset}`}>
+                <a
+                  href="/"
+                  name="resetPassword"
+                  className={`${styles.reset}`}
+                  onClick={this.handleClick}
+                >
                   Reset now
+                </a>
+              </div>
+              <div
+                className={`d-flex justify-content-center align-items-center ${styles.register}`}
+              >
+                <p className="m-0 mr-2">Don't have an account yet?</p>
+                <a
+                  href="/sign-up"
+                  name="register"
+                  className={`${styles.registerAccount}`}
+                  onClick={this.handleClick}
+                >
+                  Register
                 </a>
               </div>
               <span

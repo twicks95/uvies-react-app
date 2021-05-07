@@ -33,7 +33,7 @@ h2 {
   margin-top: 12px;
 }
 
-form {
+.signInSection form {
   margin-top: 49px;
 }
 
@@ -49,11 +49,19 @@ form {
   margin-bottom: 48px;
 }
 
-.forgotPassword {
+.forgotPassword,
+.register {
   color: #8692a6;
-  margin-top: 32px;
-  margin-bottom: 40px;
   text-align: center;
+}
+
+.forgotPassword {
+  margin-top: 32px;
+}
+
+.register {
+  margin-top: 8px;
+  margin-bottom: 40px;
 }
 
 .btnFacebook,
@@ -75,14 +83,10 @@ form {
   color: #a0a3bd;
 }
 
-button,
+.btnSignIn,
 .formInput {
   height: 64px !important;
   border-radius: 16px !important;
-}
-
-.btnSignIn,
-.formInput {
   letter-spacing: 0.75px;
 }
 
@@ -146,6 +150,10 @@ button,
   font-weight: 600;
 }
 
+.registerAccount {
+  font-weight: 700;
+}
+
 .orBorder::after,
 .orBorder::before {
   content: "";
@@ -185,10 +193,15 @@ button,
   font-weight: 700;
 }
 
-.reset {
+.reset,
+.registerAccount {
   color: #5f2eea;
   text-decoration: none !important;
-  border-bottom: 1.5px solid #5f2eea;
+}
+
+.reset:hover,
+.registerAccount:hover {
+  color: #37139b;
 }
 
 @media (max-width: 992px) {
