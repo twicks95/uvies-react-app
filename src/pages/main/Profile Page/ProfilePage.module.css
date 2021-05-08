@@ -17,9 +17,27 @@ h4 {
   padding: 7% 5%;
 }
 
+.wrapperInfo {
+  background-color: #ffffff;
+  border-radius: 24px;
+  padding: 40px 40px;
+}
+
+.wrapperInfo hr {
+  border-width: 1.2px;
+  border-color: #dedede;
+}
+
 .profileNavigation {
   height: 84px;
   padding: 0 5%;
+}
+
+.profileNavigation a {
+  font-size: 18px;
+  font-weight: 400;
+  letter-spacing: 0.75px;
+  color: #14142b;
 }
 
 .profileNavigation div a::after {
@@ -30,13 +48,29 @@ h4 {
   position: absolute;
   left: 0;
   bottom: 0;
-  background-color: black;
+  background-color: #5f2eea;
+}
+
+.meatballsMenu {
+  cursor: pointer;
+}
+
+.meatballsMenu .ball {
+  height: 6px;
+  width: 6px;
+  border-radius: 100%;
+  background-color: #5f2eea;
+}
+
+.meatballsMenu .ball:nth-child(2) {
+  margin: 0 5px;
 }
 
 .userProfilePictureWrapper {
   width: 136px;
   height: 136px;
   border-radius: 50%;
+  margin-top: 32px;
   filter: drop-shadow(0px 8px 16px rgba(73, 83, 99, 0.24));
 }
 
@@ -63,12 +97,23 @@ h4 {
 }
 
 .updateChangesButton {
-  margin: 0 5%;
-  width: 360px;
+  /* margin: 0 5%; */
+  width: 100%;
   height: 56px;
   border-radius: 16px;
 }
 
 .imageUpload input {
   border-radius: 1px !important;
+}
+
+.alertConfirmPassword {
+  font-size: 12px;
+  font-weight: bold;
+}
+
+@media (max-width: 576px) {
+  .updateChangesButton {
+    font-size: 12px !important;
+  }
 }
