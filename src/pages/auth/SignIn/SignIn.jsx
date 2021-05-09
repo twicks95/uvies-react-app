@@ -4,7 +4,7 @@ import styles from "./SignIn.module.css";
 import { connect } from "react-redux";
 import { login } from "../../../redux/actions/auth";
 
-import { Button, Col, Container, Form, Row } from "react-bootstrap";
+import { Alert, Button, Col, Container, Form, Row } from "react-bootstrap";
 import brandLogo from "../../../assets/img/tickitz.png";
 import smallBrandLogo from "../../../assets/icons/Tickitz.svg";
 import googleIcon from "../../../assets/icons/flat-color-icons_google.svg";
@@ -55,6 +55,7 @@ class SignIn extends Component {
 
   render() {
     console.log(this.state);
+    const { isError, msg } = this.props.auth;
     return (
       <Container fluid>
         <Row className="vh-100">
@@ -83,6 +84,11 @@ class SignIn extends Component {
                 Sign in with your data that you entered during your registration
               </p>
               <Form onSubmit={this.handleLogin}>
+                {isError && (
+                  <Alert variant="danger" className="mb-4">
+                    {msg}
+                  </Alert>
+                )}
                 <Form.Group
                   controlId="email"
                   className={`${styles.inputEmailGroup}`}
