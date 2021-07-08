@@ -1,33 +1,18 @@
 import React, { Component } from "react";
-import axiosApiIntances from "../../utils/axios";
+
+import { connect } from "react-redux";
+import { getMovies } from "../../redux/actions/movie";
+
 import MovieCard from "../MovieCard/MovieCard";
 import Styles from "./NowShowing.module.css";
 
 class NowShowing extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      data: [],
-    };
-  }
-
   componentDidMount() {
-    this.getNowShowingMovie();
+    this.props.getMovies("", "", "1", "10");
   }
-
-  getNowShowingMovie = () => {
-    axiosApiIntances
-      .get("movie?limit")
-      .then((res) => {
-        this.setState({ data: res.data.data });
-      })
-      .catch((err) => {
-        alert(err.msg);
-      });
-  };
 
   render() {
-    const { data } = this.state;
+    const { movies } = this.props.movie;
     const { handleDetail } = this.props;
     return (
       <section className={`d-flex flex-column ${Styles.nowShowing}`}>
@@ -43,7 +28,7 @@ class NowShowing extends Component {
           </a>
         </div>
         <div className={`d-flex overflow-auto ${Styles.nowShowingList}`}>
-          {data.map((item, index) => {
+          {movies.map((item, index) => {
             return (
               <MovieCard
                 data={item}
@@ -59,4 +44,7 @@ class NowShowing extends Component {
   }
 }
 
-export default NowShowing;
+const mapStateToProps = (state) => ({ movie: state.movie });
+const mapDispatchToProps = { getMovies };
+
+export default connect(mapStateToProps, mapDispatchToProps)(NowShowing);

@@ -1,8 +1,11 @@
 import React, { Component } from "react";
+
+import { connect } from "react-redux";
+import { getUpcomingMovies } from "../../redux/actions/movie";
+
 import styles from "./UpcomingMovies.module.css";
 import { Button } from "react-bootstrap";
 import MovieCard from "../MovieCard/MovieCard";
-import axiosApiIntances from "../../utils/axios";
 
 class UpcomingMovies extends Component {
   constructor(props) {
@@ -23,7 +26,6 @@ class UpcomingMovies extends Component {
     ];
     this.currentMonth = new Date();
     this.state = {
-      data: [],
       activeMonth: month[this.currentMonth.getMonth()],
     };
     // this.handleUpcoming = props.handleUpcomingMoviesByMonth;
@@ -31,31 +33,20 @@ class UpcomingMovies extends Component {
   }
 
   componentDidMount() {
-    this.getUpcomingMovies(this.currentMonth.getMonth() + 1);
+    this.props.getUpcomingMovies(this.currentMonth.getMonth() + 1);
   }
-
-  getUpcomingMovies = (month) => {
-    axiosApiIntances
-      .get(`movie/upcoming/${month}`)
-      .then((res) => {
-        this.setState({ data: res.data.data });
-      })
-      .catch((err) => {
-        alert(err.msg);
-      });
-  };
 
   handleChangeMonthButton = (e, month) => {
     this.setState({
       activeMonth: e.target.innerHTML,
     });
-    this.getUpcomingMovies(month);
+    this.props.getUpcomingMovies(month);
   };
 
   renderUpcomingMovies = (month) => {
-    const { data } = this.state;
-    if (data.length > 0) {
-      return data.map((item, index) => {
+    const { upcomingMovies } = this.props.movie;
+    if (upcomingMovies.length > 0) {
+      return upcomingMovies.map((item, index) => {
         return (
           <MovieCard data={item} handleDetail={this.handleDetail} key={index} />
         );
@@ -71,7 +62,6 @@ class UpcomingMovies extends Component {
 
   render() {
     const { activeMonth } = this.state;
-    // const { handleDetail } = this.props;
     return (
       <section className={`d-flex flex-column ${styles.upcomingMovies}`}>
         <div
@@ -85,36 +75,28 @@ class UpcomingMovies extends Component {
         <div className={`d-flex overflow-auto ${styles.monthsList}`}>
           <Button
             variant="outline-primary"
-            className={
-              activeMonth === "January" ? `${styles.active}` : null
-            }
+            className={activeMonth === "January" ? `${styles.active}` : null}
             onClick={(e) => this.handleChangeMonthButton(e, 1)}
           >
             January
           </Button>
           <Button
             variant="outline-primary"
-            className={
-              activeMonth === "February" ? `${styles.active}` : null
-            }
+            className={activeMonth === "February" ? `${styles.active}` : null}
             onClick={(e) => this.handleChangeMonthButton(e, 2)}
           >
             February
           </Button>
           <Button
             variant="outline-primary"
-            className={
-              activeMonth === "March" ? `${styles.active}` : null
-            }
+            className={activeMonth === "March" ? `${styles.active}` : null}
             onClick={(e) => this.handleChangeMonthButton(e, 3)}
           >
             March
           </Button>
           <Button
             variant="outline-primary"
-            className={
-              activeMonth === "April" ? `${styles.active}` : null
-            }
+            className={activeMonth === "April" ? `${styles.active}` : null}
             onClick={(e) => this.handleChangeMonthButton(e, 4)}
           >
             April
@@ -142,46 +124,36 @@ class UpcomingMovies extends Component {
           </Button>
           <Button
             variant="outline-primary"
-            className={
-              activeMonth === "August" ? `${styles.active}` : null
-            }
+            className={activeMonth === "August" ? `${styles.active}` : null}
             onClick={(e) => this.handleChangeMonthButton(e, 8)}
           >
             August
           </Button>
           <Button
             variant="outline-primary"
-            className={
-              activeMonth === "September" ? `${styles.active}` : null
-            }
+            className={activeMonth === "September" ? `${styles.active}` : null}
             onClick={(e) => this.handleChangeMonthButton(e, 9)}
           >
             September
           </Button>
           <Button
             variant="outline-primary"
-            className={
-              activeMonth === "October" ? `${styles.active}` : null
-            }
+            className={activeMonth === "October" ? `${styles.active}` : null}
             onClick={(e) => this.handleChangeMonthButton(e, 10)}
           >
             October
           </Button>
           <Button
             variant="outline-primary"
-            className={
-              activeMonth === "November" ? `${styles.active}` : null
-            }
+            className={activeMonth === "November" ? `${styles.active}` : null}
             onClick={(e) => this.handleChangeMonthButton(e, 11)}
           >
             November
           </Button>
           <Button
             variant="outline-primary"
-            className={
-              activeMonth === "Desember" ? `${styles.active}` : null
-            }
-            onClick={(e) => this.handleChangeMonthButton(e, 11)}
+            className={activeMonth === "Desember" ? `${styles.active}` : null}
+            onClick={(e) => this.handleChangeMonthButton(e, 12)}
           >
             Desember
           </Button>
@@ -194,4 +166,7 @@ class UpcomingMovies extends Component {
   }
 }
 
-export default UpcomingMovies;
+const mapStateToProps = (state) => ({ movie: state.movie });
+const mapDispatchToProps = { getUpcomingMovies };
+
+export default connect(mapStateToProps, mapDispatchToProps)(UpcomingMovies);
