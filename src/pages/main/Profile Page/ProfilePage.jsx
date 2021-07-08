@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import qs from "query-string";
 import moment from "moment";
 import { connect } from "react-redux";
 import {
@@ -91,7 +90,7 @@ class ProfilePage extends Component {
 
   handleUpload = () => {
     this.setState({ ...this.state, uploading: true });
-    const userId = qs.parse(this.props.location.search).userId;
+    const userId = this.props.auth.data.user_id;
     const { image } = this.state;
     const data = { image };
 
@@ -123,7 +122,7 @@ class ProfilePage extends Component {
 
   handleUpdate = (e) => {
     e.preventDefault();
-    const userId = qs.parse(this.props.location.search).userId;
+    const userId = this.props.auth.data.user_id;
 
     if (e.target.name === "updateUserData") {
       const { firstName, lastName } = this.state.form;
