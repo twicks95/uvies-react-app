@@ -6,7 +6,7 @@ const UserNavigation = (props) => {
   const { isAdmin } = props;
 
   const renderUserNavigation = () => {
-    if (isAdmin) {
+    if (isAdmin || localStorage.getItem("role") === "admin") {
       return (
         <>
           <Link to="/admin/dashboard" className={`${styles.menu}`}>
