@@ -9,13 +9,13 @@ const UserNavigation = (props) => {
     if (isAdmin) {
       return (
         <>
-          <Link to="/admin-dashboard" className={`${styles.menu}`}>
+          <Link to="/admin/dashboard" className={`${styles.menu}`}>
             Dashboard
           </Link>
-          <Link to="/manage-movie" className={`${styles.menu}`}>
+          <Link to="/manage/movie" className={`${styles.menu}`}>
             Manage Movie
           </Link>
-          <Link to="/manage-schedule" className={`${styles.menu}`}>
+          <Link to="/manage/schedule" className={`${styles.menu}`}>
             Manage Schedule
           </Link>
         </>
@@ -24,13 +24,13 @@ const UserNavigation = (props) => {
       return (
         <>
           <Link to="/" className={`${styles.menu}`}>
-            Movies
+            Home
           </Link>
-          <Link to="/" className={`${styles.menu}`}>
-            Cinemas
+          <Link to="/payment" className={`${styles.menu}`}>
+            Payment
           </Link>
-          <Link to="/" className={`${styles.menu}`}>
-            Buy Ticket
+          <Link to="/profile" className={`${styles.menu}`}>
+            Profile
           </Link>
         </>
       );
