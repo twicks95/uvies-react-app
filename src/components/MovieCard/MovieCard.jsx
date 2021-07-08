@@ -3,8 +3,7 @@ import { Button, Card } from "react-bootstrap";
 import styles from "./MovieCard.module.css";
 import "./MovieCard.module.css";
 import moment from "moment";
-
-import movieImage from "../../assets/img/john-wick-3.png";
+import ImagePlaceholder from "../../assets/img/default-img-placeholder.png";
 
 const MovieCard = (props) => {
   const {
@@ -15,7 +14,13 @@ const MovieCard = (props) => {
     handleDelete,
     data,
   } = props;
-  const { movie_name, movie_category, movie_release_date, movie_id } = data;
+  const {
+    movie_poster,
+    movie_name,
+    movie_category,
+    movie_release_date,
+    movie_id,
+  } = data;
 
   const renderMovieSubtitleAndText = () => {
     if (isAdminManageMovie) {
@@ -37,11 +42,11 @@ const MovieCard = (props) => {
       );
     }
   };
-  
+
   const renderMovieCardButton = () => {
     if (isNowShowing) {
       return (
-        <>
+        <div>
           <Button
             variant="outline-primary"
             onClick={() => handleDetail(movie_id)}
@@ -49,11 +54,11 @@ const MovieCard = (props) => {
             Details
           </Button>
           <Button variant="primary">Book Now</Button>
-        </>
+        </div>
       );
     } else if (isAdminManageMovie) {
       return (
-        <>
+        <div>
           <Button
             variant="outline-secondary"
             onClick={() => handleUpdate(data)}
@@ -63,7 +68,7 @@ const MovieCard = (props) => {
           <Button variant="danger" onClick={() => handleDelete(movie_id)}>
             Delete
           </Button>
-        </>
+        </div>
       );
     } else {
       return (
@@ -85,7 +90,11 @@ const MovieCard = (props) => {
     >
       <Card.Img
         variant="top"
-        src={movieImage}
+        src={
+          movie_poster
+            ? `${process.env.REACT_APP_API_MOVIE_POSTER_URL}/${movie_poster}`
+            : ImagePlaceholder
+        }
         className={`${styles.movieImg}`}
       />
       <Card.Body
@@ -97,7 +106,7 @@ const MovieCard = (props) => {
         <Card.Title className={`${styles.movieTitle}`}>{movie_name}</Card.Title>
         {renderMovieSubtitleAndText()}
         {/* </div> */}
-        <div>{renderMovieCardButton()}</div>
+        {renderMovieCardButton()}
       </Card.Body>
     </Card>
   );
