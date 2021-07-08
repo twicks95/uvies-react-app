@@ -1,9 +1,7 @@
 import React, { Component } from "react";
 import styles from "./SignUp.module.css";
-
 import { connect } from "react-redux";
 import { register } from "../../../redux/actions/auth";
-
 import { Button, Col, Container, Form, Row, Spinner } from "react-bootstrap";
 import brandLogo from "../../../assets/img/tickitz.png";
 import smallBrandLogo from "../../../assets/icons/Tickitz.svg";
@@ -18,8 +16,8 @@ class SignUp extends Component {
         userName: "",
         userEmail: "",
         userPassword: "",
-        // userAgreement: false,
       },
+      isError: false,
     };
   }
 
@@ -28,16 +26,24 @@ class SignUp extends Component {
       form: {
         ...this.state.form,
         [e.target.name]: e.target.value,
-        // userAgreement: e.target.checked,
       },
     });
   };
 
   handleRegister = (e) => {
     e.preventDefault();
-    this.props.register(this.state.form).then((result) => {
-      this.props.history.push("/sign-in");
-    });
+    this.setState({ ...this.state, isError: false });
+
+    this.props
+      .register(this.state.form)
+      .then((result) => {
+        localStorage.setItem("user_email", result.data.user_email);
+        localStorage.setItem("user_activation", result.data.user_activation);
+        this.props.history.push("/account/activation");
+      })
+      .catch(() => {
+        this.setState({ ...this.state, isError: true });
+      });
   };
 
   handleClick = (e) => {
@@ -77,11 +83,10 @@ class SignUp extends Component {
   };
 
   render() {
-    // console.log(this.state);
-    // const { userAgreement } = this.state;
-    const { isError, msg } = this.props.auth;
+    const { isError } = this.state;
+    const { msg } = this.props.auth;
     return (
-      <Container fluid>
+      <Container fluid className={styles.container}>
         <Row className="vh-100">
           {/* ================== */}
           <Col
@@ -136,11 +141,11 @@ class SignUp extends Component {
                     Name
                   </Form.Label>
                   <Form.Control
+                    required
                     type="text"
                     placeholder="Enter your name"
                     name="userName"
                     className={`${styles.formInput}`}
-                    // value={userName}
                     onChange={(e) => this.changeText(e)}
                   />
                 </Form.Group>
@@ -150,20 +155,23 @@ class SignUp extends Component {
                 >
                   <Form.Label className={`${styles.formLabel}`}>
                     Email address
-                  </Form.Label>
-                  {isError && (
-                    <p
-                      className={`d-block mb-2 ml-2 text-danger ${styles.alertEmail}`}
+                    <span
+                      className={`ml-3 ${styles.alertEmail} ${
+                        isError && styles.show
+                      }`}
                     >
-                      {msg}
-                    </p>
-                  )}
+                      ({msg})
+                    </span>
+                  </Form.Label>
                   <Form.Control
+                    required
                     type="email"
                     placeholder="Enter your email address"
                     autoComplete="off"
                     name="userEmail"
-                    className={`${isError && styles.test} ${styles.formInput}`}
+                    className={`${isError && styles.redBorder} ${
+                      styles.formInput
+                    }`}
                     onChange={(e) => this.changeText(e)}
                   />
                 </Form.Group>
@@ -175,22 +183,14 @@ class SignUp extends Component {
                     Password
                   </Form.Label>
                   <Form.Control
+                    required
                     type="password"
                     placeholder="Create your password"
                     name="userPassword"
                     className={`${styles.formInput}`}
-                    // value={userEmail}
                     onChange={(e) => this.changeText(e)}
                   />
                 </Form.Group>
-                {/* <Form.Group controlId="userAgreement">
-                  <Form.Check
-                    type="checkbox"
-                    name="userAgreement"
-                    label={"I agree to terms & conditions"}
-                    onClick={(e) => this.changeText(e)}
-                  />
-                </Form.Group> */}
                 {this.renderButtonState()}
               </Form>
               <div

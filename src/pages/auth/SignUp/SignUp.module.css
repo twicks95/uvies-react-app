@@ -1,3 +1,7 @@
+.container {
+  font-size: 62.5%;
+}
+
 .forgotPassword,
 .orBorder,
 .formTitle,
@@ -150,6 +154,8 @@ h2 {
   display: flex;
   justify-content: center;
   align-items: center;
+  font-size: 1.6em;
+  font-weight: 800 !important;
 }
 
 .activeStep {
@@ -231,18 +237,20 @@ h2 {
   color: #37139b;
 }
 
-/* input[type="checkbox"] {
-  visibility: hidden;
-} */
-
-.test {
-  background-color: rgba(255, 0, 0, 0.308);
-  color: #ffffff;
+.redBorder {
+  box-shadow: 0 0 0 1px #ea2e2e;
+  transition: all 0.2s ease-in-out;
 }
 
 .alertEmail {
+  color: #ea2e2e00;
   font-size: 12px;
   font-weight: bold;
+  transition: all 0.2s ease-in-out;
+}
+
+.show {
+  color: #ea2e2e;
 }
 
 @media (max-width: 992px) {
@@ -256,6 +264,25 @@ h2 {
 }
 
 @media (max-width: 576px) {
+  .brandForm {
+    height: 3em;
+  }
+
+  .btnJoin {
+    font-size: 1.4em !important;
+  }
+
+  .formLabel,
+  .formInput,
+  .signUpMessage,
+  .forgotPassword {
+    font-size: 1.4em;
+  }
+
+  .formTitle {
+    font-size: 2.6em;
+  }
+
   .signUpSection {
     padding: 10%;
   }
@@ -263,6 +290,10 @@ h2 {
   .iGoogle,
   .iFacebook {
     margin: 0;
+  }
+
+  .orBorder {
+    font-size: 1.2em;
   }
 
   .socialMediaLogin span {
@@ -273,5 +304,13 @@ h2 {
 @media (min-width: 992px) {
   .brandForm {
     display: none;
+  }
+
+  .forgotPassword {
+    font-size: 1.6em;
+  }
+
+  .orBorder {
+    font-size: 1.4em;
   }
 }
