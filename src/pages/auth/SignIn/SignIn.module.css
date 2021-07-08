@@ -1,3 +1,7 @@
+.container {
+  font-size: 62.5%;
+}
+
 .forgotPassword,
 .orBorder,
 .signIn,
@@ -53,6 +57,7 @@ h2 {
 .register {
   color: #8692a6;
   text-align: center;
+  font-size: 1.6em;
 }
 
 .forgotPassword {
@@ -120,6 +125,10 @@ h2 {
   color: rgba(255, 255, 255, 0.8);
   font-size: 48px;
   font-weight: 400;
+}
+
+.orBorder {
+  font-size: 1.4em;
 }
 
 .orBorder,
@@ -204,6 +213,19 @@ h2 {
   color: #37139b;
 }
 
+.alert {
+  font-size: 1.6em;
+  font-weight: 600;
+  transform: scaleY(0);
+  position: absolute;
+  transition: all 0.2s ease-in-out;
+}
+
+.show {
+  position: relative;
+  transform: scaleY(1);
+}
+
 @media (max-width: 992px) {
   .leftBanner {
     display: none !important;
@@ -219,6 +241,26 @@ h2 {
 }
 
 @media (max-width: 576px) {
+  .brandForm {
+    height: 3em;
+  }
+
+  .btnSignIn {
+    font-size: 1.4em !important;
+  }
+
+  .formLabel,
+  .formInput,
+  .signInMessage,
+  .forgotPassword,
+  .register {
+    font-size: 1.4em;
+  }
+
+  .signIn {
+    font-size: 2.6em;
+  }
+
   .signInSection {
     padding: 10%;
   }
@@ -226,6 +268,10 @@ h2 {
   .iGoogle,
   .iFacebook {
     margin: 0;
+  }
+
+  .orBorder {
+    font-size: 1.2em;
   }
 
   .socialMediaLogin span {

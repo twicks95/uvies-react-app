@@ -1,14 +1,13 @@
 import React, { Component } from "react";
 import styles from "./SignIn.module.css";
-
 import { connect } from "react-redux";
 import { login } from "../../../redux/actions/auth";
-
 import { Alert, Button, Col, Container, Form, Row } from "react-bootstrap";
 import brandLogo from "../../../assets/img/tickitz.png";
 import smallBrandLogo from "../../../assets/icons/Tickitz.svg";
 import googleIcon from "../../../assets/icons/flat-color-icons_google.svg";
 import facebookIcon from "../../../assets/icons/facebook-icon.svg";
+import { XCircleIcon } from "@heroicons/react/solid";
 
 class SignIn extends Component {
   constructor(props) {
@@ -18,6 +17,7 @@ class SignIn extends Component {
         userEmail: "",
         userPassword: "",
       },
+      isError: false,
     };
   }
 
@@ -32,11 +32,16 @@ class SignIn extends Component {
 
   handleLogin = (e) => {
     e.preventDefault();
-    this.props.login(this.state.form).then((result) => {
-      localStorage.setItem("userId", this.props.auth.data.user_id);
-      localStorage.setItem("token", this.props.auth.data.token);
-      this.props.history.push("/");
-    });
+    this.props
+      .login(this.state.form)
+      .then((result) => {
+        localStorage.setItem("token", this.props.auth.data.token);
+        localStorage.setItem("role", this.props.auth.data.user_role);
+        this.props.history.push("/");
+      })
+      .catch(() => {
+        this.setState({ ...this.state, isError: true });
+      });
   };
 
   handleClick = (e) => {
@@ -54,10 +59,10 @@ class SignIn extends Component {
   };
 
   render() {
-    console.log(this.state);
-    const { isError, msg } = this.props.auth;
+    const { isError } = this.state;
+    const { msg } = this.props.auth;
     return (
-      <Container fluid>
+      <Container fluid className={styles.container}>
         <Row className="vh-100">
           <Col
             xs={7}
@@ -83,12 +88,16 @@ class SignIn extends Component {
               <p className={`${styles.signInMessage}`}>
                 Sign in with your data that you entered during your registration
               </p>
-              <Form onSubmit={this.handleLogin}>
-                {isError && (
-                  <Alert variant="danger" className="mb-4">
-                    {msg}
-                  </Alert>
-                )}
+              <Form className="position-relative" onSubmit={this.handleLogin}>
+                <Alert
+                  variant="danger"
+                  className={`d-flex align-items-center ${styles.alert} ${
+                    isError && styles.show
+                  }`}
+                >
+                  <XCircleIcon style={{ height: "24px" }} className="mr-2" />
+                  {msg}
+                </Alert>
                 <Form.Group
                   controlId="email"
                   className={`${styles.inputEmailGroup}`}
@@ -97,11 +106,11 @@ class SignIn extends Component {
                     Email address
                   </Form.Label>
                   <Form.Control
+                    required
                     type="email"
                     placeholder="Write your email"
                     name="userEmail"
                     className={`${styles.formInput}`}
-                    // value={userEmail}
                     onChange={(e) => this.changeText(e)}
                   />
                 </Form.Group>
@@ -113,11 +122,11 @@ class SignIn extends Component {
                     Password
                   </Form.Label>
                   <Form.Control
+                    required
                     type="password"
                     placeholder="Write your password"
                     name="userPassword"
                     className={`${styles.formInput}`}
-                    // value={userEmail}
                     onChange={(e) => this.changeText(e)}
                   />
                 </Form.Group>
