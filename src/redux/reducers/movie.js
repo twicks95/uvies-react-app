@@ -1,10 +1,13 @@
 const initialState = {
   movies: [],
+  movieData: {},
   pagination: {},
   upcomingMovies: [],
   isLoading: false,
   isError: false,
-  movieData: {},
+  createMsg: "",
+  updateMsg: "",
+  imageMsg: "",
   msg: "",
 };
 
@@ -65,14 +68,14 @@ const movie = (state = initialState, action) => {
         ...state,
         isLoading: false,
         isError: false,
-        msg: action.payload.data.msg,
+        createMsg: action.payload.data.msg,
       };
     case "CREATE_MOVIE_REJECTED":
       return {
         ...state,
         isLoading: false,
         isError: true,
-        msg: action.payload.response.data.msg,
+        createMsg: action.payload.response.data.msg,
       };
     case "UPDATE_MOVIE_PENDING":
       return {
@@ -85,14 +88,14 @@ const movie = (state = initialState, action) => {
         ...state,
         isLoading: false,
         isError: false,
-        msg: action.payload.data.msg,
+        updateMsg: action.payload.data.msg,
       };
     case "UPDATE_MOVIE_REJECTED":
       return {
         ...state,
         isLoading: false,
         isError: true,
-        msg: action.payload.response.data.msg,
+        updateMsg: action.payload.response.data.msg,
       };
     case "CREATE_MOVIE_IMAGE_PENDING":
       return {
@@ -106,14 +109,14 @@ const movie = (state = initialState, action) => {
         movieData: action.payload.data.data,
         isLoading: false,
         isError: false,
-        msg: action.payload.data.msg,
+        imageMsg: action.payload.data.msg,
       };
     case "CREATE_MOVIE_IMAGE_REJECTED":
       return {
         ...state,
         isLoading: false,
         isError: true,
-        msg: action.payload.response.data.msg,
+        imageMsg: action.payload.response.data.msg,
       };
     case "UPDATE_MOVIE_IMAGE_PENDING":
       return {
@@ -127,14 +130,14 @@ const movie = (state = initialState, action) => {
         movieData: action.payload.data.data,
         isLoading: false,
         isError: false,
-        msg: action.payload.data.msg,
+        imageMsg: action.payload.data.msg,
       };
     case "UPDATE_MOVIE_IMAGE_REJECTED":
       return {
         ...state,
         isLoading: false,
         isError: true,
-        msg: action.payload.response.data.msg,
+        imageMsg: action.payload.response.data.msg,
       };
     case "DELETE_MOVIE_PENDING":
       return {
@@ -168,14 +171,14 @@ const movie = (state = initialState, action) => {
         movieData: action.payload.data.data,
         isLoading: false,
         isError: false,
-        msg: action.payload.data.data.msg,
+        imageMsg: action.payload.data.data.msg,
       };
     case "DELETE_MOVIE_IMAGE_REJECTED":
       return {
         ...state,
         isLoading: false,
         isError: true,
-        msg: action.payload.response.data.msg,
+        imageMsg: action.payload.response.data.msg,
       };
     default:
       return state;

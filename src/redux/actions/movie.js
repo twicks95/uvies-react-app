@@ -2,7 +2,7 @@ import axiosApiInstances from "../../utils/axios";
 
 export const getMovies = (
   searchByName = "",
-  sort = "movie_id ASC",
+  sort = "",
   page = "1",
   limit = "8"
 ) => {
