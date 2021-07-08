@@ -17,6 +17,7 @@ import OrderPage from "./pages/main/OrderPage/OrderPage";
 import PaymentPage from "./pages/main/PaymentPage/PaymentPage";
 import ProfilePage from "./pages/main/Profile Page/ProfilePage";
 import ManageMovie from "./pages/main/ManageMovie/ManageMovie";
+import AccountActivation from "./pages/auth/AccountActivation/AccountActivation";
 
 class App extends Component {
   render() {
@@ -25,7 +26,12 @@ class App extends Component {
         <PersistGate loading={null} persistor={persistor}>
           <Router>
             <Switch>
-              <Route path="/sign-up" exact component={SignUp}></Route>
+              <PublicRoute
+                restricted={true}
+                path="/sign-up"
+                exact
+                component={SignUp}
+              />{" "}
               <PublicRoute
                 restricted={true}
                 path="/sign-in"
@@ -33,22 +39,36 @@ class App extends Component {
                 component={SignIn}
               />
               <PublicRoute path="/" exact component={Home} />
-              <PublicRoute path="/movie-detail" exact component={MovieDetail} />
-              <PrivateRoute path="/order-page" exact component={OrderPage} />
+              <PublicRoute path="/movie/detail" exact component={MovieDetail} />
               <PrivateRoute
-                path="/payment-page"
+                author="user"
+                path="/order"
+                exact
+                component={OrderPage}
+              />
+              <PrivateRoute
+                author="user"
+                path="/payment"
                 exact
                 component={PaymentPage}
               />
               <PrivateRoute
-                path="/profile-page"
+                author="user"
+                otherAuthor="admin"
+                path="/profile"
                 exact
                 component={ProfilePage}
               />
               <PrivateRoute
-                path="/manage-movie"
+                author="admin"
+                path="/manage/movie"
                 exact
                 component={ManageMovie}
+              />
+              <Route
+                path="/account/activation"
+                exact
+                component={AccountActivation}
               />
             </Switch>
           </Router>
