@@ -15,12 +15,14 @@ h4 {
   background-color: #ffffff;
   border-radius: 24px;
   padding: 7% 5%;
+  filter: drop-shadow(0px 8px 16px rgba(73, 83, 99, 0.24));
 }
 
 .wrapperInfo {
   background-color: #ffffff;
   border-radius: 24px;
   padding: 40px 40px;
+  filter: drop-shadow(0px 8px 16px rgba(73, 83, 99, 0.24));
 }
 
 .wrapperInfo hr {
@@ -38,6 +40,28 @@ h4 {
   font-weight: 400;
   letter-spacing: 0.75px;
   color: #14142b;
+  position: relative;
+  height: 100%;
+}
+
+.menuBorder {
+  height: 4px;
+  width: 100%;
+  background-color: #5f2eea;
+  position: absolute;
+  bottom: 0;
+  width: 0%;
+  transition: width 0.1s ease-in-out;
+}
+
+.activeBorder {
+  height: 4px;
+  width: 100%;
+  background-color: #5f2eea;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  transition: width 0.1s ease-in-out;
 }
 
 .profileNavigation div a::after {
@@ -67,6 +91,10 @@ h4 {
 }
 
 .userProfilePictureWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
   width: 136px;
   height: 136px;
   border-radius: 50%;
@@ -79,11 +107,64 @@ h4 {
   border-radius: 50%;
 }
 
+.userProfilePictureWrapper svg {
+  /* color: #5f2eea; */
+  height: 100px;
+}
+
+.edit,
+.upload {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  padding: 7px;
+  border-radius: 50%;
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+.edit {
+  background-color: rgba(198, 184, 236, 0.475) !important;
+  border-color: rgba(198, 184, 236, 0.475) !important;
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
+}
+
+.edit svg {
+  height: fit-content;
+}
+
+.userProfilePictureWrapper:hover .edit {
+  background-color: #5f2eea !important;
+  border-color: #5f2eea !important;
+  color: #f5f6f8 !important;
+}
+
+input[type="file"] {
+  display: none;
+}
+
 .userTitle {
   font-family: Mulish;
   font-size: 14px;
   font-weight: 400;
   letter-spacing: 0.75px;
+}
+
+.signOutButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 50px;
+  border-radius: 16px;
+  filter: drop-shadow(0px 8px 16px rgba(73, 83, 99, 0.24));
+}
+
+.signOutButton svg {
+  height: 14px;
+  margin-right: 10px;
 }
 
 .phoneCodeRegion {
@@ -112,8 +193,46 @@ h4 {
   font-weight: bold;
 }
 
+.toastSuccess svg {
+  height: 20px;
+  margin-right: 5px;
+}
+
+.verified {
+  color: rgb(14, 53, 14);
+  background-color: rgb(202, 255, 202) !important;
+}
+.unverified {
+  color: rgb(53, 14, 14);
+  background-color: rgb(255, 202, 202) !important;
+}
+
+.redBorder {
+  box-shadow: 0 0 0 1px #ea2e2e;
+  transition: all 0.2s ease-in-out;
+}
+
+.hide {
+  color: #ea2e2e00;
+  font-size: 12px;
+  font-weight: 600;
+  margin-left: 5px;
+  transition: color 0.2s ease-in-out;
+}
+
+.show {
+  color: #ea2e2e;
+  font-size: 12px;
+  font-weight: 600;
+  margin-left: 5px;
+  transition: color 0.2s ease-in-out;
+}
+
 @media (max-width: 576px) {
   .updateChangesButton {
     font-size: 12px !important;
+  }
+  .mainWrapper {
+    padding: 72px 5%;
   }
 }
