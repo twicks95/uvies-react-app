@@ -1,9 +1,45 @@
 h4 {
   font-size: 20px;
-  font-weight: 600;
-  letter-spacing: 0.75px;
   margin-top: 34px;
   margin-bottom: 4px;
+}
+
+h4,
+h5,
+h6 {
+  font-weight: 600;
+  letter-spacing: 0.75px;
+}
+
+h5 {
+  font-size: 24px;
+}
+
+.timeStamp {
+  font-size: 14px;
+  color: #aaaaaa;
+  margin-bottom: 5px;
+  display: inline-block;
+}
+
+.historyCard:not(:last-child) {
+  margin-bottom: 80px;
+}
+
+.historyCard button {
+  border-radius: 12px;
+  padding: 2% 10%;
+  letter-spacing: 0.75px;
+  font-weight: 700;
+  font-size: 12px !important;
+}
+
+.historyCard hr {
+  margin: 20px 0;
+}
+
+h6 {
+  color: #14142b;
 }
 
 .mainWrapper {
@@ -167,9 +203,14 @@ input[type="file"] {
   margin-right: 10px;
 }
 
+.formGroup {
+  margin-bottom: 20px;
+}
+
 .phoneCodeRegion {
   background-color: #ffffff;
   border-radius: 16px 0 0 16px;
+  height: 100%;
 }
 
 .phoneInput {
@@ -228,11 +269,48 @@ input[type="file"] {
   transition: color 0.2s ease-in-out;
 }
 
+.viewMore,
+.viewLess {
+  text-decoration: none;
+  color: #5f2eea;
+  font-weight: 700;
+  font-size: 14px;
+  transition: all 0.2s ease-in-out;
+}
+.viewMore:hover,
+.viewLess:hover {
+  color: #4421a5;
+}
+
 @media (max-width: 576px) {
   .updateChangesButton {
     font-size: 12px !important;
   }
   .mainWrapper {
     padding: 72px 5%;
+  }
+
+  .timeStamp {
+    font-size: 10px;
+  }
+
+  .historyCard:not(:last-child) {
+    margin-bottom: 40px;
+  }
+
+  .historyCard h5 {
+    font-size: 16px;
+  }
+
+  .historyCard img {
+    height: 20px !important;
+  }
+
+  .historyCard button {
+    font-size: 10px !important;
+  }
+
+  .historyCard .showDetails {
+    font-size: 12px;
   }
 }

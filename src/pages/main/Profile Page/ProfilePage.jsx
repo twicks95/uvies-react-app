@@ -26,10 +26,15 @@ import Footer from "../../../components/Footer/Footer";
 import { PencilAltIcon, UserCircleIcon } from "@heroicons/react/outline";
 import {
   CheckCircleIcon,
+  ChevronDownIcon,
   LogoutIcon,
   UploadIcon,
   XCircleIcon,
 } from "@heroicons/react/solid";
+import Ebv from "../../../assets/img/ebu-id-logo.svg";
+import CineOne from "../../../assets/img/cine-one-21-logo.svg";
+import Hiflix from "../../../assets/img/hiflix-logo.svg";
+import axiosApiInstances from "../../../utils/axios";
 
 class ProfilePage extends Component {
   constructor(props) {
@@ -48,11 +53,41 @@ class ProfilePage extends Component {
       uploading: false,
       isUpdateDataSuccess: false,
       isUpdatePasswordSuccess: false,
+      bookingHistory: [],
+      totalBooking: "",
+      limit: "2",
     };
   }
 
   componentDidMount() {
     this.getUserData();
+
+    axiosApiInstances
+      .get(
+        `booking/by/userId?userId=${this.props.auth.data.user_id}&limit=${this.state.limit}`
+      )
+      .then((res) => {
+        this.setState({
+          ...this.state,
+          bookingHistory: res.data.data,
+          totalBooking: res.data.pagination.totalData,
+        });
+      });
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (this.state.limit !== prevState.limit) {
+      this.props.history.push(
+        `/profile?menu=history&limit=${this.state.limit}`
+      );
+      axiosApiInstances
+        .get(
+          `booking/by/userId?userId=${this.props.auth.data.user_id}&limit=${this.state.limit}`
+        )
+        .then((res) => {
+          this.setState({ ...this.state, bookingHistory: res.data.data });
+        });
+    }
   }
 
   getUserData = () => {
@@ -168,17 +203,27 @@ class ProfilePage extends Component {
   };
 
   render() {
+    console.log(this.state.totalBooking);
+    console.log(this.state.limit);
     const { settings, history } = this.state.menu;
     const { firstName, lastName, phoneNumber, newPassword, confirmPassword } =
       this.state.form;
-    const { user_email, user_name, user_profile_picture, user_verification } =
-      this.props.user.data;
+    const {
+      user_email,
+      user_name,
+      user_profile_picture,
+      user_role,
+      user_verification,
+    } = this.props.user.data;
     const {
       image,
       isUpdateDataSuccess,
       isUpdatePasswordSuccess,
       showToast,
       uploading,
+      bookingHistory,
+      limit,
+      totalBooking,
     } = this.state;
     const {
       isUpdateDataError,
@@ -213,7 +258,7 @@ class ProfilePage extends Component {
                 ) : (
                   <CheckCircleIcon style={{ color: "#5f2eea" }} />
                 )}
-                <strong className="mr-auto">Upload Image</strong>
+                <strong className="me-auto">Upload Image</strong>
                 <small>{moment(updatedAt).fromNow()}</small>
               </Toast.Header>
               <Toast.Body>{msg}</Toast.Body>
@@ -259,7 +304,7 @@ class ProfilePage extends Component {
                         )}
                       </Button>
                     ) : (
-                      <label for="upload" className={styles.edit}>
+                      <label htmlFor="upload" className={styles.edit}>
                         <PencilAltIcon />
                       </label>
                     )}
@@ -295,7 +340,7 @@ class ProfilePage extends Component {
                 <Link
                   to="/profile?menu=settings"
                   name="settings"
-                  className={`d-block d-flex align-items-center position-relative mr-5 text-decoration-none`}
+                  className={`d-block d-flex align-items-center position-relative me-5 text-decoration-none`}
                   onClick={(e) => {
                     this.setState({
                       ...this.state,
@@ -314,246 +359,373 @@ class ProfilePage extends Component {
                     }
                   />
                 </Link>
-                <Link
-                  to="/profile?menu=history"
-                  name="history"
-                  className={`d-block d-flex align-items-center position-relative text-decoration-none`}
-                  onClick={(e) => {
-                    this.setState({
-                      ...this.state,
-                      menu: {
-                        ...this.state.menu,
-                        settings: false,
-                        [e.target.name]: true,
-                      },
-                    });
-                  }}
-                >
-                  Order History
-                  <div
-                    className={
-                      history ? styles.activeBorder : styles.menuBorder
-                    }
-                  />
-                </Link>
+                {user_role === "user" ? (
+                  <Link
+                    to="/profile?menu=history"
+                    name="history"
+                    className={`d-block d-flex align-items-center position-relative text-decoration-none`}
+                    onClick={(e) => {
+                      this.setState({
+                        ...this.state,
+                        menu: {
+                          ...this.state.menu,
+                          settings: false,
+                          [e.target.name]: true,
+                        },
+                      });
+                    }}
+                  >
+                    Order History
+                    <div
+                      className={
+                        history ? styles.activeBorder : styles.menuBorder
+                      }
+                    />
+                  </Link>
+                ) : (
+                  <></>
+                )}
                 {/* </div> */}
               </div>
-              <form name="updateUserData" onSubmit={this.handleUpdate}>
-                <div className={`mt-5 ${styles.wrapper}`}>
-                  {(isUpdateDataSuccess && (
-                    <Alert
-                      variant="success"
-                      className="d-flex align-items-center mb-4"
-                    >
-                      <CheckCircleIcon
-                        style={{ height: "20px", marginRight: "5px" }}
-                      />
-                      Success update your detail information
-                    </Alert>
-                  )) ||
-                    (isUpdateDataError && (
-                      <Alert
-                        variant="danger"
-                        className="d-flex align-items-center mb-4"
-                      >
-                        <XCircleIcon
-                          style={{ height: "20px", marginRight: "5px" }}
-                        />
-                        {msg}
-                      </Alert>
-                    ))}
-                  <h6>Details Information</h6>
-                  <hr className={`mb-5`} />
-                  <Row xs={1} md={2}>
-                    <Col>
-                      <Form.Group controlId="firstName">
-                        <Form.Label>
-                          First Name{" "}
-                          <span
-                            className={!firstName ? styles.show : styles.hide}
-                          >
-                            (Required field)
-                          </span>
-                        </Form.Label>
-                        <Form.Control
-                          type="text"
-                          placeholder="My first name"
-                          name="firstName"
-                          value={firstName}
-                          className={!firstName ? styles.redBorder : ""}
-                          onChange={(e) => this.changeStateForm(e)}
-                        />
-                      </Form.Group>
-                      <Form.Group controlId="emailAddress">
-                        <Form.Label>
-                          E-mail{" "}
-                          {user_verification === "0" ? (
-                            <span
-                              style={{
-                                color: "#ea2e2e",
-                                fontSize: "12px",
-                                fontWeight: "600",
-                                marginLeft: "5px",
-                              }}
-                            >
-                              (Email is not verified)
-                            </span>
-                          ) : (
-                            <span
-                              style={{
-                                color: "#33d433",
-                                fontSize: "12px",
-                                fontWeight: "600",
-                                marginLeft: "5px",
-                              }}
-                            >
-                              (Email verified)
-                            </span>
-                          )}
-                        </Form.Label>
-                        <Form.Control
-                          type="email"
-                          placeholder="My email address"
-                          name="email"
-                          value={user_email}
-                          className={
-                            user_verification === "1"
-                              ? styles.verified
-                              : styles.unverified
-                          }
-                          disabled
-                        />
-                      </Form.Group>
-                    </Col>
-                    <Col>
-                      <Form.Group controlId="lastName">
-                        <Form.Label>
-                          Last Name{" "}
-                          <span
-                            className={!lastName ? styles.show : styles.hide}
-                          >
-                            (Required field)
-                          </span>
-                        </Form.Label>
-                        <Form.Control
-                          type="text"
-                          placeholder="My last name"
-                          name="lastName"
-                          value={lastName}
-                          className={!lastName ? styles.redBorder : ""}
-                          onChange={(e) => this.changeStateForm(e)}
-                        />
-                      </Form.Group>
-                      <Form.Group controlId="phoneNumber">
-                        <Form.Label>Phone Number</Form.Label>
-                        <InputGroup className="mb-3">
-                          <InputGroup.Prepend>
-                            <InputGroup.Text
-                              id="basic-addon1"
-                              className={`${styles.phoneCodeRegion}`}
-                            >
-                              +62
-                            </InputGroup.Text>
-                          </InputGroup.Prepend>
-                          <FormControl
-                            placeholder="82323xxxxxx"
-                            aria-label="Username"
-                            aria-describedby="basic-addon1"
-                            name="phoneNumber"
-                            value={phoneNumber}
-                            className={`${styles.phoneInput}`}
-                            onChange={(e) => this.changeStateForm(e)}
+              {this.state.menu.settings ? (
+                <>
+                  <form name="updateUserData" onSubmit={this.handleUpdate}>
+                    <div className={`mt-5 ${styles.wrapper}`}>
+                      {(isUpdateDataSuccess && (
+                        <Alert
+                          variant="success"
+                          className="d-flex align-items-center mb-4"
+                        >
+                          <CheckCircleIcon
+                            style={{ height: "20px", marginRight: "5px" }}
                           />
-                        </InputGroup>
-                      </Form.Group>
-                    </Col>
-                  </Row>
-                </div>
-                <Button
-                  type="submit"
-                  className={`mt-3 ${styles.updateChangesButton}`}
-                >
-                  Update my detail information
-                </Button>
-              </form>
-              <form name="updateUserPassword" onSubmit={this.handleUpdate}>
-                <div className={`mt-5 ${styles.wrapper}`}>
-                  {(isUpdatePasswordSuccess && (
-                    <Alert
-                      variant="success"
-                      className="d-flex align-items-center mb-4"
+                          Success update your detail information
+                        </Alert>
+                      )) ||
+                        (isUpdateDataError && (
+                          <Alert
+                            variant="danger"
+                            className="d-flex align-items-center mb-4"
+                          >
+                            <XCircleIcon
+                              style={{ height: "20px", marginRight: "5px" }}
+                            />
+                            {msg}
+                          </Alert>
+                        ))}
+                      <h6>Details Information</h6>
+                      <hr className={`mb-5`} />
+                      <Row xs={1} md={2}>
+                        <Col>
+                          <Form.Group
+                            controlId="firstName"
+                            className={styles.formGroup}
+                          >
+                            <Form.Label>
+                              First Name{" "}
+                              <span
+                                className={
+                                  !firstName ? styles.show : styles.hide
+                                }
+                              >
+                                (Required field)
+                              </span>
+                            </Form.Label>
+                            <Form.Control
+                              type="text"
+                              placeholder="My first name"
+                              name="firstName"
+                              value={firstName}
+                              className={!firstName ? styles.redBorder : ""}
+                              onChange={(e) => this.changeStateForm(e)}
+                            />
+                          </Form.Group>
+                          <Form.Group
+                            controlId="emailAddress"
+                            className={styles.formGroup}
+                          >
+                            <Form.Label>
+                              E-mail{" "}
+                              {user_verification === "0" ? (
+                                <span
+                                  style={{
+                                    color: "#ea2e2e",
+                                    fontSize: "12px",
+                                    fontWeight: "600",
+                                    marginLeft: "5px",
+                                  }}
+                                >
+                                  (Not verified)
+                                </span>
+                              ) : (
+                                <span
+                                  style={{
+                                    color: "#2f702f",
+                                    fontSize: "12px",
+                                    fontWeight: "600",
+                                    marginLeft: "5px",
+                                  }}
+                                >
+                                  (Verified)
+                                </span>
+                              )}
+                            </Form.Label>
+                            <Form.Control
+                              type="email"
+                              placeholder="My email address"
+                              name="email"
+                              value={user_email}
+                              className={
+                                user_verification === "1"
+                                  ? styles.verified
+                                  : styles.unverified
+                              }
+                              disabled
+                            />
+                          </Form.Group>
+                        </Col>
+                        <Col>
+                          <Form.Group
+                            controlId="lastName"
+                            className={styles.formGroup}
+                          >
+                            <Form.Label>
+                              Last Name{" "}
+                              <span
+                                className={
+                                  !lastName ? styles.show : styles.hide
+                                }
+                              >
+                                (Required field)
+                              </span>
+                            </Form.Label>
+                            <Form.Control
+                              type="text"
+                              placeholder="My last name"
+                              name="lastName"
+                              value={lastName}
+                              className={!lastName ? styles.redBorder : ""}
+                              onChange={(e) => this.changeStateForm(e)}
+                            />
+                          </Form.Group>
+                          {user_role === "user" ? (
+                            <Form.Group
+                              controlId="phoneNumber"
+                              className={styles.formGroup}
+                            >
+                              <Form.Label>Phone Number</Form.Label>
+                              <InputGroup className="mb-3">
+                                <InputGroup.Prepend>
+                                  <InputGroup.Text
+                                    id="basic-addon1"
+                                    className={`${styles.phoneCodeRegion}`}
+                                  >
+                                    +62
+                                  </InputGroup.Text>
+                                </InputGroup.Prepend>
+                                <FormControl
+                                  placeholder="82323xxxxxx"
+                                  aria-label="Username"
+                                  aria-describedby="basic-addon1"
+                                  name="phoneNumber"
+                                  value={phoneNumber}
+                                  className={`${styles.phoneInput}`}
+                                  onChange={(e) => this.changeStateForm(e)}
+                                />
+                              </InputGroup>
+                            </Form.Group>
+                          ) : (
+                            <></>
+                          )}
+                        </Col>
+                      </Row>
+                    </div>
+                    <Button
+                      type="submit"
+                      className={`mt-3 ${styles.updateChangesButton}`}
                     >
-                      <CheckCircleIcon
-                        style={{ height: "20px", marginRight: "5px" }}
-                      />
-                      {msg}
-                    </Alert>
-                  )) ||
-                    (isUpdatePasswordError && (
-                      <Alert
-                        variant="danger"
-                        className="d-flex align-items-center mb-4"
-                      >
-                        <XCircleIcon
-                          style={{ height: "20px", marginRight: "5px" }}
-                        />
-                        {msg}
-                      </Alert>
-                    ))}
-                  <h6>Change Password</h6>
-                  <hr className={`mb-5`} />
-                  <Row xs={1} sm={2}>
-                    <Col>
-                      <Form.Group controlId="newPassword">
-                        <Form.Label>
-                          New Password{" "}
-                          <span
-                            className={!newPassword ? styles.show : styles.hide}
+                      Update my detail information
+                    </Button>
+                  </form>
+                  <form name="updateUserPassword" onSubmit={this.handleUpdate}>
+                    <div className={`mt-5 ${styles.wrapper}`}>
+                      {(isUpdatePasswordSuccess && (
+                        <Alert
+                          variant="success"
+                          className="d-flex align-items-center mb-4"
+                        >
+                          <CheckCircleIcon
+                            style={{ height: "20px", marginRight: "5px" }}
+                          />
+                          {msg}
+                        </Alert>
+                      )) ||
+                        (isUpdatePasswordError && (
+                          <Alert
+                            variant="danger"
+                            className="d-flex align-items-center mb-4"
                           >
-                            (Required field)
-                          </span>
-                        </Form.Label>
-                        <Form.Control
-                          type="password"
-                          placeholder="My new password"
-                          name="newPassword"
-                          value={newPassword}
-                          className={!newPassword ? styles.redBorder : ""}
-                          onChange={(e) => this.changeStateForm(e)}
-                        />
-                      </Form.Group>
-                    </Col>
-                    <Col>
-                      <Form.Group controlId="confirmPassword">
-                        <Form.Label>
-                          Confirm Password{" "}
-                          <span
-                            className={
-                              !confirmPassword ? styles.show : styles.hide
-                            }
+                            <XCircleIcon
+                              style={{ height: "20px", marginRight: "5px" }}
+                            />
+                            {msg}
+                          </Alert>
+                        ))}
+                      <h6>Change Password</h6>
+                      <hr className={`mb-5`} />
+                      <Row xs={1} sm={2}>
+                        <Col>
+                          <Form.Group
+                            controlId="newPassword"
+                            className={styles.formGroup}
                           >
-                            (Required field)
-                          </span>
-                        </Form.Label>
-                        <Form.Control
-                          type="password"
-                          placeholder="Confirm my new password"
-                          name="confirmPassword"
-                          value={confirmPassword}
-                          className={!confirmPassword ? styles.redBorder : ""}
-                          onChange={(e) => this.changeStateForm(e)}
-                        />
-                      </Form.Group>
-                    </Col>
+                            <Form.Label>
+                              New Password{" "}
+                              <span
+                                className={
+                                  !newPassword ? styles.show : styles.hide
+                                }
+                              >
+                                (Required field)
+                              </span>
+                            </Form.Label>
+                            <Form.Control
+                              type="password"
+                              placeholder="My new password"
+                              name="newPassword"
+                              value={newPassword}
+                              className={!newPassword ? styles.redBorder : ""}
+                              onChange={(e) => this.changeStateForm(e)}
+                            />
+                          </Form.Group>
+                        </Col>
+                        <Col>
+                          <Form.Group
+                            controlId="confirmPassword"
+                            className={styles.formGroup}
+                          >
+                            <Form.Label>
+                              Confirm Password{" "}
+                              <span
+                                className={
+                                  !confirmPassword ? styles.show : styles.hide
+                                }
+                              >
+                                (Required field)
+                              </span>
+                            </Form.Label>
+                            <Form.Control
+                              type="password"
+                              placeholder="Confirm my new password"
+                              name="confirmPassword"
+                              value={confirmPassword}
+                              className={
+                                !confirmPassword ? styles.redBorder : ""
+                              }
+                              onChange={(e) => this.changeStateForm(e)}
+                            />
+                          </Form.Group>
+                        </Col>
+                      </Row>
+                    </div>
+                    <Button
+                      type="submit"
+                      className={`mt-3 ${styles.updateChangesButton}`}
+                    >
+                      Change my password
+                    </Button>
+                  </form>{" "}
+                </>
+              ) : (
+                <div className={`mt-5 ${styles.wrapper}`}>
+                  <Row xs={1}>
+                    {bookingHistory.length > 0 ? (
+                      bookingHistory.map((item, index) => (
+                        <Col className={styles.historyCard} key={index}>
+                          <div className="d-flex align-items-center justify-content-between">
+                            <div>
+                              <span className={styles.timeStamp}>
+                                {moment(item.schedule_date_start).format(
+                                  "dddd, DD MMMM YYYY"
+                                )}
+                                -{" "}
+                                {moment(
+                                  `2021-12-12 ${item.schedule_clock}`
+                                ).format("LT")}
+                              </span>
+                              <h5>{item.movie_name}</h5>
+                            </div>
+                            <div>
+                              <img
+                                src={
+                                  item.premiere_name === "Ebv.id"
+                                    ? Ebv
+                                    : item.premiere_name === "Hiflix"
+                                    ? Hiflix
+                                    : CineOne
+                                }
+                                alt="premiere"
+                                style={{ height: "30px" }}
+                              />
+                            </div>
+                          </div>
+                          <hr />
+                          <div className="d-flex align-items-center justify-content-between">
+                            <Button
+                              onClick={() =>
+                                this.props.history.push(
+                                  `/user/booking/ticket?bookingId=${item.booking_id}`
+                                )
+                              }
+                            >
+                              Show ticket
+                            </Button>
+                            <span className={styles.showDetails}>
+                              Show details{" "}
+                              <ChevronDownIcon style={{ height: "10px" }} />
+                            </span>
+                          </div>
+                        </Col>
+                      ))
+                    ) : (
+                      <Col className="d-flex align-items-center justify-content-center">
+                        <p style={{ fontWeight: "700" }}>No Booking History</p>
+                      </Col>
+                    )}
                   </Row>
+                  {limit < totalBooking ? (
+                    <div className="d-flex align-items-center justify-content-center mt-5">
+                      <Link
+                        className={styles.viewMore}
+                        onClick={() =>
+                          this.setState({
+                            ...this.state,
+                            limit: parseInt(limit) + 2,
+                          })
+                        }
+                      >
+                        View More
+                      </Link>
+                    </div>
+                  ) : limit >= totalBooking && totalBooking > 2 ? (
+                    <div className="d-flex align-items-center justify-content-center mt-5">
+                      <Link
+                        className={styles.viewLess}
+                        onClick={() =>
+                          this.setState({
+                            ...this.state,
+                            limit: "2",
+                          })
+                        }
+                      >
+                        View Less
+                      </Link>
+                    </div>
+                  ) : (
+                    <></>
+                  )}
                 </div>
-                <Button
-                  type="submit"
-                  className={`mt-3 ${styles.updateChangesButton}`}
-                >
-                  Change my password
-                </Button>
-              </form>
+              )}
             </Col>
           </Row>
         </Container>
