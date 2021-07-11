@@ -4,13 +4,13 @@
   justify-content: center;
 }
 
-.nowShowing h4, 
+.nowShowing h4,
 .btnViewAll {
   font-weight: 700;
 }
 
 .btnViewAll {
-  color: #5f2eea
+  color: #5f2eea;
 }
 
 .nowShowing h4::after {

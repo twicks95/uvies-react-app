@@ -102,7 +102,9 @@ const MovieCard = (props) => {
           isNowShowing ? "test" : null
         } ${styles.movieCardBody}`}
       >
-        <Card.Title className={`${styles.movieTitle}`}>{movie_name}</Card.Title>
+        <Card.Title title={movie_name} className={`${styles.movieTitle}`}>
+          {movie_name}
+        </Card.Title>
         {renderMovieSubtitleAndText()}
         {renderMovieCardButton()}
       </Card.Body>

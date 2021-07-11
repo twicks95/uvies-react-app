@@ -1,8 +1,6 @@
 import React, { Component } from "react";
-
 import { connect } from "react-redux";
 import { getMovies } from "../../redux/actions/movie";
-
 import MovieCard from "../MovieCard/MovieCard";
 import Styles from "./NowShowing.module.css";
 
@@ -16,9 +14,7 @@ class NowShowing extends Component {
     const { handleDetail } = this.props;
     return (
       <section className={`d-flex flex-column ${Styles.nowShowing}`}>
-        <div
-          className={`d-flex align-items-center justify-content-between w-100`}
-        >
+        <div className={`d-flex align-items-end justify-content-between w-100`}>
           <h4>Now Showing</h4>
           <a
             className={`text-decoration-none ${Styles.btnViewAll}`}

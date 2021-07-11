@@ -1,8 +1,6 @@
 import React, { Component } from "react";
-
 import { connect } from "react-redux";
 import { getUpcomingMovies } from "../../redux/actions/movie";
-
 import styles from "./UpcomingMovies.module.css";
 import { Button } from "react-bootstrap";
 import MovieCard from "../MovieCard/MovieCard";
@@ -28,7 +26,6 @@ class UpcomingMovies extends Component {
     this.state = {
       activeMonth: month[this.currentMonth.getMonth()],
     };
-    // this.handleUpcoming = props.handleUpcomingMoviesByMonth;
     this.handleDetail = props.handleDetail;
   }
 
@@ -64,9 +61,7 @@ class UpcomingMovies extends Component {
     const { activeMonth } = this.state;
     return (
       <section className={`d-flex flex-column ${styles.upcomingMovies}`}>
-        <div
-          className={`d-flex align-items-center justify-content-between w-100`}
-        >
+        <div className={`d-flex align-items-end justify-content-between w-100`}>
           <h4>Upcoming Movies</h4>
           <a className={`text-decoration-none ${styles.btnViewAll}`} href="/">
             view all
