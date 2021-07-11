@@ -663,7 +663,11 @@ class ProfilePage extends Component {
                                     : CineOne
                                 }
                                 alt="premiere"
-                                style={{ height: "30px" }}
+                                style={
+                                  item.premiere_name === "CineOne21"
+                                    ? { width: "100px" }
+                                    : { height: "30px" }
+                                }
                               />
                             </div>
                           </div>
