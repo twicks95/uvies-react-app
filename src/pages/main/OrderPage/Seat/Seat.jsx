@@ -13,7 +13,6 @@ export default class Seat extends Component {
 
   componentDidMount() {
     this.setAlphabetSeat();
-    console.log(this.state);
   }
 
   setAlphabetSeat = () => {
@@ -33,6 +32,7 @@ export default class Seat extends Component {
       selectedSeat,
       reservedSeat,
       bookingSeat,
+      removeSeat,
     } = this.props;
     return (
       <>
@@ -42,7 +42,10 @@ export default class Seat extends Component {
             return (
               <Col className={`p-0`} key={index}>
                 <div
-                  onClick={() => bookingSeat(item)}
+                  onClick={() => {
+                    const seatIndex = selectedSeat.indexOf(item);
+                    seatIndex < 0 ? bookingSeat(item) : removeSeat(seatIndex);
+                  }}
                   className={`${styles.seat} ${
                     reservedSeat.indexOf(item) > -1
                       ? styles.soldSeat
@@ -54,11 +57,23 @@ export default class Seat extends Component {
               </Col>
             );
           })}
-          <Col className={`p-0`}></Col>
+          <Col className={`p-0`} />
           {seatB.map((item, index) => {
             return (
-              <Col className={`p-0`}>
-                <div className={`${styles.seat} ${styles.seatAvailable}`}></div>
+              <Col className={`p-0`} key={index}>
+                <div
+                  onClick={() => {
+                    const seatIndex = selectedSeat.indexOf(item);
+                    seatIndex < 0 ? bookingSeat(item) : removeSeat(seatIndex);
+                  }}
+                  className={`${styles.seat} ${
+                    reservedSeat.indexOf(item) > -1
+                      ? styles.soldSeat
+                      : selectedSeat.indexOf(item) > -1
+                      ? styles.selectedSeat
+                      : styles.seatAvailable
+                  }`}
+                ></div>
               </Col>
             );
           })}

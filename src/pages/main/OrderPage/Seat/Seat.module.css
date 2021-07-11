@@ -12,7 +12,7 @@
 }
 
 .seatAvailable {
-  background-color: #D6D8E7;
+  background-color: #d6d8e7;
 }
 
 .selectedSeat {
@@ -21,4 +21,12 @@
 
 .soldSeat {
   background-color: #6e7191;
+  pointer-events: none;
+}
+
+@media (max-width: 576px) {
+  .seat {
+    width: 20px;
+    height: 20px;
+  }
 }
