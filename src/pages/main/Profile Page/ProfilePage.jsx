@@ -203,8 +203,6 @@ class ProfilePage extends Component {
   };
 
   render() {
-    console.log(this.state.totalBooking);
-    console.log(this.state.limit);
     const { settings, history } = this.state.menu;
     const { firstName, lastName, phoneNumber, newPassword, confirmPassword } =
       this.state.form;
