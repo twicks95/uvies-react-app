@@ -1,4 +1,3 @@
-// import React, { Component } from "react";
 import { Button, Form, FormControl } from "react-bootstrap";
 import Styles from "./JoinMember.module.css";
 
@@ -12,22 +11,12 @@ const JoinMember = () => {
         <br />
         <span>Moviegoers</span>
       </p>
-      {/* <form className="d-flex flex-column flex-md-row">
-        <input
-          type="email"
-          className={`form-control ${Styles.inputEmail}`}
-          id="input-email"
-          placeholder="Type your email"
-        />
-        <button
-          type="submit"
-          className={`btn btn-primary ${Styles.btnJoinNow}`}
-        >
-          Join now
-        </button>
-      </form> */} 
       <Form className={`d-flex flex-column flex-md-row`}>
-        <FormControl type="email" placeholder="Type your email" className={`mr-sm-2 ${Styles.inputEmail}`} />
+        <FormControl
+          type="email"
+          placeholder="Type your email"
+          className={`me-sm-2 ${Styles.inputEmail}`}
+        />
         <Button variant="primary" className={`${Styles.btnJoinNow}`}>
           Join now
         </Button>
@@ -39,6 +28,6 @@ const JoinMember = () => {
       </p>
     </section>
   );
-}
+};
 
-export default JoinMember
+export default JoinMember;
