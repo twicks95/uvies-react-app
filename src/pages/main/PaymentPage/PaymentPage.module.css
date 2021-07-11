@@ -74,11 +74,7 @@
 }
 
 .paymentMethod .aRow {
-  grid-row-gap: 32px;
-}
-
-.paymentMethod .aRow .colPadding {
-  padding: 0 0;
+  grid-row-gap: 28px;
 }
 
 .orSeparator {
@@ -150,6 +146,10 @@
 .personalInfoContainer .regionPhoneCode {
   border-radius: 16px 0 0 16px;
   padding: 0 32px;
+}
+
+.phoneNumber {
+  border-radius: 0 16px 16px 0 !important;
 }
 
 @media (max-width: 576px) {
