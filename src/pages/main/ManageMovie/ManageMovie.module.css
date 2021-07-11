@@ -1,3 +1,7 @@
+.imageUpload input {
+  border-radius: 1px !important;
+}
+
 .resetButton {
   border: 0px solid !important;
   /* color: #5f2eea !important; */
@@ -37,6 +41,26 @@
   margin-right: 5px;
   margin-left: 5px;
 } */
+.redBorder {
+  box-shadow: 0 0 0px 1.5px #ea2e2e;
+  transition: all 0.2s ease-in-out;
+}
+
+.hide {
+  color: #ea2e2e00;
+  font-size: 12px;
+  font-weight: 600;
+  margin-left: 10px;
+  transition: color 0.2s ease-in-out;
+}
+
+.show {
+  color: #ea2e2e;
+  font-size: 12px;
+  font-weight: 600;
+  margin-left: 10px;
+  transition: color 0.2s ease-in-out;
+}
 
 .moviePoster {
   padding: 14%;
@@ -44,7 +68,65 @@
   height: 100%;
 }
 
-.moviePoster img {
+.formGroup {
+  margin-bottom: 20px;
+}
+
+.moviePoster:hover .movieImg div,
+.showBackground {
+  background-color: rgba(0, 0, 0, 0.205) !important;
+}
+
+.moviePoster:hover .uploadBtn,
+.showButton {
+  background-color: #5f2eea !important;
+  color: #dedede !important;
+}
+
+.plusIcon,
+.uploadIcon,
+.xIcon {
+  height: 16px;
+  margin-right: 2px;
+}
+
+.movieImg div {
+  background-color: rgba(0, 0, 0, 0);
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  top: 0;
+  border-radius: 16px;
+  transition: all 0.2s ease-in-out;
+}
+
+.uploadBtn,
+.removeBtn {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  font-size: 12px;
+  background-color: #602eea00;
+  padding: 8px 14px;
+  color: #dedede00;
+  border-radius: 8px;
+  transition: all 0.2s ease-in-out;
+}
+
+.removeBtn {
+  background-color: #ea2e2e !important;
+}
+
+.moviePoster .movieImg {
+  border-radius: 16px;
+  height: 100%;
+  position: relative;
+}
+
+.moviePoster .movieImg img {
   border-radius: 16px;
   height: 100%;
   object-fit: cover;
@@ -139,6 +221,11 @@
 .pagination > li:last-child > a,
 .pagination > li:last-child > span {
   border-radius: unset;
+}
+
+.toastSuccess svg {
+  height: 20px;
+  margin-right: 5px;
 }
 
 @media (max-width: 576px) {

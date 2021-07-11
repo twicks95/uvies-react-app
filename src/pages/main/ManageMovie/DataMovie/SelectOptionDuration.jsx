@@ -1,6 +1,5 @@
 import React from "react";
 import { Form } from "react-bootstrap";
-import styles from "./SelectOptionButton.module.css";
 
 const SelectButton = (props) => {
   const {
@@ -53,13 +52,13 @@ const SelectButton = (props) => {
   };
 
   return (
-    <Form.Group controlId={name}>
+    <Form.Group controlId={name} className="d-flex flex-column">
       <Form.Label>{label}</Form.Label>
       <Form.Control
         as="select"
         name={name}
         custom
-        className={styles.selectOption}
+        className="p-2"
         value={name === "movieHours" ? stateFormHours : stateFormMinutes}
         onChange={(e) => handleChange(e)}
       >
