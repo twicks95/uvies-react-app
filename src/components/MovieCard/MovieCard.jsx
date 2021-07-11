@@ -85,7 +85,7 @@ const MovieCard = (props) => {
   return (
     <Card
       className={`d-flex align-items-center text-center ${
-        isAdminManageMovie ? "mr-0 mb-5" : "mr-5"
+        isAdminManageMovie ? "me-0 mb-5" : "me-5"
       }  ${styles.movieCardContainer}`}
     >
       <Card.Img
@@ -102,10 +102,8 @@ const MovieCard = (props) => {
           isNowShowing ? "test" : null
         } ${styles.movieCardBody}`}
       >
-        {/* <div> */}
         <Card.Title className={`${styles.movieTitle}`}>{movie_name}</Card.Title>
         {renderMovieSubtitleAndText()}
-        {/* </div> */}
         {renderMovieCardButton()}
       </Card.Body>
     </Card>
