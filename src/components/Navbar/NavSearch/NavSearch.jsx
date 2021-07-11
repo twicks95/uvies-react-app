@@ -10,7 +10,7 @@ const NavSearch = (props) => {
         <FormControl
           type="text"
           placeholder="Search"
-          className={`mr-sm-2 ${styles.searchInput}`}
+          className={`me-sm-2 ${styles.searchInput}`}
         />
         <Button variant="" className={`${styles.btnSearch}`}>
           <img src={IconSearch} alt="Search" />
