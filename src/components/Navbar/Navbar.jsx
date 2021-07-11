@@ -1,16 +1,12 @@
 import React, { Component } from "react";
 import { Nav, Navbar, Button } from "react-bootstrap";
 import { withRouter } from "react-router-dom";
-
 import { connect } from "react-redux";
-
 import NavSearch from "./NavSearch/NavSearch";
 import BrandLogo from "../../assets/icons/Tickitz.svg";
 import styles from "./Navbar.module.css";
 import UserNavigation from "./UserNavigation/UserNavigation";
 import DropdownNavigation from "./DropdownNavigation/DropdownNavigation";
-import BlankProfilePict from "../../assets/img/blank-profile-picture.jpg";
-
 import { UserCircleIcon } from "@heroicons/react/outline";
 
 class NavigationBar extends Component {
@@ -67,7 +63,7 @@ class NavigationBar extends Component {
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="mr-auto">
+          <Nav className="me-auto">
             <UserNavigation isAdmin={role} />
           </Nav>
           <Nav>
