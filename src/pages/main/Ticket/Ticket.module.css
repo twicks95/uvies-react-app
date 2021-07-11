@@ -1,0 +1,157 @@
+.container {
+  background-color: #f5f6f8;
+  font-size: 62.5%;
+  padding: 10em 10%;
+}
+
+.container section {
+  background-color: #ffffff;
+  border-radius: 16px;
+  display: grid;
+  place-items: center;
+  padding: 5em;
+}
+
+.container section h1 {
+  color: #14142b;
+  font-size: 2.4em;
+  font-weight: 700;
+  margin-bottom: 2em;
+  letter-spacing: 0.25px;
+}
+
+.ticket {
+  border-radius: 10px;
+  width: 100%;
+  border: 1px solid #dedede;
+}
+
+.head1,
+.body1 {
+  border-right: dashed 1.5px #dedede;
+}
+.head1 {
+  border-right: dashed 1.5px #dedede;
+  position: relative;
+}
+
+.head1::after {
+  background-color: #ffffff;
+  border-radius: 50%;
+  content: "";
+  height: 50px;
+  position: absolute;
+  right: -25px;
+  top: -25px;
+  width: 50px;
+  z-index: 99;
+}
+
+.body1 {
+  position: relative;
+}
+
+.body1::after {
+  border-top: 1.5px solid #dedede;
+  content: "";
+  background-color: #ffffff;
+  border-radius: 50%;
+  height: 50px;
+  width: 50px;
+  position: absolute;
+  right: -25px;
+  bottom: -25px;
+}
+
+.body1 h6 {
+  color: #aaaaaa;
+  font-size: 1.2em;
+}
+
+.body1 span {
+  color: #14142b;
+  font-size: 1.6em;
+  font-weight: 600;
+}
+
+.body2 {
+  display: grid;
+  height: 300px;
+  place-items: center;
+}
+
+.head1 span,
+.body1 h6,
+.body1 span {
+  letter-spacing: 0.75px;
+}
+
+.head1 span {
+  color: #ffffff;
+  font-size: 1.4em;
+  font-weight: 600;
+}
+
+.head1,
+.head2 {
+  border-radius: 10px 10px 0 0;
+  background-color: #5f2eea;
+  height: 7em;
+}
+
+.head1 img,
+.head2 img {
+  height: 4em;
+}
+
+.btnGroup button {
+  background-color: #ffffff;
+  color: #5c636a;
+  padding: 0.5em 2em;
+}
+
+.btnGroup button svg {
+  height: 1em;
+  margin-right: 5px;
+}
+
+.qrCode {
+  height: 15em;
+}
+
+@media (max-width: 996px) {
+  .container {
+    padding: 10%;
+  }
+}
+
+@media (max-width: 768px) {
+  .head1,
+  .body1 {
+    border-right: none;
+  }
+
+  .head1::after {
+    display: none;
+  }
+
+  .body1::after {
+    border-top: none;
+    border-left: 1.5px solid #dedede;
+  }
+
+  .body2 {
+    height: 100%;
+  }
+
+  .qrCode {
+    height: 12em;
+    margin: 4em 0;
+  }
+}
+
+@media (max-width: 576px) {
+  .container {
+    padding: 5%;
+  }
+}
