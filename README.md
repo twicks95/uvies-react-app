@@ -1,6 +1,6 @@
 <h1 align='center'>React JS - Uvies - Online Ticket Booking</h1>
   <p align="center">
-    <a href="https://google.com">View Demo</a>
+    <a href="https://uvies.netlify.app">View Demo</a>
     ·
     <a href="https://github.com/twicks95/uvies-react-app/issues">Report Bug</a>
     ·
