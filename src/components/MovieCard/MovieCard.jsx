@@ -74,6 +74,7 @@ const MovieCard = (props) => {
       return (
         <Button
           variant="outline-primary"
+          className="mt-5"
           onClick={() => handleDetail(movie_id)}
         >
           Details
@@ -102,10 +103,12 @@ const MovieCard = (props) => {
           isNowShowing ? "test" : null
         } ${styles.movieCardBody}`}
       >
-        <Card.Title title={movie_name} className={`${styles.movieTitle}`}>
-          {movie_name}
-        </Card.Title>
-        {renderMovieSubtitleAndText()}
+        <div>
+          <Card.Title title={movie_name} className={`${styles.movieTitle}`}>
+            {movie_name}
+          </Card.Title>
+          {renderMovieSubtitleAndText()}
+        </div>
         {renderMovieCardButton()}
       </Card.Body>
     </Card>
