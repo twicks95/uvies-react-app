@@ -11,7 +11,7 @@
 
 ## About The Project
 
-Website
+The website application was created to help movie lovers to find out what films are currently showing and will be showing in the near future. It also provides the convenience of choosing a cinema, booking seats, and buying tickets online.
 
 ## Built With
 
