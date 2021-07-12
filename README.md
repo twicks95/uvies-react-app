@@ -17,8 +17,8 @@ The website application was created to help movie lovers to find out what films 
 
 [![React](https://img.shields.io/badge/React-v17.0.2-blue)](https://github.com/facebook/react)
 [![Bootstrap](https://img.shields.io/badge/Bootstrap-v5.0.x-blue)](https://github.com/react-bootstrap/react-bootstrap)
-[![React Bootstrap](https://img.shields.io/badge/React%20Bootstrap-v1.5.2-blue)]
-[![Redux](https://img.shields.io/badge/Redux-v4.1.0-blue)]
+[React Bootstrap](https://img.shields.io/badge/React%20Bootstrap-v1.5.2-blue)
+[Redux](https://img.shields.io/badge/Redux-v4.1.0-blue)
 
 ## Requirements
 
