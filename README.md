@@ -16,7 +16,7 @@ The website application was created to help movie lovers to find out what films 
 ## Built With
 
 [![React](https://img.shields.io/badge/React-v17.0.2-blue)](https://github.com/facebook/react)
-[![Bootstrap](https://img.shields.io/badge/Bootstrap-v4.6.x-blue)](https://github.com/react-bootstrap/react-bootstrap)
+[![Bootstrap](https://img.shields.io/badge/Bootstrap-v5.0.x-blue)](https://github.com/react-bootstrap/react-bootstrap)
 
 ## Requirements
 
