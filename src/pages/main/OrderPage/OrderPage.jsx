@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { Button, Col, Container, ListGroup, Row } from "react-bootstrap";
+import { Button, Col, Container, ListGroup, Modal, Row } from "react-bootstrap";
 import styles from "./OrderPage.module.css";
 import Navbar from "../../../components/Navbar/Navbar";
 import Footer from "../../../components/Footer/Footer";
@@ -10,10 +10,12 @@ import Hiflix from "../../../assets/img/hiflix-logo.svg";
 import { useEffect, useState } from "react";
 import moment from "moment";
 import axiosApiInstances from "../../../utils/axios";
+import { ExclamationCircleIcon } from "@heroicons/react/solid";
 
 const OrderPage = (props) => {
   const [selectedSeat, setSelectedSeat] = useState([]);
   const [reservedSeat, setReservedSeat] = useState([]);
+  const [showModal, setShowModal] = useState(false);
   const movie = localStorage.getItem("movie");
   const premiere = localStorage.getItem("premiere");
   const premiereId = localStorage.getItem("premiereId");
@@ -65,6 +67,35 @@ const OrderPage = (props) => {
 
   return (
     <>
+      <Modal
+        size="md"
+        show={showModal}
+        onHide={() => setShowModal(false)}
+        centered
+      >
+        <Modal.Body className="d-flex flex-column align-items-center justify-content-center pt-0 pb-5">
+          <h4
+            style={{
+              fontSize: "28px",
+              fontWeight: "700",
+              letterSpacing: ".75px",
+            }}
+          >
+            No Seat Choosen!
+          </h4>
+          <ExclamationCircleIcon
+            className="text-warning"
+            style={{
+              height: "50px",
+              // marginBottom: "20px",
+              marginTop: "20px",
+            }}
+          />
+          <p style={{ textAlign: "center", width: "80%" }}>
+            Please choose your seat before check out.
+          </p>
+        </Modal.Body>
+      </Modal>
       <Navbar />
       <div
         className={`d-flex align-items-center justify-content-between ${styles.stickyHeadMovieSelection}`}
@@ -187,14 +218,18 @@ const OrderPage = (props) => {
               <Button
                 variant={"primary"}
                 onClick={() => {
-                  const total = document.getElementById("total-payment");
-                  let res = total.textContent.slice(3).replace(".", "");
-                  if (res.indexOf(".") >= 0) {
-                    res = res.replace(".", "");
+                  if (selectedSeat.length > 0) {
+                    const total = document.getElementById("total-payment");
+                    let res = total.textContent.slice(3).replace(".", "");
+                    if (res.indexOf(".") >= 0) {
+                      res = res.replace(".", "");
+                    }
+                    localStorage.setItem("totalPayment", res);
+                    localStorage.setItem("seat", selectedSeat);
+                    props.history.push("/payment");
+                  } else {
+                    setShowModal(true);
                   }
-                  localStorage.setItem("totalPayment", res);
-                  localStorage.setItem("seat", selectedSeat);
-                  props.history.push("/payment");
                 }}
               >
                 Check out now
