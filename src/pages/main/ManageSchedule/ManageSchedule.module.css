@@ -1,0 +1,323 @@
+.formGroup {
+  color: #4e4b66 !important;
+  margin-bottom: 20px;
+}
+
+.addClock {
+  border: 1.5px solid #5f2eea;
+  border-radius: 12px;
+  color: #5f2eea;
+  cursor: pointer;
+  height: 35px;
+  transition: box-shadow 0.2s ease-in-out;
+}
+
+.addClock:hover {
+  box-shadow: 0px 0px 16px 1px #11111125;
+}
+
+.clock {
+  cursor: default;
+  position: relative;
+}
+
+.clock .delete {
+  background-color: rgba(255, 0, 0, 0);
+  border-radius: 50%;
+  content: "";
+  cursor: pointer;
+  color: #ffffff00;
+  display: grid;
+  height: 15px;
+  padding: 2px;
+  place-items: center;
+  pointer-events: none;
+  position: absolute;
+  right: 0;
+  top: -10px;
+  transition: all 0.2s ease-in-out;
+  width: 15px;
+}
+
+.clockInput {
+  border: 1.5px solid #5f2eea;
+  height: 45px !important;
+}
+
+.clockInput:focus {
+  outline: none;
+}
+
+.clock:hover .delete {
+  background-color: red;
+  color: #ffffff;
+  pointer-events: all;
+}
+
+.addClock svg {
+  width: 100%;
+  height: 100%;
+}
+
+.addClockActionBtnGroup {
+  position: absolute;
+  bottom: -10px;
+}
+
+.addClockActionBtn {
+  height: 20px;
+  background-color: #ffffff;
+  cursor: pointer;
+}
+
+.resetButton {
+  border: 0px solid !important;
+  /* color: #5f2eea !important; */
+  color: rgb(167, 167, 167) !important;
+  transition: 0.12s ease-in-out;
+}
+
+.resetButton:hover {
+  border: 2px solid rgb(185, 185, 185) !important;
+  background-color: transparent !important;
+  color: rgb(136, 136, 136) !important;
+}
+
+.mainWrapper {
+  padding: 56px 70px;
+  background-color: #f5f6f8;
+}
+
+.wrapper {
+  background-color: #ffffff;
+  border-radius: 24px;
+  padding: 7% 5%;
+}
+
+.premiereLocationImageWidth {
+  width: 100%;
+  border: 1px solid red;
+}
+
+.premiereLocationImgWrapper {
+  border: 1px solid red;
+  padding: 5px;
+  height: 100%;
+}
+
+/* .column {
+  margin-right: 5px;
+  margin-left: 5px;
+} */
+.redBorder {
+  box-shadow: 0 0 0px 1.5px #ea2e2e;
+  transition: all 0.2s ease-in-out;
+}
+
+.hide {
+  color: #ea2e2e00;
+  font-size: 12px;
+  font-weight: 600;
+  margin-left: 10px;
+  transition: color 0.2s ease-in-out;
+}
+
+.show {
+  color: #ea2e2e;
+  font-size: 12px;
+  font-weight: 600;
+  margin-left: 10px;
+  transition: color 0.2s ease-in-out;
+}
+
+.moviePoster {
+  padding: 14%;
+  border-radius: 24px;
+  height: 100%;
+}
+
+.moviePoster:hover .movieImg div,
+.showBackground {
+  background-color: rgba(0, 0, 0, 0.205) !important;
+}
+
+.moviePoster:hover .uploadBtn,
+.showButton {
+  background-color: #5f2eea !important;
+  color: #dedede !important;
+}
+
+.plusIcon,
+.uploadIcon,
+.xIcon {
+  height: 16px;
+  margin-right: 2px;
+}
+
+.movieImg div {
+  background-color: rgba(0, 0, 0, 0);
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  top: 0;
+  border-radius: 16px;
+  transition: all 0.2s ease-in-out;
+}
+
+.uploadBtn,
+.removeBtn {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  font-size: 12px;
+  background-color: #602eea00;
+  padding: 8px 14px;
+  color: #dedede00;
+  border-radius: 8px;
+  transition: all 0.2s ease-in-out;
+}
+
+.removeBtn {
+  background-color: #ea2e2e !important;
+}
+
+.moviePoster .movieImg {
+  border-radius: 16px;
+  height: 100%;
+  position: relative;
+}
+
+.moviePoster .movieImg img {
+  border-radius: 16px;
+  height: 100%;
+  object-fit: cover;
+}
+
+.movieForm {
+  margin-bottom: 68px;
+}
+
+.movieForm input,
+.movieForm select,
+.movieForm textarea {
+  background-color: #fcfdfe;
+}
+
+.movieForm input:focus,
+.movieForm select:focus,
+.movieForm textarea:focus {
+  background-color: #eeeeee;
+}
+
+.movieData {
+  margin-bottom: 24px;
+}
+
+.actionButton button {
+  width: 181px;
+  height: 51px;
+  border-radius: 16px;
+}
+
+.actionButton button:last-child {
+  filter: drop-shadow(0px 8px 16px rgba(95, 46, 234, 0.24));
+}
+
+.pagination {
+  margin: 15px auto;
+  display: flex;
+  list-style: none;
+  outline: none;
+}
+.pagination > .active > a {
+  background-color: #5f2eea !important;
+  box-shadow: 0px 8px 16px rgba(95, 46, 234, 0.24);
+  border-color: none !important ;
+  border-radius: 8px;
+  color: #fff !important;
+}
+
+.pagination ul {
+  padding-left: 0 !important;
+}
+
+.pagination > li > a {
+  background-color: #ffffff;
+  border: 0.5px solid #dedede;
+  padding: 9px 15px;
+  height: 500px;
+  margin: 0 8px;
+  outline: none;
+  cursor: pointer;
+  border-radius: 8px;
+}
+
+.pagination > li:last-child > a,
+.pagination > li:first-child > a {
+  border: none !important;
+  background-color: transparent !important;
+  display: none;
+}
+
+.pagination > .active > a,
+.pagination > .active > span,
+.pagination > .active > a:hover,
+.pagination > .active > span:hover,
+.pagination > .active > a:focus,
+.pagination > .active > span:focus {
+  background-color: #47ccde;
+  border-color: #47ccde;
+  outline: none;
+}
+.pagination > li > a,
+.pagination > li > span {
+  color: #47ccde;
+}
+.pagination > li:first-child > a,
+.pagination > li:first-child > span,
+.pagination > li:last-child > a,
+.pagination > li:last-child > span {
+  border-radius: unset;
+}
+
+.toastSuccess svg {
+  height: 20px;
+  margin-right: 5px;
+}
+
+.premiereLogo {
+  border-radius: 16px;
+  display: grid;
+  place-items: center;
+  padding: 15px;
+  height: 60px;
+  width: 110px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.premiereLogo:hover {
+  box-shadow: 0px 8px 16px 0px #11111114;
+}
+
+.premiereLogo img {
+  width: 100%;
+}
+
+@media (max-width: 576px) {
+  .mainWrapper {
+    padding-right: 5%;
+    padding-left: 5%;
+  }
+
+  .actionButton {
+    justify-content: space-between !important;
+  }
+
+  .actionButton button {
+    width: 230px;
+  }
+}

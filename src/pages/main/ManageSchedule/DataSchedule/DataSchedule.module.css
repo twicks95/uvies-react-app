@@ -1,0 +1,87 @@
+.wrapper {
+  font-size: 62.5%;
+  background-color: #ffffff;
+  border-radius: 24px;
+  padding: 7% 5%;
+}
+
+.searchAction button:first-child {
+  width: auto;
+}
+
+.searchAction button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100px;
+  border: 1px solid rgba(100, 100, 100, 0.24);
+  border-radius: 16px !important;
+  background-color: #ffffff;
+}
+
+.searchAction input {
+  height: 37.5px !important;
+  border: 0.5px solid rgba(100, 100, 100, 0.24);
+}
+
+.ticket {
+  border: 0.5px solid #dedede;
+  border-radius: 16px;
+  padding: 3em 2em;
+  height: 100%;
+  letter-spacing: 0.75px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.ticket .address,
+.hour {
+  font-size: 1.2em;
+}
+
+.ticket .address {
+  color: #6e7191;
+}
+
+.ticket .hour {
+  color: #4e4b66;
+}
+
+.ticket .price,
+.ticket .priceNominal {
+  font-size: 1.6em;
+}
+
+.ticket .price {
+  color: #6b6b6b;
+}
+
+.ticket .priceNominal {
+  font-weight: 700;
+}
+
+.ticket .actionBtn {
+  border-radius: 10px;
+  font-size: 14px !important;
+  width: 100%;
+}
+
+.list {
+  font-weight: 700;
+}
+
+@media (max-width: 768px) {
+  .searchAction {
+    width: 100%;
+  }
+
+  .searchAction div {
+    width: 100px !important;
+  }
+
+  .searchAction form {
+    width: 100%;
+  }
+}
