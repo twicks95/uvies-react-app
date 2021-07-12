@@ -54,7 +54,7 @@ class MovieDetail extends Component {
 
     axiosApiInstances
       .get(
-        `premiere?id=${movieId}&date='${date}'&location=${location}&limit=${limit}`
+        `premiere?id=${movieId}&date=${date}&location=${location}&limit=${limit}`
       )
       .then((res) => {
         this.setState({ ...this.state, premieres: res.data.data });
@@ -80,7 +80,7 @@ class MovieDetail extends Component {
     let api;
     if (date && location) {
       api = axiosApiInstances.get(
-        `premiere?id=${movieId}&date='${date}'&location=${location}&limit=${limit}`
+        `premiere?id=${movieId}&date=${date}&location=${location}&limit=${limit}`
       );
     } else if (location) {
       api = axiosApiInstances.get(
@@ -88,11 +88,11 @@ class MovieDetail extends Component {
       );
     } else if (date) {
       api = axiosApiInstances.get(
-        `premiere?id=${movieId}&date='${date}'&limit=${limit}`
+        `premiere?id=${movieId}&date=${date}&limit=${limit}`
       );
     } else {
       api = axiosApiInstances.get(
-        `premiere?id=${movieId}&date='${date}'&location=${location}&limit=${limit}`
+        `premiere?id=${movieId}&date=${date}&location=${location}&limit=${limit}`
       );
     }
 
@@ -107,12 +107,14 @@ class MovieDetail extends Component {
 
       date && location
         ? this.props.history.push(
-            `/movie/detail?movieId=7&date=${date}&location=${location}`
+            `/movie/detail?movieId=${movieId}&date=${date}&location=${location}`
           )
         : date
-        ? this.props.history.push(`/movie/detail?movieId=7&date=${date}`)
+        ? this.props.history.push(
+            `/movie/detail?movieId=${movieId}&date=${date}`
+          )
         : this.props.history.push(
-            `/movie/detail?movieId=7&location=${location}`
+            `/movie/detail?movieId=${movieId}&location=${location}`
           );
     }
 
