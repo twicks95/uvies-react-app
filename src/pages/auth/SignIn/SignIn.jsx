@@ -32,6 +32,8 @@ class SignIn extends Component {
 
   handleLogin = (e) => {
     e.preventDefault();
+    this.setState({ ...this.state, isError: false });
+
     this.props
       .login(this.state.form)
       .then((result) => {
@@ -95,7 +97,7 @@ class SignIn extends Component {
                     isError && styles.show
                   }`}
                 >
-                  <XCircleIcon style={{ height: "24px" }} className="mr-2" />
+                  <XCircleIcon style={{ height: "24px" }} className="me-2" />
                   {msg}
                 </Alert>
                 <Form.Group
@@ -141,7 +143,7 @@ class SignIn extends Component {
               <div
                 className={`d-flex justify-content-center align-items-center ${styles.forgotPassword}`}
               >
-                <p className="m-0 mr-2">Forgot password?</p>
+                <p className="m-0 me-2">Forgot password?</p>
                 <a
                   href="/"
                   name="resetPassword"
@@ -154,7 +156,7 @@ class SignIn extends Component {
               <div
                 className={`d-flex justify-content-center align-items-center ${styles.register}`}
               >
-                <p className="m-0 mr-2">Don't have an account yet?</p>
+                <p className="m-0 me-2">Don't have an account yet?</p>
                 <a
                   href="/sign-up"
                   name="register"

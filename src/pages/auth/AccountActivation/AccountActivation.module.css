@@ -1,0 +1,133 @@
+.container {
+  font-size: 62.5%;
+}
+
+.title {
+  font-family: "Inter", sans-serif;
+}
+
+.title {
+  color: #121212;
+  font-size: 2.8em;
+  margin-bottom: 0;
+}
+
+.title {
+  letter-spacing: 0.003em;
+}
+
+.rightSection {
+  padding: 4em;
+}
+
+/* === */
+.leftBanner {
+  background-image: url(../../../assets//img/image.png);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  padding: 0 112px;
+  position: relative;
+  z-index: -2;
+}
+
+.leftBanner::before {
+  content: "";
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: rgba(43, 21, 107, 0.8);
+  z-index: -99;
+}
+
+.leftBanner .uviesLogo,
+.leftBanner h2 {
+  z-index: 99;
+}
+
+.leftBanner .uviesLogo {
+  height: 104px;
+  width: 276px;
+}
+
+.leftBanner h2 {
+  color: #ffffff;
+  font-size: 48px;
+  font-weight: 400;
+  margin-top: 101px;
+  margin-bottom: 22px;
+  font-size: 48px;
+  font-weight: 700;
+  letter-spacing: 0.003em;
+}
+
+.leftBanner p {
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 40px;
+  color: rgba(255, 255, 255, 0.7);
+  margin-bottom: 68px;
+}
+
+.leftBanner .stepList {
+  display: flex;
+  align-items: center;
+  margin-bottom: 46px;
+}
+
+.leftBanner .stepList span {
+  font-size: 24px;
+  font-weight: 600;
+  letter-spacing: 0.5%;
+  color: #ffffff;
+}
+
+.leftBanner .stepNumber {
+  height: 50px;
+  width: 50px;
+  margin-right: 42px;
+  color: #ffffff;
+  border: 2px solid #ffffff;
+  border-radius: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.6em;
+  font-weight: 800 !important;
+}
+
+.activeStep {
+  color: rgba(41, 3, 65, 0.5) !important;
+  background-color: #ffffff;
+}
+
+.title {
+  font-weight: 600;
+}
+
+@media (max-width: 992px) {
+  .leftBanner {
+    display: none !important;
+  }
+
+  .brandForm {
+    margin-bottom: 40px;
+  }
+}
+
+@media (max-width: 576px) {
+  .brandForm {
+    height: 3em;
+  }
+}
+
+@media (min-width: 992px) {
+  .brandForm {
+    display: none;
+  }
+  .rightSection {
+    padding: 8em;
+  }
+}

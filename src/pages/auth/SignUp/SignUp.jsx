@@ -156,7 +156,7 @@ class SignUp extends Component {
                   <Form.Label className={`${styles.formLabel}`}>
                     Email address
                     <span
-                      className={`ml-3 ${styles.alertEmail} ${
+                      className={`ms-3 ${styles.alertEmail} ${
                         isError && styles.show
                       }`}
                     >
@@ -196,7 +196,7 @@ class SignUp extends Component {
               <div
                 className={`d-flex justify-content-center align-items-center ${styles.forgotPassword}`}
               >
-                <p className="m-0 mr-2">Already have an account?</p>
+                <p className="m-0 me-2">Already have an account?</p>
                 <a
                   href="/sign-in"
                   name="signIn"
