@@ -71,6 +71,7 @@ class ManageMovie extends Component {
       deleteMovie: false,
       imageUploaded: false,
       isCreateDataSuccess: false,
+      isUpdateDataSuccess: false,
     };
   }
 
@@ -145,7 +146,7 @@ class ManageMovie extends Component {
           image: this.props.movie.movieData.movie_poster,
           movieId: this.props.movie.movieData.id,
           showToast: true,
-          isCreate: false,
+          // isCreate: false,
           imageUploaded: true,
         });
       })
@@ -194,6 +195,7 @@ class ManageMovie extends Component {
           ...this.state,
           image: this.props.movie.movieData.movie_poster,
           imageUploaded: true,
+          isCreate: true,
         });
       })
       .catch(() => {
@@ -272,9 +274,13 @@ class ManageMovie extends Component {
           ...this.state.form,
           image: null,
         },
-        isCreateDataSuccess: true,
+        isUpdateDataSuccess: true,
+        isCreate: true,
         showToast2: true,
       });
+      window.setTimeout(() => {
+        this.setState({ ...this.state, isUpdateDataSuccess: false });
+      }, 5000);
       this.getMovies();
       this.resetForm();
     });
@@ -358,6 +364,7 @@ class ManageMovie extends Component {
       showToast2,
       isLoggedIn,
       imageUploaded,
+      isUpdateDataSuccess,
     } = this.state;
     const {
       movieName,
@@ -476,7 +483,7 @@ class ManageMovie extends Component {
                 )}
                 <strong className="me-auto">Movie Data</strong>
               </Toast.Header>
-              {isUpdate ? (
+              {isUpdateDataSuccess ? (
                 <Toast.Body>{updateMsg}</Toast.Body>
               ) : (
                 <Toast.Body>{createMsg}</Toast.Body>
