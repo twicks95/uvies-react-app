@@ -1,0 +1,62 @@
+.container {
+  background-color: #f5f6f8;
+  font-size: 62.5%;
+  padding: 10em 10%;
+}
+
+h1 {
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: 0.25px;
+  margin-bottom: 24px;
+}
+
+.contentWrapper {
+  background-color: #ffffff;
+  border-radius: 16px;
+  filter: drop-shadow(0px 8px 16px rgba(73, 83, 99, 0.24));
+  padding: 2em;
+}
+
+.filter button,
+.actionBtn {
+  border-radius: 12px;
+}
+
+.actionBtn {
+  padding: 0.9em 0;
+  font-weight: 700;
+}
+
+.actionBtn:last-child {
+  background-color: #ffffff !important;
+  color: #5f2eea !important;
+}
+
+.filter button,
+.actionBtn {
+  font-size: 1.3em !important;
+}
+
+.filter button {
+  align-items: center;
+  border-color: #4e4b66 !important;
+  color: #4e4b66 !important;
+  display: flex;
+  justify-content: space-between;
+  padding: 1em;
+  width: 100%;
+}
+
+.filter div {
+  width: 100%;
+}
+
+.filter button,
+.filter button:hover {
+  background-color: #ffffff !important;
+}
+
+.filter button:focus {
+  box-shadow: none !important;
+}
