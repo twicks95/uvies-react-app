@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import styles from "./Dashboard.module.css";
 import Navbar from "../../../components/Navbar/Navbar";
 import Footer from "../../../components/Footer/Footer";
@@ -6,13 +6,13 @@ import { Button, Col, Dropdown, DropdownButton, Row } from "react-bootstrap";
 import { Line } from "react-chartjs-2";
 
 const Dashboard = (props) => {
-  const [movie, setMovie] = useState("");
-  const [premiere, setPremiere] = useState("");
-  const [location, setLocation] = useState("");
+  // const [movie, setMovie] = useState("");
+  // const [premiere, setPremiere] = useState("");
+  // const [location, setLocation] = useState("");
 
   useEffect(() => {}, []);
 
-  const handleFilter = () => {};
+  // const handleFilter = () => {};
 
   const data = {
     labels: [
