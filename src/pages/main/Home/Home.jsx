@@ -1,38 +1,22 @@
 import React, { Component } from "react";
+
+import { connect } from "react-redux";
+import { getUserData } from "../../../redux/actions/user";
+
 import Navbar from "../../../components/Navbar/Navbar";
 import NowShowing from "../../../components/NowShowing/NowShowing";
 import UpcomingMovies from "../../../components/UpcomingMovies/UpcomingMovies";
 import JoinMember from "../../../components/JoinMember/JoinMember";
 import Footer from "../../../components/Footer/Footer";
 import Styles from "./Home.module.css";
-import axiosApiIntances from "../../../utils/axios";
 
-export default class Home extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      data: [],
-    };
-  }
-
+class Home extends Component {
   componentDidMount() {
-    this.getMovies();
+    this.props.getUserData(this.props.auth.data.user_id);
   }
-
-  getMovies = () => {
-    axiosApiIntances
-      .get(`movie?limit=10`)
-      .then((res) => {
-        this.setState({ data: res.data.data });
-        // console.log(res)
-      })
-      .catch((err) => {
-        console.log(err.response);
-      });
-  };
 
   handleDetail = (id) => {
-    this.props.history.push(`/movie-detail?movieId=${id}`);
+    this.props.history.push(`/movie/detail?movieId=${id}`);
   };
 
   render() {
@@ -67,3 +51,8 @@ export default class Home extends Component {
     );
   }
 }
+
+const mapStateToProps = (state) => ({ auth: state.auth });
+const mapDispatchToProps = { getUserData };
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home);
