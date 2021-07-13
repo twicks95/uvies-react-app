@@ -24,16 +24,20 @@ class NowShowing extends Component {
           </a>
         </div>
         <div className={`d-flex overflow-auto ${Styles.nowShowingList}`}>
-          {movies.map((item, index) => {
-            return (
-              <MovieCard
-                data={item}
-                handleDetail={handleDetail}
-                isNowShowing={true}
-                key={index}
-              />
-            );
-          })}
+          {movies ? (
+            movies.map((item, index) => {
+              return (
+                <MovieCard
+                  data={item}
+                  handleDetail={handleDetail}
+                  isNowShowing={true}
+                  key={index}
+                />
+              );
+            })
+          ) : (
+            <></>
+          )}
         </div>
       </section>
     );

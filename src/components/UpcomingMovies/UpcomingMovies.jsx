@@ -42,7 +42,7 @@ class UpcomingMovies extends Component {
 
   renderUpcomingMovies = (month) => {
     const { upcomingMovies } = this.props.movie;
-    if (upcomingMovies.length > 0) {
+    if (upcomingMovies && upcomingMovies.length > 0) {
       return upcomingMovies.map((item, index) => {
         return (
           <MovieCard data={item} handleDetail={this.handleDetail} key={index} />

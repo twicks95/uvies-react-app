@@ -60,3 +60,11 @@ h1 {
 .filter button:focus {
   box-shadow: none !important;
 }
+
+.dropdownItem {
+  white-space: normal;
+}
+
+.dropdownItem span {
+  font-weight: 700;
+}
