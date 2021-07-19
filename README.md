@@ -7,7 +7,7 @@
     <a href="https://github.com/twicks95/uvies-react-app/pulls">Request Feature</a>
   </p>
 
-![Image Banner](IMAGE PATH)
+![Image Banner](public/Scene.png)
 
 ## About The Project
 
