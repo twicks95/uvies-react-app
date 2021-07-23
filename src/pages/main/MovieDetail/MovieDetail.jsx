@@ -50,7 +50,6 @@ class MovieDetail extends Component {
 
   componentDidMount() {
     const { movieId } = this.state;
-
     this.getDataMovie(movieId);
 
     const reqEndpoint = this.getPremiere(this.state);
@@ -61,7 +60,6 @@ class MovieDetail extends Component {
       .catch((err) => {
         this.setState({ ...this.state, premieres: [] });
       });
-
     axiosApiInstances
       .get("premiere/location")
       .then((res) => {
@@ -97,7 +95,6 @@ class MovieDetail extends Component {
         );
       }
     }
-
     if (limit !== prevState.limit) {
       reqEndpoint
         .then((res) => {
@@ -107,7 +104,6 @@ class MovieDetail extends Component {
           this.setState({ ...this.state, premieres: [] });
         });
     }
-
     if (movieId !== prevState.movieId) {
       this.getDataMovie(movieId);
     }

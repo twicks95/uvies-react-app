@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import { Button, Col, Container, ListGroup, Modal, Row } from "react-bootstrap";
 import styles from "./OrderPage.module.css";
 import Navbar from "../../../components/Navbar/Navbar";
@@ -36,13 +35,11 @@ const OrderPage = (props) => {
 
   useEffect(() => {
     seat.length > 0 ? setSelectedSeat(seat) : setSelectedSeat([]);
-
     axiosApiInstances
       .get(`schedule/premiere/clock?premiereId=${premiereId}&clock=${hour}`)
       .then((res) => {
         props.setBooking({ scheduleId: res.data.data[0].schedule_id });
       });
-
     axiosApiInstances.get(`booking/seat/booked/${premiereId}`).then((res) => {
       let reservedSeat = [];
       for (const i of res.data.data) {
@@ -50,7 +47,7 @@ const OrderPage = (props) => {
       }
       setReservedSeat(reservedSeat);
     });
-  }, []);
+  }, [hour, premiereId, seat, props]);
 
   const bookingSeat = (seat) => {
     setSelectedSeat([...selectedSeat, seat]);
