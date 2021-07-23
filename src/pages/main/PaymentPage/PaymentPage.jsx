@@ -50,7 +50,7 @@ const PaymentPage = (props) => {
   });
 
   const handlePay = () => {
-    if (premiereId) {
+    if (premiereId && scheduleId && seat.length > 0 && totalPayment) {
       const data = {
         userId: parseInt(userId),
         premiereId: parseInt(premiereId),

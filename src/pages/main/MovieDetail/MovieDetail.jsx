@@ -228,8 +228,12 @@ class MovieDetail extends Component {
             </Toast>
           </div>
           <Container fluid className={`${styles.movieDetails}`}>
-            <Row xs={1} md={2} className={`g-0`}>
-              <Col md={3} lg={4} className={`${styles.moviePosterContainer}`}>
+            <Row xs={1} lg={2} className={`g-0`}>
+              <Col
+                xs={12}
+                lg={4}
+                className={`mb-md-5 mb-lg-0 ${styles.moviePosterContainer}`}
+              >
                 <Card className={`${styles.moviePoster}`}>
                   <Card.Img
                     variant="top"
@@ -242,7 +246,7 @@ class MovieDetail extends Component {
                   />
                 </Card>
               </Col>
-              <Col md={9} lg={8} className={`${styles.movieDescContainer}`}>
+              <Col xs={12} lg={8} className={`${styles.movieDescContainer}`}>
                 <div
                   className={`d-flex flex-column align-items-center align-items-md-start mb-5 ${styles.movieDescHead}`}
                 >
@@ -341,120 +345,126 @@ class MovieDetail extends Component {
               </Dropdown>
             </div>
             <Row style={{ rowGap: "20px" }}>
-              {premieres.length > 0 ? (
-                premieres.map((item, index) => (
-                  <Col className={styles.ticket} key={index}>
-                    <div className="h-100 d-flex flex-column justify-content-between">
-                      <div>
-                        <div className="d-flex flex-column flex-md-row">
-                          <div
-                            className={`d-flex align-items-center ${styles.cinemaLogoContainer}`}
-                          >
-                            <img
-                              src={
-                                item.premiere_name === "Ebv.id"
-                                  ? Ebv
-                                  : item.premiere_name === "Hiflix"
-                                  ? Hiflix
-                                  : CineOne
-                              }
-                              alt={item.premiere_name}
-                            />
-                          </div>
-                          <div
-                            className={`d-flex flex-column justify-content-center text-center text-lg-left text-md-start ${styles.cinemaInfoGroup}`}
-                          >
-                            <h3 className={styles.cinemaName}>CineOne21</h3>
-                            <p className={`m-0 ${styles.cinemaLocation}`}>
-                              {item.location_address}, {item.location_city}
-                            </p>
-                          </div>
-                        </div>
-                        <div className={styles.separator}></div>
-                      </div>
-                      <div>
-                        <span className={styles.pickHour}>Pick hour</span>
-                        <Row xs={4} className={`g-2 ${styles.hourGroup}`}>
-                          {item.schedule_clock.map((hour, index) => (
-                            <Col
-                              key={index}
-                              id={`${item.premiere_id}${index}`}
-                              title={hour}
-                              className={`${
-                                this.state.selectedHour ===
-                                  `${item.premiere_id}${index}` &&
-                                styles.selected
-                              } ${styles.hour}`}
-                              onClick={(e) => {
-                                this.setState({
-                                  ...this.state,
-                                  selectedHour: e.target.id,
-                                  hour: e.target.title,
-                                });
-                              }}
-                            >
-                              <span
-                                id={`${item.premiere_id}${index}`}
-                                title={hour}
-                                className="p-0"
-                              >
-                                {moment(`2021-12-12 ${hour}`)
-                                  .format("LT")
-                                  .toLowerCase()}
-                              </span>
-                            </Col>
-                          ))}
-                        </Row>
-                      </div>
-                      <div>
+              {premieres.map((item, index) => (
+                <Col className={styles.ticket} key={index}>
+                  <div className="h-100 d-flex flex-column justify-content-between">
+                    <div>
+                      <div className="d-flex flex-column flex-md-row">
                         <div
-                          className={`d-flex justify-content-between align-items-center ${styles.priceGroup}`}
+                          className={`d-flex align-items-center ${styles.cinemaLogoContainer}`}
                         >
-                          <p className="m-0">Price</p>
-                          <span className={styles.price}>
-                            IDR{item.premiere_price.toLocaleString("id-ID")}
-                            /seat
-                          </span>
+                          <img
+                            src={
+                              item.premiere_name === "Ebv.id"
+                                ? Ebv
+                                : item.premiere_name === "Hiflix"
+                                ? Hiflix
+                                : CineOne
+                            }
+                            alt={item.premiere_name}
+                          />
                         </div>
-                        {role !== "admin" && (
-                          <Button
-                            variant="primary"
-                            className="w-100"
-                            onClick={() => {
-                              if (this.state.hour) {
-                                const bookingData = {
-                                  movieId,
-                                  movieName,
-                                  hour,
-                                  premiereId: item.premiere_id,
-                                  premiereName: item.premiere_name,
-                                  premierePrice: item.premiere_price,
-                                  schedule: item.schedule_date_start,
-                                  locationId: item.location_id,
-                                };
-                                this.props.setBooking(bookingData);
-                                this.props.history.push("/order");
-                              } else {
-                                this.setState({
-                                  ...this.state,
-                                  showToast: true,
-                                });
-                              }
+                        <div
+                          className={`d-flex flex-column justify-content-center text-center text-lg-left text-md-start ${styles.cinemaInfoGroup}`}
+                        >
+                          <h3 className={styles.cinemaName}>CineOne21</h3>
+                          <p className={`m-0 ${styles.cinemaLocation}`}>
+                            {item.location_address}, {item.location_city}
+                          </p>
+                        </div>
+                      </div>
+                      <div className={styles.separator}></div>
+                    </div>
+                    <div>
+                      <span className={styles.pickHour}>Pick hour</span>
+                      <Row xs={4} className={`g-2 ${styles.hourGroup}`}>
+                        {item.schedule_clock.map((hour, index) => (
+                          <Col
+                            key={index}
+                            id={`${item.premiere_id}${index}`}
+                            title={hour}
+                            className={`${
+                              this.state.selectedHour ===
+                                `${item.premiere_id}${index}` && styles.selected
+                            } ${styles.hour}`}
+                            onClick={(e) => {
+                              this.setState({
+                                ...this.state,
+                                selectedHour: e.target.id,
+                                hour: e.target.title,
+                              });
                             }}
                           >
-                            Book now
-                          </Button>
-                        )}
-                      </div>
+                            <span
+                              id={`${item.premiere_id}${index}`}
+                              title={hour}
+                              className="p-0"
+                            >
+                              {moment(`2021-12-12 ${hour}`)
+                                .format("LT")
+                                .toLowerCase()}
+                            </span>
+                          </Col>
+                        ))}
+                      </Row>
                     </div>
-                  </Col>
-                ))
-              ) : (
-                <>
-                  <span>Sorry, there are no schedules for selected date.</span>
-                </>
-              )}
+                    <div>
+                      <div
+                        className={`d-flex justify-content-between align-items-center ${styles.priceGroup}`}
+                      >
+                        <p className="m-0">Price</p>
+                        <span className={styles.price}>
+                          IDR{item.premiere_price.toLocaleString("id-ID")}
+                          /seat
+                        </span>
+                      </div>
+                      {role !== "admin" && (
+                        <Button
+                          variant="primary"
+                          className="w-100"
+                          onClick={() => {
+                            if (this.state.hour) {
+                              const bookingData = {
+                                movieId,
+                                movieName,
+                                hour,
+                                premiereId: item.premiere_id,
+                                premiereName: item.premiere_name,
+                                premierePrice: item.premiere_price,
+                                schedule: item.schedule_date_start,
+                                locationId: item.location_id,
+                              };
+                              this.props.setBooking(bookingData);
+                              this.props.history.push("/order");
+                            } else {
+                              this.setState({
+                                ...this.state,
+                                showToast: true,
+                              });
+                            }
+                          }}
+                        >
+                          Book now
+                        </Button>
+                      )}
+                    </div>
+                  </div>
+                </Col>
+              ))}
             </Row>
+            {!premieres.length > 0 && (
+              <>
+                <span
+                  style={{
+                    color: "#8692A6",
+                    width: "40%",
+                    textAlign: "center",
+                  }}
+                >
+                  Sorry, there are no schedules for selected date or location.
+                </span>
+              </>
+            )}
             {/* <div
               className={`d-flex align-items-center justify-content-center w-100 ${styles.viewMore}`}
             >

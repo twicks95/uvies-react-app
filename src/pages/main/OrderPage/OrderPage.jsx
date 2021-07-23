@@ -47,14 +47,16 @@ const OrderPage = (props) => {
       }
       setReservedSeat(reservedSeat);
     });
-  }, [hour, premiereId, seat, props]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const bookingSeat = (seat) => {
     setSelectedSeat([...selectedSeat, seat]);
   };
 
-  const removeSeat = (index) => {
-    setSelectedSeat(selectedSeat.splice(index, 1));
+  const removeSeat = (seat) => {
+    const newSelectedSeat = selectedSeat.filter((el) => el !== seat);
+    setSelectedSeat(newSelectedSeat);
   };
 
   const handleCheckout = () => {
@@ -64,7 +66,12 @@ const OrderPage = (props) => {
       if (amount.indexOf(".") >= 0) {
         amount = amount.replace(".", "");
       }
-      props.setBooking({ totalPayment: amount, seat: selectedSeat });
+      props.setBooking({
+        totalPayment: amount,
+        seat: selectedSeat.sort(
+          (a, b) => parseInt(a.substring(1)) - parseInt(b.substring(1))
+        ),
+      });
       props.history.push("/payment");
     } else {
       setShowModal(true);
@@ -97,7 +104,6 @@ const OrderPage = (props) => {
             className="text-warning"
             style={{
               height: "50px",
-              // marginBottom: "20px",
               marginTop: "20px",
             }}
           />
@@ -297,7 +303,11 @@ const OrderPage = (props) => {
                     <span style={{ textAlign: "right", width: "40%" }}>
                       {selectedSeat.length > 0
                         ? selectedSeat
-                            .sort()
+                            .sort(
+                              (a, b) =>
+                                parseInt(a.substring(1)) -
+                                parseInt(b.substring(1))
+                            )
                             .map((item, index) =>
                               index > 0 ? `, ${item}` : item
                             )

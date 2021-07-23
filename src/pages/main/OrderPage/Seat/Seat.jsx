@@ -43,8 +43,9 @@ export default class Seat extends Component {
               <Col className={`p-0`} key={index}>
                 <div
                   onClick={() => {
-                    const seatIndex = selectedSeat.indexOf(item);
-                    seatIndex < 0 ? bookingSeat(item) : removeSeat(seatIndex);
+                    !selectedSeat.includes(item)
+                      ? bookingSeat(item)
+                      : removeSeat(item);
                   }}
                   className={`${styles.seat} ${
                     reservedSeat.indexOf(item) > -1
@@ -63,8 +64,9 @@ export default class Seat extends Component {
               <Col className={`p-0`} key={index}>
                 <div
                   onClick={() => {
-                    const seatIndex = selectedSeat.indexOf(item);
-                    seatIndex < 0 ? bookingSeat(item) : removeSeat(seatIndex);
+                    !selectedSeat.includes(item)
+                      ? bookingSeat(item)
+                      : removeSeat(item);
                   }}
                   className={`${styles.seat} ${
                     reservedSeat.indexOf(item) > -1
