@@ -3,15 +3,15 @@ import Styles from "./Footer.module.css";
 import { Col, Container, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
-import EbvId from "../../assets/img/ebu-id-logo.svg"
-import CineOne21 from "../../assets/img/cine-one-21-logo.svg"
-import Hiflix from "../../assets/img/hiflix-logo.svg"
+import EbvId from "../../assets/img/ebu-id-logo.svg";
+import CineOne21 from "../../assets/img/cine-one-21-logo.svg";
+import Hiflix from "../../assets/img/hiflix-logo.svg";
 
-import BrandLogo from "../../assets/icons/Tickitz.svg"
-import Facebook from "../../assets/icons/bx_bxl-facebook-circle.svg"
-import Instagram from "../../assets/icons/bx_bxl-instagram.svg"
-import Twitter from "../../assets/icons/twitter-icon.svg"
-import Youtube from "../../assets/icons/youtube-icon.svg"
+import BrandLogo from "../../assets/icons/uvies-blue.svg";
+import Facebook from "../../assets/icons/bx_bxl-facebook-circle.svg";
+import Instagram from "../../assets/icons/bx_bxl-instagram.svg";
+import Twitter from "../../assets/icons/twitter-icon.svg";
+import Youtube from "../../assets/icons/youtube-icon.svg";
 
 export default class Footer extends Component {
   render() {
@@ -53,11 +53,7 @@ export default class Footer extends Component {
               <h5>Our Sponsor</h5>
               <div className={`d-flex flex-wrap flex-row flex-md-column`}>
                 <div className={Styles.sponsorLogoContainer}>
-                  <img
-                    src={EbvId}
-                    alt="ebv.id"
-                    className={Styles.sponsorEbu}
-                  />
+                  <img src={EbvId} alt="ebv.id" className={Styles.sponsorEbu} />
                 </div>
                 <div
                   className={`d-flex align-items-end ${Styles.sponsorLogoContainer}`}
@@ -85,14 +81,8 @@ export default class Footer extends Component {
                 <div
                   className={`d-flex flex-row flex-lg-column align-items-center ${Styles.socialIcons}`}
                 >
-                  <img
-                    src={Facebook}
-                    alt="facebook"
-                  />
-                  <img
-                    src={Instagram}
-                    alt="Instagram"
-                  />
+                  <img src={Facebook} alt="facebook" />
+                  <img src={Instagram} alt="Instagram" />
                   <img src={Twitter} alt="Twitter" />
                   <img src={Youtube} alt="Youtube" />
                 </div>
@@ -110,7 +100,7 @@ export default class Footer extends Component {
           <small
             className={`d-flex justify-content-lg-center ${Styles.copyright}`}
           >
-            © 2020 Tickitz. All Rights Reserved.
+            © 2020 Uvies. All Rights Reserved.
           </small>
         </Container>
       </footer>

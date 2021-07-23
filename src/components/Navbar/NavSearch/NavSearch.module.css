@@ -1,49 +1,94 @@
+.searchGroup {
+  display: flex;
+  height: 40px;
+  width: 100%;
+  justify-content: flex-end;
+  margin-bottom: 10px;
+  position: relative;
+}
+
 .searchInput {
-  /* visibility: hidden; */
-  display: none !important;
-  margin-right: 0 !important;
-  /* max-width: 0; */
-  /* opacity: 0%; */
-  transition: opacity 2s, max-width 2s;
-  /* transition-delay: max-width .2s; */
+  height: 100% !important;
+}
+
+.searchInput,
+.searchResult,
+.btnSearch {
+  border-radius: 8px !important;
 }
 
 .btnSearch {
-  margin: 0 24px;
+  background-color: transparent !important;
+  border: 1px solid #ced4da !important;
 }
 
-.searchInput:hover {
-  /* display: block !important; */
-  opacity: 100%;
-  max-width: 200px;
-  /* transition-delay: max-width .2s; */
+.searchResult {
+  border: 1px solid #ced4da;
+  background-color: #ffffff;
+  position: absolute;
+  width: 100%;
+  max-height: 300px;
+  top: 50px;
+  z-index: 99;
+  overflow: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #5f2eea #f5f5f5;
+}
+.searchResult::-webkit-scrollbar {
+  width: 5px !important;
+}
+.searchResult::-webkit-scrollbar-track {
+  background: rgb(245, 245, 245);
+  border-radius: 8px;
+}
+.searchResult::-webkit-scrollbar-thumb {
+  background: #5f2eea;
+  border-radius: 8px;
 }
 
-@media (max-width: 576px) {
+.searchResult .list {
+  display: inline-block;
+  font-size: 0.9em;
+  font-weight: 600;
+  padding: 10px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  width: 100%;
+  margin: 0;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.searchResult .list:hover {
+  color: #5f2eea;
+}
+
+@media (min-width: 992px) {
+  .searchGroup {
+    margin: 0 20px 0 15px;
+    width: fit-content;
+  }
+
   .searchInput {
-    width: 75%;
-    margin-right: 10px !important;
+    display: none;
   }
 
   .btnSearch {
-    width: 20%;
-    margin: 0 !important;
-  }
-}
-
-@media (max-width: 991px) {
-  form {
-    margin-top: 20px;
-    margin-bottom: 10px;
+    border: none !important;
   }
 
-  .searchInput {
-    display: inline-block !important;
-    /* max-width: ; */
+  .show {
+    display: inline-block;
+    animation: showss 0.5s ease-in-out forwards;
   }
 
-  .btnSearch {
-    margin-left: 10px;
-    border: 1px solid #ced4da;
+  @keyframes showss {
+    0% {
+      width: 0;
+    }
+    100% {
+      width: 300px !important;
+    }
   }
 }

@@ -26,7 +26,6 @@ class UpcomingMovies extends Component {
     this.state = {
       activeMonth: month[this.currentMonth.getMonth()],
     };
-    this.handleDetail = props.handleDetail;
   }
 
   componentDidMount() {
@@ -44,9 +43,7 @@ class UpcomingMovies extends Component {
     const { upcomingMovies } = this.props.movie;
     if (upcomingMovies && upcomingMovies.length > 0) {
       return upcomingMovies.map((item, index) => {
-        return (
-          <MovieCard data={item} handleDetail={this.handleDetail} key={index} />
-        );
+        return <MovieCard data={item} key={index} />;
       });
     } else {
       return (

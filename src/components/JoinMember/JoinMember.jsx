@@ -22,7 +22,7 @@ const JoinMember = () => {
         </Button>
       </Form>
       <p>
-        By joining you as a Tickitz member,
+        By joining you as a Uvies member,
         <br />
         we will always send you the latest updates via email .
       </p>

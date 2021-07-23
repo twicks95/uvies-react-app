@@ -1,4 +1,5 @@
 import React from "react";
+import { withRouter } from "react-router-dom";
 import { Button, Card } from "react-bootstrap";
 import styles from "./MovieCard.module.css";
 import "./MovieCard.module.css";
@@ -6,14 +7,8 @@ import moment from "moment";
 import ImagePlaceholder from "../../assets/img/default-img-placeholder.png";
 
 const MovieCard = (props) => {
-  const {
-    isNowShowing,
-    isAdminManageMovie,
-    handleDetail,
-    handleUpdate,
-    handleDelete,
-    data,
-  } = props;
+  const { isNowShowing, isAdminManageMovie, handleUpdate, handleDelete, data } =
+    props;
   const {
     movie_poster,
     movie_name,
@@ -21,6 +16,10 @@ const MovieCard = (props) => {
     movie_release_date,
     movie_id,
   } = data;
+
+  const handleDetail = (id) => {
+    props.history.push(`/movie/detail/${id}`);
+  };
 
   const renderMovieSubtitleAndText = () => {
     if (isAdminManageMovie) {
@@ -53,7 +52,9 @@ const MovieCard = (props) => {
           >
             Details
           </Button>
-          <Button variant="primary">Book Now</Button>
+          <Button variant="primary" onClick={() => handleDetail(movie_id)}>
+            Book Now
+          </Button>
         </div>
       );
     } else if (isAdminManageMovie) {
@@ -120,4 +121,4 @@ MovieCard.defaultProps = {
   movieCategory: "category",
 };
 
-export default MovieCard;
+export default withRouter(MovieCard);

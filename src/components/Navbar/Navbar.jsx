@@ -3,7 +3,7 @@ import { Nav, Navbar, Button } from "react-bootstrap";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import NavSearch from "./NavSearch/NavSearch";
-import BrandLogo from "../../assets/icons/Tickitz.svg";
+import BrandLogo from "../../assets/icons/uvies-blue.svg";
 import styles from "./Navbar.module.css";
 import UserNavigation from "./UserNavigation/UserNavigation";
 import DropdownNavigation from "./DropdownNavigation/DropdownNavigation";
@@ -46,30 +46,26 @@ class NavigationBar extends Component {
     }
   };
 
-  leadToHomePage = () => {
-    this.props.history.push("/");
-  };
-
   render() {
     const { role } = this.props;
 
     return (
       <Navbar bg="light" expand="lg" className={`${styles.navigationBar}`}>
         <Navbar.Brand
-          onClick={this.leadToHomePage}
+          onClick={() => this.props.history.push("/")}
           className={`${styles.navigationBrand}`}
         >
           <img src={BrandLogo} alt="Uvies Logo" />
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="me-auto">
+          <Nav className="me-auto pt-4 pt-lg-0">
             <UserNavigation isAdmin={role} />
           </Nav>
           <Nav>
             <DropdownNavigation />
           </Nav>
-          <NavSearch />
+          <NavSearch handleSetMovieId={this.props.handleSetMovieId} />
           {this.renderButton()}
         </Navbar.Collapse>
       </Navbar>

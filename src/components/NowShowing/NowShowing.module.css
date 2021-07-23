@@ -27,6 +27,7 @@
 
 .nowShowingList {
   margin-top: 72px;
+  scrollbar-width: none;
 }
 
 .nowShowingList::-webkit-scrollbar {

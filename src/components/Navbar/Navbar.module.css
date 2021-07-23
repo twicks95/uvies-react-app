@@ -4,7 +4,8 @@
 }
 
 .navigationBrand {
-  width: 130px;
+  padding: 0;
+  width: 100px;
   margin-right: 36px;
   cursor: pointer;
 }

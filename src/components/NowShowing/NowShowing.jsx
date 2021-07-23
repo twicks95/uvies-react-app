@@ -11,7 +11,6 @@ class NowShowing extends Component {
 
   render() {
     const { movies } = this.props.movie;
-    const { handleDetail } = this.props;
     return (
       <section className={`d-flex flex-column ${Styles.nowShowing}`}>
         <div className={`d-flex align-items-end justify-content-between w-100`}>
@@ -26,14 +25,7 @@ class NowShowing extends Component {
         <div className={`d-flex overflow-auto ${Styles.nowShowingList}`}>
           {movies ? (
             movies.map((item, index) => {
-              return (
-                <MovieCard
-                  data={item}
-                  handleDetail={handleDetail}
-                  isNowShowing={true}
-                  key={index}
-                />
-              );
+              return <MovieCard data={item} isNowShowing={true} key={index} />;
             })
           ) : (
             <></>
