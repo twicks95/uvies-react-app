@@ -18,6 +18,7 @@ import {
 import ImagePlaceholder from "../../../assets/img/default-img-placeholder.png";
 import { connect } from "react-redux";
 import { getPremieres } from "../../../redux/actions/premiere";
+import { setBooking } from "../../../redux/actions/booking";
 import Ebv from "../../../assets/img/ebu-id-logo.svg";
 import Hiflix from "../../../assets/img/hiflix-logo.svg";
 import CineOne from "../../../assets/img/cine-one-21-logo.svg";
@@ -36,26 +37,24 @@ class MovieDetail extends Component {
       movieCasts: "",
       movieSynopsis: "",
       moviePoster: null,
-      location: "",
-      date: "",
+      location: qs.parse(this.props.location.search).location || "",
+      date: qs.parse(this.props.location.search).date || "",
       locationList: [],
       limit: 100,
       selectedHour: "",
       hour: "",
       showToast: false,
-      movieId: qs.parse(this.props.location.search),
+      movieId: this.props.match.params.id,
     };
   }
 
   componentDidMount() {
-    const { movieId } = qs.parse(this.props.location.search);
-    const { date, location, limit } = this.state;
+    const { movieId } = this.state;
+
     this.getDataMovie(movieId);
 
-    axiosApiInstances
-      .get(
-        `premiere?id=${movieId}&date=${date}&location=${location}&limit=${limit}`
-      )
+    const reqEndpoint = this.getPremiere(this.state);
+    reqEndpoint
       .then((res) => {
         this.setState({ ...this.state, premieres: res.data.data });
       })
@@ -74,30 +73,11 @@ class MovieDetail extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    const { movieId } = qs.parse(this.props.location.search);
-    const { date, location, limit } = this.state;
-
-    let api;
-    if (date && location) {
-      api = axiosApiInstances.get(
-        `premiere?id=${movieId}&date=${date}&location=${location}&limit=${limit}`
-      );
-    } else if (location) {
-      api = axiosApiInstances.get(
-        `premiere?id=${movieId}&location=${location}&limit=${limit}`
-      );
-    } else if (date) {
-      api = axiosApiInstances.get(
-        `premiere?id=${movieId}&date=${date}&limit=${limit}`
-      );
-    } else {
-      api = axiosApiInstances.get(
-        `premiere?id=${movieId}&date=${date}&location=${location}&limit=${limit}`
-      );
-    }
+    const { date, location, limit, movieId } = this.state;
+    const reqEndpoint = this.getPremiere(this.state);
 
     if (date !== prevState.date || location !== prevState.location) {
-      api
+      reqEndpoint
         .then((res) => {
           this.setState({ ...this.state, premieres: res.data.data });
         })
@@ -105,21 +85,21 @@ class MovieDetail extends Component {
           this.setState({ ...this.state, premieres: [] });
         });
 
-      date && location
-        ? this.props.history.push(
-            `/movie/detail?movieId=${movieId}&date=${date}&location=${location}`
-          )
-        : date
-        ? this.props.history.push(
-            `/movie/detail?movieId=${movieId}&date=${date}`
-          )
-        : this.props.history.push(
-            `/movie/detail?movieId=${movieId}&location=${location}`
-          );
+      if (date && location) {
+        this.props.history.push(
+          `/movie/detail/${movieId}?date=${date}&location=${location}`
+        );
+      } else if (date) {
+        this.props.history.push(`/movie/detail/${movieId}?date=${date}`);
+      } else {
+        this.props.history.push(
+          `/movie/detail/${movieId}?location=${location}`
+        );
+      }
     }
 
     if (limit !== prevState.limit) {
-      api
+      reqEndpoint
         .then((res) => {
           this.setState({ ...this.state, premieres: res.data.data });
         })
@@ -127,22 +107,41 @@ class MovieDetail extends Component {
           this.setState({ ...this.state, premieres: [] });
         });
     }
+
+    if (movieId !== prevState.movieId) {
+      this.getDataMovie(movieId);
+    }
   }
+
+  setMovieId = (id) => {
+    this.setState({ ...this.state, movieId: id });
+  };
 
   getDataMovie = (id) => {
     axiosApiInstances
       .get(`movie/${id}`)
       .then((res) => {
+        const {
+          movie_casts,
+          movie_category,
+          movie_director,
+          movie_duration,
+          movie_name,
+          movie_poster,
+          movie_release_date,
+          movie_synopsis,
+        } = res.data.data[0];
+
         this.setState({
           ...this.state,
-          movieName: res.data.data[0].movie_name,
-          movieGenre: res.data.data[0].movie_category,
-          movieRelease: res.data.data[0].movie_release_date,
-          movieDirector: res.data.data[0].movie_director,
-          movieDuration: res.data.data[0].movie_duration,
-          movieCasts: res.data.data[0].movie_casts,
-          movieSynopsis: res.data.data[0].movie_synopsis,
-          moviePoster: res.data.data[0].movie_poster,
+          movieName: movie_name,
+          movieGenre: movie_category,
+          movieRelease: movie_release_date,
+          movieDirector: movie_director,
+          movieDuration: movie_duration,
+          movieCasts: movie_casts,
+          movieSynopsis: movie_synopsis,
+          moviePoster: movie_poster,
         });
       })
       .catch((err) => {
@@ -150,9 +149,44 @@ class MovieDetail extends Component {
       });
   };
 
+  getPremiere = ({ date, location, limit, movieId }) => {
+    if (!date) {
+      const d = new Date(Date.now());
+      date = `${d.getFullYear()}-${
+        d.getMonth().toString().length === 1
+          ? `0${d.getMonth() + 1}`
+          : d.getMonth() + 1
+      }-${
+        d.getDate().toString().length === 1 ? `0${d.getDate()}` : d.getDate()
+      }`;
+      this.setState({ ...this.state, date });
+    }
+
+    let reqEndpoint;
+    if (date && location) {
+      reqEndpoint = axiosApiInstances.get(
+        `premiere?id=${movieId}&date=${date}&location=${location}&limit=${limit}`
+      );
+    } else if (location) {
+      reqEndpoint = axiosApiInstances.get(
+        `premiere?id=${movieId}&location=${location}&limit=${limit}`
+      );
+    } else if (date) {
+      reqEndpoint = axiosApiInstances.get(
+        `premiere?id=${movieId}&date=${date}&limit=${limit}`
+      );
+    } else {
+      reqEndpoint = axiosApiInstances.get(
+        `premiere?id=${movieId}&date=${date}&location=${location}&limit=${limit}`
+      );
+    }
+    return reqEndpoint;
+  };
+
   render() {
     const role = this.props.auth.data.user_role;
     const {
+      movieId,
       movieName,
       movieGenre,
       movieRelease,
@@ -164,11 +198,13 @@ class MovieDetail extends Component {
       locationList,
       premieres,
       showToast,
+      date,
+      hour,
     } = this.state;
 
     return (
       <>
-        <Navbar />
+        <Navbar handleSetMovieId={this.setMovieId} />
         <main className={`${styles.mainWrapper}`}>
           <div
             style={{
@@ -265,6 +301,7 @@ class MovieDetail extends Component {
                 name="date"
                 placeholder=""
                 type="date"
+                value={date}
                 onChange={(e) =>
                   this.setState({ ...this.state, date: e.target.value })
                 }
@@ -281,6 +318,16 @@ class MovieDetail extends Component {
                     : this.state.location}
                 </Dropdown.Toggle>
                 <Dropdown.Menu style={{ width: "100%" }}>
+                  <Dropdown.Item
+                    onClick={() =>
+                      this.setState({
+                        ...this.state,
+                        location: "",
+                      })
+                    }
+                  >
+                    All
+                  </Dropdown.Item>
                   {locationList.map((item, index) => (
                     <Dropdown.Item
                       key={index}
@@ -298,126 +345,119 @@ class MovieDetail extends Component {
               </Dropdown>
             </div>
             <Row style={{ rowGap: "20px" }}>
-              {premieres.map((item, index) => (
-                <Col className={styles.ticket} key={index}>
-                  <div className="h-100 d-flex flex-column justify-content-between">
-                    <div>
-                      <div className="d-flex flex-column flex-md-row">
-                        <div
-                          className={`d-flex align-items-center ${styles.cinemaLogoContainer}`}
-                        >
-                          <img
-                            src={
-                              item.premiere_name === "Ebv.id"
-                                ? Ebv
-                                : item.premiere_name === "Hiflix"
-                                ? Hiflix
-                                : CineOne
-                            }
-                            alt={item.premiere_name}
-                          />
-                        </div>
-                        <div
-                          className={`d-flex flex-column justify-content-center text-center text-lg-left text-md-start ${styles.cinemaInfoGroup}`}
-                        >
-                          <h3 className={styles.cinemaName}>CineOne21</h3>
-                          <p className={`m-0 ${styles.cinemaLocation}`}>
-                            {item.location_address}, {item.location_city}
-                          </p>
-                        </div>
-                      </div>
-                      <div className={styles.separator}></div>
-                    </div>
-                    <div>
-                      <span className={styles.pickHour}>Pick hour</span>
-                      <Row xs={4} className={`g-2 ${styles.hourGroup}`}>
-                        {item.schedule_clock.map((hour, index) => (
-                          <Col
-                            key={index}
-                            id={`${item.premiere_id}${index}`}
-                            title={hour}
-                            className={`${
-                              this.state.selectedHour ===
-                                `${item.premiere_id}${index}` && styles.selected
-                            } ${styles.hour}`}
-                            onClick={(e) => {
-                              this.setState({
-                                ...this.state,
-                                selectedHour: e.target.id,
-                                hour: e.target.title,
-                              });
-                            }}
+              {premieres.length > 0 ? (
+                premieres.map((item, index) => (
+                  <Col className={styles.ticket} key={index}>
+                    <div className="h-100 d-flex flex-column justify-content-between">
+                      <div>
+                        <div className="d-flex flex-column flex-md-row">
+                          <div
+                            className={`d-flex align-items-center ${styles.cinemaLogoContainer}`}
                           >
-                            <span
+                            <img
+                              src={
+                                item.premiere_name === "Ebv.id"
+                                  ? Ebv
+                                  : item.premiere_name === "Hiflix"
+                                  ? Hiflix
+                                  : CineOne
+                              }
+                              alt={item.premiere_name}
+                            />
+                          </div>
+                          <div
+                            className={`d-flex flex-column justify-content-center text-center text-lg-left text-md-start ${styles.cinemaInfoGroup}`}
+                          >
+                            <h3 className={styles.cinemaName}>CineOne21</h3>
+                            <p className={`m-0 ${styles.cinemaLocation}`}>
+                              {item.location_address}, {item.location_city}
+                            </p>
+                          </div>
+                        </div>
+                        <div className={styles.separator}></div>
+                      </div>
+                      <div>
+                        <span className={styles.pickHour}>Pick hour</span>
+                        <Row xs={4} className={`g-2 ${styles.hourGroup}`}>
+                          {item.schedule_clock.map((hour, index) => (
+                            <Col
+                              key={index}
                               id={`${item.premiere_id}${index}`}
                               title={hour}
-                              className="p-0"
+                              className={`${
+                                this.state.selectedHour ===
+                                  `${item.premiere_id}${index}` &&
+                                styles.selected
+                              } ${styles.hour}`}
+                              onClick={(e) => {
+                                this.setState({
+                                  ...this.state,
+                                  selectedHour: e.target.id,
+                                  hour: e.target.title,
+                                });
+                              }}
                             >
-                              {moment(`2021-12-12 ${hour}`)
-                                .format("LT")
-                                .toLowerCase()}
-                            </span>
-                          </Col>
-                        ))}
-                      </Row>
-                    </div>
-                    <div>
-                      <div
-                        className={`d-flex justify-content-between align-items-center ${styles.priceGroup}`}
-                      >
-                        <p className="m-0">Price</p>
-                        <span className={styles.price}>
-                          IDR{item.premiere_price.toLocaleString("id-ID")}/seat
-                        </span>
+                              <span
+                                id={`${item.premiere_id}${index}`}
+                                title={hour}
+                                className="p-0"
+                              >
+                                {moment(`2021-12-12 ${hour}`)
+                                  .format("LT")
+                                  .toLowerCase()}
+                              </span>
+                            </Col>
+                          ))}
+                        </Row>
                       </div>
-                      {role !== "admin" && (
-                        <Button
-                          variant="primary"
-                          className="w-100"
-                          onClick={() => {
-                            if (this.state.hour) {
-                              localStorage.setItem(
-                                "movie",
-                                this.state.movieName
-                              );
-                              localStorage.setItem(
-                                "movieId",
-                                this.state.movieId.movieId
-                              );
-                              localStorage.setItem(
-                                "premiere",
-                                item.premiere_name
-                              );
-                              localStorage.setItem(
-                                "premiereId",
-                                item.premiere_id
-                              );
-                              localStorage.setItem(
-                                "price",
-                                item.premiere_price
-                              );
-                              localStorage.setItem(
-                                "date",
-                                item.schedule_date_start
-                              );
-                              localStorage.setItem(
-                                "locationId",
-                                item.location_id
-                              );
-                              localStorage.setItem("hour", this.state.hour);
-                              this.props.history.push("/order");
-                            } else {
-                              this.setState({ ...this.state, showToast: true });
-                            }
-                          }}
+                      <div>
+                        <div
+                          className={`d-flex justify-content-between align-items-center ${styles.priceGroup}`}
                         >
-                          Book now
-                        </Button>
-                      )}
+                          <p className="m-0">Price</p>
+                          <span className={styles.price}>
+                            IDR{item.premiere_price.toLocaleString("id-ID")}
+                            /seat
+                          </span>
+                        </div>
+                        {role !== "admin" && (
+                          <Button
+                            variant="primary"
+                            className="w-100"
+                            onClick={() => {
+                              if (this.state.hour) {
+                                const bookingData = {
+                                  movieId,
+                                  movieName,
+                                  hour,
+                                  premiereId: item.premiere_id,
+                                  premiereName: item.premiere_name,
+                                  premierePrice: item.premiere_price,
+                                  schedule: item.schedule_date_start,
+                                  locationId: item.location_id,
+                                };
+                                this.props.setBooking(bookingData);
+                                this.props.history.push("/order");
+                              } else {
+                                this.setState({
+                                  ...this.state,
+                                  showToast: true,
+                                });
+                              }
+                            }}
+                          >
+                            Book now
+                          </Button>
+                        )}
+                      </div>
                     </div>
-                  </div>
-                </Col>
-              ))}
+                  </Col>
+                ))
+              ) : (
+                <>
+                  <span>Sorry, there are no schedules for selected date.</span>
+                </>
+              )}
             </Row>
             {/* <div
               className={`d-flex align-items-center justify-content-center w-100 ${styles.viewMore}`}
@@ -446,6 +486,6 @@ const mapStateToProps = (state) => ({
   premiere: state.premiere,
 });
 
-const mapDispatchToProps = { getPremieres };
+const mapDispatchToProps = { getPremieres, setBooking };
 
 export default connect(mapStateToProps, mapDispatchToProps)(MovieDetail);

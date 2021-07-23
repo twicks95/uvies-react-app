@@ -58,9 +58,15 @@
   border-radius: 16px;
 }
 
-.payment:hover {
+.payment:hover,
+.payment:focus {
+  box-shadow: none !important;
   background-color: #dedede;
   border-color: #dedede;
+}
+
+.payment {
+  border-color: #dfdfdf;
 }
 
 .payment img {

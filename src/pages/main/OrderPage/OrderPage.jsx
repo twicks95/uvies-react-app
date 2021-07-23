@@ -11,27 +11,36 @@ import { useEffect, useState } from "react";
 import moment from "moment";
 import axiosApiInstances from "../../../utils/axios";
 import { ExclamationCircleIcon } from "@heroicons/react/solid";
+import { resetBooking, setBooking } from "../../../redux/actions/booking";
+import { connect } from "react-redux";
 
 const OrderPage = (props) => {
   const [selectedSeat, setSelectedSeat] = useState([]);
   const [reservedSeat, setReservedSeat] = useState([]);
   const [showModal, setShowModal] = useState(false);
-  const movie = localStorage.getItem("movie");
-  const premiere = localStorage.getItem("premiere");
-  const premiereId = localStorage.getItem("premiereId");
-  const date = localStorage.getItem("date");
-  const hour = localStorage.getItem("hour");
-  const price = localStorage.getItem("price");
+  const {
+    hour,
+    // locationId,
+    // movieId,
+    movieName,
+    premiereId,
+    premiereName,
+    premierePrice,
+    schedule,
+    seat = [],
+  } = props.booking.detail;
+  const movie = movieName;
+  const premiere = premiereName;
+  const date = schedule;
+  const price = premierePrice;
 
   useEffect(() => {
-    localStorage.getItem("seat")
-      ? setSelectedSeat(localStorage.getItem("seat").split(","))
-      : setSelectedSeat([]);
+    seat.length > 0 ? setSelectedSeat(seat) : setSelectedSeat([]);
 
     axiosApiInstances
       .get(`schedule/premiere/clock?premiereId=${premiereId}&clock=${hour}`)
       .then((res) => {
-        localStorage.setItem("scheduleId", res.data.data[0].schedule_id);
+        props.setBooking({ scheduleId: res.data.data[0].schedule_id });
       });
 
     axiosApiInstances.get(`booking/seat/booked/${premiereId}`).then((res) => {
@@ -51,18 +60,22 @@ const OrderPage = (props) => {
     setSelectedSeat(selectedSeat.splice(index, 1));
   };
 
+  const handleCheckout = () => {
+    if (selectedSeat.length > 0) {
+      const totalText = document.getElementById("total-payment");
+      let amount = totalText.textContent.slice(3).replace(".", "");
+      if (amount.indexOf(".") >= 0) {
+        amount = amount.replace(".", "");
+      }
+      props.setBooking({ totalPayment: amount, seat: selectedSeat });
+      props.history.push("/payment");
+    } else {
+      setShowModal(true);
+    }
+  };
+
   const handleResetBooking = () => {
-    localStorage.removeItem("totalPayment");
-    localStorage.removeItem("seat");
-    localStorage.removeItem("movie");
-    localStorage.removeItem("movieId");
-    localStorage.removeItem("date");
-    localStorage.removeItem("hour");
-    localStorage.removeItem("premiere");
-    localStorage.removeItem("premiereId");
-    localStorage.removeItem("price");
-    localStorage.removeItem("scheduleId");
-    localStorage.removeItem("locationId");
+    props.resetBooking();
   };
 
   return (
@@ -215,23 +228,7 @@ const OrderPage = (props) => {
               >
                 Change your movie
               </Button>
-              <Button
-                variant={"primary"}
-                onClick={() => {
-                  if (selectedSeat.length > 0) {
-                    const total = document.getElementById("total-payment");
-                    let res = total.textContent.slice(3).replace(".", "");
-                    if (res.indexOf(".") >= 0) {
-                      res = res.replace(".", "");
-                    }
-                    localStorage.setItem("totalPayment", res);
-                    localStorage.setItem("seat", selectedSeat);
-                    props.history.push("/payment");
-                  } else {
-                    setShowModal(true);
-                  }
-                }}
-              >
+              <Button variant={"primary"} onClick={handleCheckout}>
                 Check out now
               </Button>
             </div>
@@ -272,6 +269,7 @@ const OrderPage = (props) => {
                         width: "40%",
                         whiteSpace: "nowrap",
                         textOverflow: "ellipsis",
+                        textAlign: "right",
                       }}
                     >
                       {movie ? movie : "No Movie Selected..."}
@@ -332,4 +330,8 @@ const OrderPage = (props) => {
   );
 };
 
-export default OrderPage;
+const mapStateToProps = (state) => ({
+  booking: state.booking,
+});
+const mapDispatchToProps = { resetBooking, setBooking };
+export default connect(mapStateToProps, mapDispatchToProps)(OrderPage);

@@ -1,8 +1,4 @@
 import React, { Component } from "react";
-
-import { connect } from "react-redux";
-import { getUserData } from "../../../redux/actions/user";
-
 import Navbar from "../../../components/Navbar/Navbar";
 import NowShowing from "../../../components/NowShowing/NowShowing";
 import UpcomingMovies from "../../../components/UpcomingMovies/UpcomingMovies";
@@ -11,14 +7,6 @@ import Footer from "../../../components/Footer/Footer";
 import Styles from "./Home.module.css";
 
 class Home extends Component {
-  componentDidMount() {
-    this.props.getUserData(this.props.auth.data.user_id);
-  }
-
-  handleDetail = (id) => {
-    this.props.history.push(`/movie/detail?movieId=${id}`);
-  };
-
   render() {
     return (
       <>
@@ -42,8 +30,8 @@ class Home extends Component {
               <div className={`${Styles.box3}`}></div>
             </div>
           </div>
-          <NowShowing handleDetail={this.handleDetail} />
-          <UpcomingMovies handleDetail={this.handleDetail} />
+          <NowShowing />
+          <UpcomingMovies />
           <JoinMember />
         </div>
         <Footer />
@@ -52,7 +40,4 @@ class Home extends Component {
   }
 }
 
-const mapStateToProps = (state) => ({ auth: state.auth });
-const mapDispatchToProps = { getUserData };
-
-export default connect(mapStateToProps, mapDispatchToProps)(Home);
+export default Home;

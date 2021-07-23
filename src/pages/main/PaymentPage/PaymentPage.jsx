@@ -18,11 +18,12 @@ import danaLogo from "../../../assets/img/dana-logo.svg";
 import bcaLogo from "../../../assets/img/bca-logo.svg";
 import briLogo from "../../../assets/img/bri-logo.svg";
 import ovoLogo from "../../../assets/img/ovo-logo.svg";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import moment from "moment";
 import axiosApiInstances from "../../../utils/axios";
 import { CheckCircleIcon } from "@heroicons/react/solid";
+import { resetBooking } from "../../../redux/actions/booking";
 
 const PaymentPage = (props) => {
   const [name, setName] = useState(props.user.data.user_name);
@@ -30,20 +31,23 @@ const PaymentPage = (props) => {
   const [phone, setPhone] = useState(props.user.data.user_phone_number);
   const [paymentMethod, setPaymentMethod] = useState("");
   const [showModal, setShowModal] = useState(false);
-
+  const {
+    hour,
+    movieName,
+    premiereName,
+    premiereId,
+    scheduleId,
+    schedule,
+    seat = [],
+    totalPayment,
+  } = props.booking.detail;
   const userId = props.user.data.user_id;
-  const movie = localStorage.getItem("movie");
-  // const movieId = localStorage.getItem("movieId");
-  const premiere = localStorage.getItem("premiere");
-  const premiereId = localStorage.getItem("premiereId");
-  // const locationId = localStorage.getItem("locationId");
-  const scheduleId = localStorage.getItem("scheduleId");
-  const date = localStorage.getItem("date");
-  const hour = localStorage.getItem("hour");
-  const totalPayment = localStorage.getItem("totalPayment");
-  const seat = localStorage.getItem("seat")
-    ? localStorage.getItem("seat").split(",")
-    : [];
+
+  useEffect(() => {
+    if (!props.booking.detail.scheduleId) {
+      document.getElementById("btn-previous").disabled = true;
+    }
+  });
 
   const handlePay = () => {
     if (premiereId) {
@@ -59,23 +63,13 @@ const PaymentPage = (props) => {
       };
 
       axiosApiInstances.post("booking", data).then((res) => {
-        localStorage.removeItem("totalPayment");
-        localStorage.removeItem("seat");
-        localStorage.removeItem("movie");
-        localStorage.removeItem("movieId");
-        localStorage.removeItem("date");
-        localStorage.removeItem("hour");
-        localStorage.removeItem("premiere");
-        localStorage.removeItem("premiereId");
-        localStorage.removeItem("price");
-        localStorage.removeItem("scheduleId");
-        localStorage.removeItem("locationId");
+        props.resetBooking();
         setShowModal(true);
         window.setTimeout(() => {
           props.history.push(
             `/user/booking/ticket?bookingId=${res.data.data.id}`
           );
-        }, 3000);
+        }, 4000);
       });
     }
   };
@@ -125,7 +119,9 @@ const PaymentPage = (props) => {
                   >
                     {`Date & time`}
                     <span className={`${styles.detail}`}>
-                      {date ? moment(date).format("dddd, DD MMMM YYYY") : "-"}{" "}
+                      {schedule
+                        ? moment(schedule).format("dddd, DD MMMM YYYY")
+                        : "-"}{" "}
                       at{" "}
                       {hour
                         ? moment(`2021-12-12 ${hour}`)
@@ -140,7 +136,7 @@ const PaymentPage = (props) => {
                   >
                     Movie title
                     <span className={`${styles.detail}`}>
-                      {movie ? movie : "No Movie Selected"}
+                      {movieName ? movieName : "No Movie Selected"}
                     </span>
                   </ListGroup.Item>
                   <ListGroup.Item
@@ -149,7 +145,7 @@ const PaymentPage = (props) => {
                   >
                     Cinema name
                     <span className={`${styles.detail}`}>
-                      {premiere ? premiere : "-"} Cinema
+                      {premiereName ? premiereName : "-"} Cinema
                     </span>
                   </ListGroup.Item>
                   <ListGroup.Item
@@ -299,6 +295,7 @@ const PaymentPage = (props) => {
                 className={`d-flex flex-column flex-lg-row justify-content-between ${styles.btnPaymentGroup}`}
               >
                 <Button
+                  id="btn-previous"
                   variant={"outline-primary"}
                   className={`d-none d-lg-inline-block`}
                   onClick={() => props.history.push("/order")}
@@ -382,6 +379,7 @@ const PaymentPage = (props) => {
 
 const mapStateToProps = (state) => ({
   user: state.user,
+  booking: state.booking,
 });
-
-export default connect(mapStateToProps, null)(PaymentPage);
+const mapDispatchToProps = { resetBooking };
+export default connect(mapStateToProps, mapDispatchToProps)(PaymentPage);
