@@ -39,7 +39,11 @@ class App extends Component {
                 component={SignIn}
               />
               <PublicRoute path="/" exact component={Home} />
-              <PublicRoute path="/movie/detail" exact component={MovieDetail} />
+              <PublicRoute
+                path="/movie/detail/:id"
+                exact
+                component={MovieDetail}
+              />
               <PrivateRoute
                 author="user"
                 path="/order"
