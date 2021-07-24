@@ -21,6 +21,15 @@ export const getMovieById = (id) => {
   };
 };
 
+export const getNowShowingMovies = (date, order, limit) => {
+  return {
+    type: "GET_NOW_SHOWING_MOVIES",
+    payload: axiosApiInstances.get(
+      `movie/now-showing?date=${date}&order=${order}&limit=${limit}`
+    ),
+  };
+};
+
 export const getUpcomingMovies = (month) => {
   return {
     type: "GET_UPCOMING_MOVIES",
