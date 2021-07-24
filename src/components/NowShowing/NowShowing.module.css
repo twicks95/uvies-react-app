@@ -33,3 +33,10 @@
 .nowShowingList::-webkit-scrollbar {
   display: none;
 }
+
+.emptyMessage {
+  color: #8692a6;
+  width: 50%;
+  text-align: center;
+  margin: auto;
+}
