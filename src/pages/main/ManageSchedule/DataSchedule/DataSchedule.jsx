@@ -145,7 +145,7 @@ const DataSchedule = (props) => {
         </div>
       </div>
       <Row xs={1} md={2} lg={3} className={`g-4 m-0 border ${styles.wrapper} `}>
-        {data ? (
+        {data.length > 0 ? (
           data.map((item, index) => (
             <Col key={index}>
               <div className={styles.ticket}>
@@ -217,7 +217,16 @@ const DataSchedule = (props) => {
             </Col>
           ))
         ) : (
-          <> </>
+          <p
+            style={{
+              fontSize: "2em",
+              fontWeight: "700",
+              margin: "auto",
+              textAlign: "center",
+            }}
+          >
+            No Data
+          </p>
         )}
       </Row>
     </>

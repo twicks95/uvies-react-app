@@ -60,6 +60,7 @@ const PaymentPage = (props) => {
         bookingPaymentMethod: paymentMethod,
         bookingStatus: "Approved",
         bookingSeat: seat,
+        bookingDate: schedule,
       };
 
       axiosApiInstances.post("booking", data).then((res) => {
@@ -292,12 +293,11 @@ const PaymentPage = (props) => {
                 </p>
               </Card>
               <div
-                className={`d-flex flex-column flex-lg-row justify-content-between ${styles.btnPaymentGroup}`}
+                className={`d-flex flex-column flex-lg-row justify-content-between gap-4 ${styles.btnPaymentGroup}`}
               >
                 <Button
                   id="btn-previous"
                   variant={"outline-primary"}
-                  className={`d-none d-lg-inline-block`}
                   onClick={() => props.history.push("/order")}
                 >
                   Previous step

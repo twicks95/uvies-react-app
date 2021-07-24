@@ -22,11 +22,9 @@ export default function Ticket(props) {
   })();
 
   useEffect(() => {
-    axiosApiInstances
-      .get(`booking/by/bookingId?bookingId=${bookingId}`)
-      .then((res) => {
-        setData(res.data.data[0]);
-      });
+    axiosApiInstances.get(`booking/by/bookingId/${bookingId}`).then((res) => {
+      setData(res.data.data[0]);
+    });
 
     axiosApiInstances.get(`booking/seat/${bookingId}`).then((res) => {
       let seat = [];
@@ -61,7 +59,7 @@ export default function Ticket(props) {
                         <div className="mb-4">
                           <h6>Date</h6>
                           <span>
-                            {moment(data.schedule_date_start).format("DD MMM")}
+                            {moment(data.booking_for_date).format("DD MMM")}
                           </span>
                         </div>
                         <div>

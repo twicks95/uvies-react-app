@@ -158,7 +158,7 @@ const ManageSchedule = (props) => {
         .then((res) => {
           setShowToast({ ...showToast, create: true });
           setMsg({ ...msg, create: res.data.msg });
-          resetForm();
+          handleResetForm();
           getPremieres();
         })
         .catch((err) => setError(err.payload.data.msg));
@@ -282,6 +282,7 @@ const ManageSchedule = (props) => {
     locationId,
     dateStart,
     dateEnd,
+    props,
   });
   return (
     <>
@@ -549,7 +550,8 @@ const ManageSchedule = (props) => {
                       {locationData1.length > 0 ? (
                         locationData1.map((item, index) => (
                           <option key={index} id={item.location_id}>
-                            {item.location_city} - {item.location_address}
+                            {item.location_city}
+                            {item.location_address}
                           </option>
                         ))
                       ) : (

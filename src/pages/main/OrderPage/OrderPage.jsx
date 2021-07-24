@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { Button, Col, Container, ListGroup, Modal, Row } from "react-bootstrap";
 import styles from "./OrderPage.module.css";
 import Navbar from "../../../components/Navbar/Navbar";
@@ -30,24 +31,38 @@ const OrderPage = (props) => {
   } = props.booking.detail;
   const movie = movieName;
   const premiere = premiereName;
-  const date = schedule;
   const price = premierePrice;
+
+  const sortSelectedSeat = (seatArray) => {
+    return seatArray
+      .sort((a, b) => parseInt(a.substring(1)) - parseInt(b.substring(1)))
+      .sort((a, b) => a.substring(0, 1).localeCompare(b.substring(0, 1)));
+  };
 
   useEffect(() => {
     seat.length > 0 ? setSelectedSeat(seat) : setSelectedSeat([]);
     axiosApiInstances
       .get(`schedule/premiere/clock?premiereId=${premiereId}&clock=${hour}`)
       .then((res) => {
-        props.setBooking({ scheduleId: res.data.data[0].schedule_id });
+        const scheduleId = res.data.data[0].schedule_id;
+        props.setBooking({ scheduleId });
+
+        // run this endpoint to get booked seat
+        axiosApiInstances
+          .get(
+            `booking/seat/booked/${premiereId}?date=${schedule}&scheduleId=${scheduleId}`
+          )
+          .then((res) => {
+            let reservedSeat = [];
+            for (const i of res.data.data) {
+              reservedSeat.push(i.booking_seat_location);
+            }
+            setReservedSeat(reservedSeat);
+          })
+          .catch(() => {
+            setReservedSeat([]);
+          });
       });
-    axiosApiInstances.get(`booking/seat/booked/${premiereId}`).then((res) => {
-      let reservedSeat = [];
-      for (const i of res.data.data) {
-        reservedSeat.push(i.booking_seat_location);
-      }
-      setReservedSeat(reservedSeat);
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const bookingSeat = (seat) => {
@@ -68,9 +83,7 @@ const OrderPage = (props) => {
       }
       props.setBooking({
         totalPayment: amount,
-        seat: selectedSeat.sort(
-          (a, b) => parseInt(a.substring(1)) - parseInt(b.substring(1))
-        ),
+        seat: sortSelectedSeat(selectedSeat),
       });
       props.history.push("/payment");
     } else {
@@ -189,7 +202,7 @@ const OrderPage = (props) => {
               <div className={`mt-5 ${styles.seatingKeys}`}>
                 <p>Seating key</p>
                 <div
-                  className={`d-flex justify-content-center ${styles.seatingKeyGroup}`}
+                  className={`d-flex flex-column flex-md-row gap-2 gap-md-0 justify-content-center ${styles.seatingKeyGroup}`}
                 >
                   <div className={`d-flex me-4 ${styles.key}`}>
                     <div
@@ -281,7 +294,9 @@ const OrderPage = (props) => {
                   <ListGroup.Item
                     className={`d-flex justify-content-between border-0`}
                   >
-                    {date ? moment(date).format("dddd, DD MMMM YYYY") : "-"}
+                    {schedule
+                      ? moment(schedule).format("dddd, DD MMMM YYYY")
+                      : "-"}
                     <span>
                       {hour
                         ? moment(`2021-12-12 ${hour}`)
@@ -302,15 +317,9 @@ const OrderPage = (props) => {
                     Seat choosed
                     <span style={{ textAlign: "right", width: "40%" }}>
                       {selectedSeat.length > 0
-                        ? selectedSeat
-                            .sort(
-                              (a, b) =>
-                                parseInt(a.substring(1)) -
-                                parseInt(b.substring(1))
-                            )
-                            .map((item, index) =>
-                              index > 0 ? `, ${item}` : item
-                            )
+                        ? sortSelectedSeat(selectedSeat).map((item, index) =>
+                            index > 0 ? `, ${item}` : item
+                          )
                         : "No seat choosen"}
                     </span>
                   </ListGroup.Item>

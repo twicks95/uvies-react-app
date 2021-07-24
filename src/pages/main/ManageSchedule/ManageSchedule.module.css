@@ -307,6 +307,10 @@
   width: 100%;
 }
 
+option {
+  white-space: pre;
+}
+
 @media (max-width: 576px) {
   .mainWrapper {
     padding-right: 5%;

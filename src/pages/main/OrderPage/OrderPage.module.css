@@ -57,6 +57,12 @@ h3 {
   letter-spacing: 0.75px;
 }
 
+.key {
+  display: flex;
+  align-items: center;
+  font-size: 0.85em;
+}
+
 .key .availability {
   height: 26px;
   width: 26px;
@@ -121,6 +127,26 @@ h3 {
   .mainWrapper {
     padding: 72px 5%;
     background-color: #f5f6f8;
+  }
+  .stickyHeadMovieSelection {
+    padding: 32px 5%;
+  }
+  .stickyHeadMovieSelection .movieNameSelected {
+    font-size: 18px;
+  }
+  .stickyHeadMovieSelection .changeMovieButton {
+    border-radius: 12px;
+    font-size: 12px !important;
+    width: 132px;
+    height: 38px;
+  }
+  .key {
+    font-size: 0.8em;
+  }
+  .key .availability {
+    height: 16px;
+    width: 16px;
+    border-radius: 4px;
   }
 }
 @media (max-width: 768px) {

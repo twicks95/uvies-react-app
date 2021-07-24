@@ -5,8 +5,30 @@ import UpcomingMovies from "../../../components/UpcomingMovies/UpcomingMovies";
 import JoinMember from "../../../components/JoinMember/JoinMember";
 import Footer from "../../../components/Footer/Footer";
 import Styles from "./Home.module.css";
+import { connect } from "react-redux";
+import { getNowShowingMovies } from "../../../redux/actions/movie";
 
 class Home extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
+
+  componentDidMount() {
+    const currentDate = this.getCurrentDate();
+    this.props.getNowShowingMovies(currentDate, "", "");
+  }
+
+  getCurrentDate = () => {
+    const d = new Date(Date.now());
+    const dateNow = `${d.getFullYear()}-${
+      d.getMonth().toString().length === 1
+        ? `0${d.getMonth() + 1}`
+        : d.getMonth() + 1
+    }-${d.getDate().toString().length === 1 ? `0${d.getDate()}` : d.getDate()}`;
+    return dateNow;
+  };
+
   render() {
     return (
       <>
@@ -40,4 +62,5 @@ class Home extends Component {
   }
 }
 
-export default Home;
+const mapDispatchToProps = { getNowShowingMovies };
+export default connect(null, mapDispatchToProps)(Home);

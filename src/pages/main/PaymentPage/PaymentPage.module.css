@@ -213,7 +213,7 @@
     margin-bottom: 40px;
   }
 
-  .btnPaymentGroup button:last-child {
+  .btnPaymentGroup button {
     width: 100%;
   }
 }

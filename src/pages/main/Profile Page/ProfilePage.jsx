@@ -61,7 +61,6 @@ class ProfilePage extends Component {
 
   componentDidMount() {
     this.getUserData();
-
     axiosApiInstances
       .get(
         `booking/by/userId?userId=${this.props.auth.data.user_id}&limit=${this.state.limit}`
@@ -643,7 +642,7 @@ class ProfilePage extends Component {
                           <div className="d-flex align-items-center justify-content-between">
                             <div>
                               <span className={styles.timeStamp}>
-                                {moment(item.schedule_date_start).format(
+                                {moment(item.booking_for_date).format(
                                   "dddd, DD MMMM YYYY"
                                 )}
                                 -{" "}

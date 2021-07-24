@@ -179,6 +179,28 @@ class MovieDetail extends Component {
     return reqEndpoint;
   };
 
+  handleBook = (item) => {
+    if (this.state.hour) {
+      const bookingData = {
+        movieId: this.state.movieId,
+        movieName: this.state.movieName,
+        hour: this.state.hour,
+        premiereId: item.premiere_id,
+        premiereName: item.premiere_name,
+        premierePrice: item.premiere_price,
+        schedule: this.state.date,
+        locationId: item.location_id,
+      };
+      this.props.setBooking(bookingData);
+      this.props.history.push("/order");
+    } else {
+      this.setState({
+        ...this.state,
+        showToast: true,
+      });
+    }
+  };
+
   render() {
     const role = this.props.auth.data.user_role;
     const {
@@ -423,25 +445,7 @@ class MovieDetail extends Component {
                           variant="primary"
                           className="w-100"
                           onClick={() => {
-                            if (this.state.hour) {
-                              const bookingData = {
-                                movieId,
-                                movieName,
-                                hour,
-                                premiereId: item.premiere_id,
-                                premiereName: item.premiere_name,
-                                premierePrice: item.premiere_price,
-                                schedule: item.schedule_date_start,
-                                locationId: item.location_id,
-                              };
-                              this.props.setBooking(bookingData);
-                              this.props.history.push("/order");
-                            } else {
-                              this.setState({
-                                ...this.state,
-                                showToast: true,
-                              });
-                            }
+                            this.handleBook(item);
                           }}
                         >
                           Book now
@@ -454,14 +458,9 @@ class MovieDetail extends Component {
             </Row>
             {!premieres.length > 0 && (
               <>
-                <span
-                  style={{
-                    color: "#8692A6",
-                    width: "40%",
-                    textAlign: "center",
-                  }}
-                >
-                  Sorry, there are no schedules for selected date or location.
+                <span className={styles.emptyMessage}>
+                  Sorry, there are no schedules for the selected date or
+                  location.
                 </span>
               </>
             )}
