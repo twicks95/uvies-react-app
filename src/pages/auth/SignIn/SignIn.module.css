@@ -102,7 +102,7 @@ h2 {
   background-repeat: no-repeat;
   background-size: cover;
   position: relative;
-  z-index: -2;
+  z-index: -1;
 }
 
 .leftBanner::before {
@@ -121,9 +121,18 @@ h2 {
   z-index: 99;
 }
 
+.uviesLogo {
+  height: 10em;
+  margin-bottom: 20px;
+}
+.uviesLogo,
+.brandForm {
+  cursor: pointer;
+}
+
 .leftBanner h2 {
   color: rgba(255, 255, 255, 0.8);
-  font-size: 48px;
+  font-size: 3.5em;
   font-weight: 400;
 }
 
@@ -233,6 +242,7 @@ h2 {
 
   .brandForm {
     margin-bottom: 40px;
+    height: 3em;
   }
 
   .signInMessage {
@@ -242,7 +252,7 @@ h2 {
 
 @media (max-width: 576px) {
   .brandForm {
-    height: 3em;
+    height: 2em;
   }
 
   .btnSignIn {

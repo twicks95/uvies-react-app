@@ -3,10 +3,11 @@ import styles from "./SignUp.module.css";
 import { connect } from "react-redux";
 import { register } from "../../../redux/actions/auth";
 import { Button, Col, Container, Form, Row, Spinner } from "react-bootstrap";
-import brandLogo from "../../../assets/img/tickitz.png";
-import smallBrandLogo from "../../../assets/icons/Tickitz.svg";
+import brandLogo from "../../../assets/icons/uvies-white.svg";
+import smallBrandLogo from "../../../assets/icons/uvies-blue.svg";
 import googleIcon from "../../../assets/icons/flat-color-icons_google.svg";
 import facebookIcon from "../../../assets/icons/facebook-icon.svg";
+import { withRouter } from "react-router-dom";
 
 class SignUp extends Component {
   constructor(props) {
@@ -97,6 +98,7 @@ class SignUp extends Component {
               src={brandLogo}
               alt="uvies logo"
               className={`${styles.uviesLogo}`}
+              onClick={() => this.props.history.push("/")}
             />
 
             <h2>Let's build your account</h2>
@@ -131,6 +133,7 @@ class SignUp extends Component {
                 className={`${styles.brandForm}`}
                 src={smallBrandLogo}
                 alt="uvies logo"
+                onClick={() => this.props.history.push("/")}
               />
               <h1 className={`${styles.formTitle}`}>
                 Fill your additional details
@@ -255,4 +258,4 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = { register };
 
-export default connect(mapStateToProps, mapDispatchToProps)(SignUp);
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(SignUp));

@@ -112,6 +112,11 @@ h2 {
   width: 276px;
 }
 
+.uviesLogo,
+.brandForm {
+  cursor: pointer;
+}
+
 .leftBanner h2 {
   color: #ffffff;
   font-size: 48px;
@@ -260,12 +265,13 @@ h2 {
 
   .brandForm {
     margin-bottom: 40px;
+    height: 3em;
   }
 }
 
 @media (max-width: 576px) {
   .brandForm {
-    height: 3em;
+    height: 2em;
   }
 
   .btnJoin {

@@ -2,12 +2,22 @@ import React, { Component } from "react";
 import styles from "./SignIn.module.css";
 import { connect } from "react-redux";
 import { login } from "../../../redux/actions/auth";
-import { Alert, Button, Col, Container, Form, Row } from "react-bootstrap";
-import brandLogo from "../../../assets/img/tickitz.png";
-import smallBrandLogo from "../../../assets/icons/Tickitz.svg";
+import { getUserData } from "../../../redux/actions/user";
+import {
+  Alert,
+  Button,
+  Col,
+  Container,
+  Form,
+  Row,
+  Spinner,
+} from "react-bootstrap";
+import brandLogo from "../../../assets/icons/uvies-white.svg";
+import smallBrandLogo from "../../../assets/icons/uvies-blue.svg";
 import googleIcon from "../../../assets/icons/flat-color-icons_google.svg";
 import facebookIcon from "../../../assets/icons/facebook-icon.svg";
 import { XCircleIcon } from "@heroicons/react/solid";
+import { withRouter } from "react-router-dom";
 
 class SignIn extends Component {
   constructor(props) {
@@ -37,6 +47,7 @@ class SignIn extends Component {
     this.props
       .login(this.state.form)
       .then((result) => {
+        this.props.getUserData(this.props.auth.data.user_id);
         localStorage.setItem("token", this.props.auth.data.token);
         localStorage.setItem("role", this.props.auth.data.user_role);
         this.props.history.push("/");
@@ -74,6 +85,7 @@ class SignIn extends Component {
               src={brandLogo}
               alt="uvies logo"
               className={`${styles.uviesLogo}`}
+              onClick={() => this.props.history.push("/")}
             />
             <h2>Wait, Watch, Wow!</h2>
           </Col>
@@ -85,6 +97,7 @@ class SignIn extends Component {
                 className={`${styles.brandForm}`}
                 src={smallBrandLogo}
                 alt="uvies logo"
+                onClick={() => this.props.history.push("/")}
               />
               <h1 className={`${styles.signIn}`}>Sign In</h1>
               <p className={`${styles.signInMessage}`}>
@@ -132,13 +145,31 @@ class SignIn extends Component {
                     onChange={(e) => this.changeText(e)}
                   />
                 </Form.Group>
-                <Button
-                  variant="primary"
-                  type="submit"
-                  className={`w-100 ${styles.btnSignIn}`}
-                >
-                  Sign In
-                </Button>
+                {this.props.auth.isLoading ? (
+                  <Button
+                    variant="primary"
+                    className={`w-100 ${styles.btnSignIn}`}
+                    disabled
+                  >
+                    <Spinner
+                      as="span"
+                      animation="border"
+                      size="sm"
+                      role="status"
+                      aria-hidden="true"
+                      className="me-2"
+                    />
+                    <span className="sr-only">Loading...</span>
+                  </Button>
+                ) : (
+                  <Button
+                    variant="primary"
+                    type="submit"
+                    className={`w-100 ${styles.btnSignIn}`}
+                  >
+                    Sign In
+                  </Button>
+                )}
               </Form>
               <div
                 className={`d-flex justify-content-center align-items-center ${styles.forgotPassword}`}
@@ -213,6 +244,6 @@ const mapStateToProps = (state) => ({
   auth: state.auth,
 });
 
-const mapDispatchToProps = { login };
+const mapDispatchToProps = { login, getUserData };
 
-export default connect(mapStateToProps, mapDispatchToProps)(SignIn);
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(SignIn));
