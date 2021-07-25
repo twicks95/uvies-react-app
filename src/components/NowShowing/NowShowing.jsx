@@ -18,7 +18,7 @@ class NowShowing extends Component {
           </a>
         </div>
         <div className={`d-flex overflow-auto ${styles.nowShowingList}`}>
-          {nowShowing.length > 0 ? (
+          {nowShowing && nowShowing.length > 0 ? (
             nowShowing.map((item, index) => {
               return <MovieCard data={item} isNowShowing={true} key={index} />;
             })
