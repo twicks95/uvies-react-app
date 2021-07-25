@@ -204,7 +204,7 @@ class MovieDetail extends Component {
   render() {
     const role = this.props.auth.data.user_role;
     const {
-      movieId,
+      // movieId,
       movieName,
       movieGenre,
       movieRelease,
@@ -217,7 +217,7 @@ class MovieDetail extends Component {
       premieres,
       showToast,
       date,
-      hour,
+      // hour,
     } = this.state;
 
     return (
@@ -277,30 +277,28 @@ class MovieDetail extends Component {
                 </div>
                 <Row xs={2} className={`m-0`}>
                   <Col xs={6} md={4} className={`mb-3 p-0`}>
-                    <h6 className=" ">Release date</h6>
-                    <span className=" ">
-                      {moment(movieRelease).format("ll")}
-                    </span>
+                    <h6>Release date</h6>
+                    <span>{moment(movieRelease).format("ll")}</span>
                   </Col>
                   <Col xs={6} md={8} className={`mb-3 p-0`}>
-                    <h6 className=" ">Directed by</h6>
-                    <span className=" ">{movieDirector}</span>
+                    <h6>Directed by</h6>
+                    <span>{movieDirector}</span>
                   </Col>
                   <Col md={4} className={`p-0`}>
-                    <h6 className=" ">Duration</h6>
-                    <span className=" ">
+                    <h6>Duration</h6>
+                    <span>
                       {moment
                         .duration(movieDuration)
                         .format("h [hour] m [minute]")}
                     </span>
                   </Col>
                   <Col md={8} className={`p-0`}>
-                    <h6 className=" ">Casts</h6>
-                    <span className=" ">{movieCasts}</span>
+                    <h6>Casts</h6>
+                    <span>{movieCasts}</span>
                   </Col>
                 </Row>
                 <div className={`${styles.separator}`}></div>
-                <div className="">
+                <div>
                   <h5>Synopsis</h5>
                   <p className={`m-0 ${styles.synopsisDesc}`}>
                     {movieSynopsis}
