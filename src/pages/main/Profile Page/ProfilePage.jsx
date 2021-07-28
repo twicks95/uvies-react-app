@@ -223,6 +223,8 @@ class ProfilePage extends Component {
       totalBooking,
     } = this.state;
     const {
+      updatingDetail,
+      updatingPassword,
       isUpdateDataError,
       isUpdatePasswordError,
       isUpdateImageError,
@@ -537,12 +539,30 @@ class ProfilePage extends Component {
                         </Col>
                       </Row>
                     </div>
-                    <Button
-                      type="submit"
-                      className={`mt-3 ${styles.updateChangesButton}`}
-                    >
-                      Update my detail information
-                    </Button>
+                    {updatingDetail ? (
+                      <Button
+                        variant="primary"
+                        className={`mt-3 ${styles.updateChangesButton}`}
+                        disabled
+                      >
+                        <Spinner
+                          as="span"
+                          animation="border"
+                          size="sm"
+                          role="status"
+                          aria-hidden="true"
+                          className="me-2"
+                        />
+                        <span className="sr-only">Updating...</span>
+                      </Button>
+                    ) : (
+                      <Button
+                        type="submit"
+                        className={`mt-3 ${styles.updateChangesButton}`}
+                      >
+                        Update my detail information
+                      </Button>
+                    )}
                   </form>
                   <form name="updateUserPassword" onSubmit={this.handleUpdate}>
                     <div className={`mt-5 ${styles.wrapper}`}>
@@ -625,12 +645,30 @@ class ProfilePage extends Component {
                         </Col>
                       </Row>
                     </div>
-                    <Button
-                      type="submit"
-                      className={`mt-3 ${styles.updateChangesButton}`}
-                    >
-                      Change my password
-                    </Button>
+                    {updatingPassword ? (
+                      <Button
+                        variant="primary"
+                        className={`mt-3 ${styles.updateChangesButton}`}
+                        disabled
+                      >
+                        <Spinner
+                          as="span"
+                          animation="border"
+                          size="sm"
+                          role="status"
+                          aria-hidden="true"
+                          className="me-2"
+                        />
+                        <span className="sr-only">Changing password...</span>
+                      </Button>
+                    ) : (
+                      <Button
+                        type="submit"
+                        className={`mt-3 ${styles.updateChangesButton}`}
+                      >
+                        Change my password
+                      </Button>
+                    )}
                   </form>{" "}
                 </>
               ) : (
