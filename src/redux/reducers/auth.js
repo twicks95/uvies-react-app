@@ -38,10 +38,10 @@ const auth = (state = initialState, action) => {
     case "REGISTER_FULFILLED":
       return {
         ...state,
-        data: action,
+        data: action.payload.data.data,
         isLoading: false,
         isError: false,
-        msg: action,
+        msg: action.payload.data.msg,
       };
     case "REGISTER_REJECTED":
       return {
