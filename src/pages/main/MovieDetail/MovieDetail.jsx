@@ -48,6 +48,8 @@ class MovieDetail extends Component {
     };
   }
 
+  getDate = () => new Date(Date.now());
+
   componentDidMount() {
     const { movieId } = this.state;
     this.getDataMovie(movieId);
@@ -219,7 +221,7 @@ class MovieDetail extends Component {
       date,
       // hour,
     } = this.state;
-
+    console.log(this.getDate(), new Date(this.state.date));
     return (
       <>
         <Navbar handleSetMovieId={this.setMovieId} />
@@ -406,6 +408,16 @@ class MovieDetail extends Component {
                             className={`${
                               this.state.selectedHour ===
                                 `${item.premiere_id}${index}` && styles.selected
+                            } ${
+                              new Date(this.state.date) < this.getDate() &&
+                              this.getDate() >=
+                                this.getDate().setHours(
+                                  parseInt(hour.split(":")[0]),
+                                  parseInt(hour.split(":")[1]),
+                                  parseInt(hour.split(":")[2])
+                                )
+                                ? styles.disabled
+                                : null
                             } ${styles.hour}`}
                             onClick={(e) => {
                               this.setState({

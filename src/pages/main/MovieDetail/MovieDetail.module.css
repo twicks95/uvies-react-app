@@ -179,6 +179,11 @@
   text-align: center;
 }
 
+.disabled {
+  pointer-events: none;
+  color: rgba(110, 113, 145, 0.5);
+}
+
 @media (max-width: 576px) {
   .mainWrapper {
     margin-right: 5%;
