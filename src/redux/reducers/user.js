@@ -1,6 +1,8 @@
 const initialState = {
   data: {},
-  isloading: false,
+  updatingDetail: false,
+  updatingPassword: false,
+  isLoading: false,
   isGetError: false,
   isUpdateDataError: false,
   isUpdateImageError: false,
@@ -36,21 +38,21 @@ const user = (state = initialState, action) => {
     case "UPDATE_USER_DATA_PENDING":
       return {
         ...state,
-        isLoading: true,
+        updatingData: true,
         isUpdateDataError: false,
       };
     case "UPDATE_USER_DATA_FULFILLED":
       return {
         ...state,
         data: { ...state.data, ...action.payload.data.data },
-        isLoading: false,
+        updatingData: false,
         isUpdateDataError: false,
         msg: action.payload.data.msg,
       };
     case "UPDATE_USER_DATA_REJECTED":
       return {
         ...state,
-        isLoading: false,
+        updatingData: false,
         isUpdateDataError: true,
         msg: action.payload.response.data.msg,
       };
@@ -83,20 +85,20 @@ const user = (state = initialState, action) => {
     case "UPDATE_USER_PASSWORD_PENDING":
       return {
         ...state,
-        isLoading: true,
+        updatingPassword: true,
         isUpdatePasswordError: false,
       };
     case "UPDATE_USER_PASSWORD_FULFILLED":
       return {
         ...state,
-        isLoading: false,
+        updatingPassword: false,
         isUpdatePasswordError: false,
         msg: action.payload.data.msg,
       };
     case "UPDATE_USER_PASSWORD_REJECTED":
       return {
         ...state,
-        isLoading: false,
+        updatingPassword: false,
         isUpdatePasswordError: true,
         msg: action.payload.response.data.msg,
       };
