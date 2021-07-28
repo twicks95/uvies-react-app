@@ -6,7 +6,7 @@ import qs from "query-string";
 import { PrinterIcon } from "@heroicons/react/outline";
 import { DownloadIcon } from "@heroicons/react/solid";
 import { Button, Col, Row } from "react-bootstrap";
-import Tickitz from "../../../assets/img/tickitz.png";
+import Logo from "../../../assets/icons/uvies-white.svg";
 import QRCode from "../../../assets/img/QRCode.png";
 import { useEffect, useState } from "react";
 import axiosApiInstances from "../../../utils/axios";
@@ -45,12 +45,12 @@ export default function Ticket(props) {
             <Col md={8}>
               <div>
                 <div
-                  className={`d-flex align-items-center justify-content-between px-5 ${styles.head1}`}
+                  className={`d-flex align-items-center justify-content-between px-4 px-sm-5 ${styles.head1}`}
                 >
-                  <img src={Tickitz} alt="tickitz" />
+                  <img src={Logo} alt="tickitz" />
                   <span>Admit One</span>
                 </div>
-                <div className={`p-5 ${styles.body1}`}>
+                <div className={`p-4 p-sm-5 ${styles.body1}`}>
                   <h6>Movie</h6>
                   <span>{data.movie_name}</span>
                   <Row className="mt-4">
@@ -117,7 +117,7 @@ export default function Ticket(props) {
               <div
                 className={`d-flex align-items-center justify-content-center ${styles.head2}`}
               >
-                <img src={Tickitz} alt="tickitz" />
+                <img src={Logo} alt="tickitz" />
               </div>
               <div className={styles.body2}>
                 <img src={QRCode} alt="QR Code" className={styles.qrCode} />

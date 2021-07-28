@@ -101,7 +101,7 @@
 
 .head1 img,
 .head2 img {
-  height: 4em;
+  height: 2.5em;
 }
 
 .btnGroup button {
@@ -153,5 +153,9 @@
 @media (max-width: 576px) {
   .container {
     padding: 5%;
+  }
+
+  .head1 span {
+    font-size: 1.2em;
   }
 }

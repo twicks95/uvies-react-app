@@ -290,6 +290,10 @@ input[type="file"] {
     padding: 72px 5%;
   }
 
+  .profileNavigation a {
+    font-size: 0.9em;
+  }
+
   .timeStamp {
     font-size: 10px;
   }

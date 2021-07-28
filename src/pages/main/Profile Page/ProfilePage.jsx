@@ -333,13 +333,13 @@ class ProfilePage extends Component {
             </Col>
             <Col lg={8}>
               <div
-                className={`d-flex align-items-center ${styles.wrapper} ${styles.profileNavigation}`}
+                className={`d-flex align-items-center gap-5 justify-content-center justify-content-md-start ${styles.wrapper} ${styles.profileNavigation}`}
               >
                 {/* <div className={`d-flex h-100`}> */}
                 <Link
                   to="/profile?menu=settings"
                   name="settings"
-                  className={`d-block d-flex align-items-center position-relative me-5 text-decoration-none`}
+                  className={`d-block d-flex align-items-center position-relative text-decoration-none`}
                   onClick={(e) => {
                     this.setState({
                       ...this.state,
