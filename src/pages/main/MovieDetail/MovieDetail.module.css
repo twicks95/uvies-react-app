@@ -134,27 +134,12 @@
   color: #6b6b6b;
 }
 
-.ticket .hour {
-  cursor: pointer;
-  border-radius: 5px;
-  text-align: center;
-  transition: all 0.2s ease-in-out;
-}
-
 .ticket .pickHour {
   font-size: 12px;
   font-weight: 700;
   color: #5f2eea;
   display: inline-block;
   margin-bottom: 10px;
-}
-
-.ticket .hour:hover {
-  box-shadow: 0 0 0 1px #5f2eea;
-}
-
-.selected {
-  box-shadow: 0 0 0 1px #5f2eea;
 }
 
 .viewMore {

@@ -5,6 +5,7 @@ import "moment-duration-format";
 import axiosApiInstances from "../../../utils/axios";
 import Navbar from "../../../components/Navbar/Navbar";
 import Footer from "../../../components/Footer/Footer";
+import ItemHours from "./ItemHour/ItemHours";
 import styles from "./MovieDetail.module.css";
 import {
   Button,
@@ -203,7 +204,16 @@ class MovieDetail extends Component {
     }
   };
 
+  handleSelectHour = (e) => {
+    this.setState({
+      ...this.state,
+      selectedHour: e.target.id,
+      hour: e.target.title,
+    });
+  };
+
   render() {
+    console.log(this.state.hour);
     const role = this.props.auth.data.user_role;
     const {
       // movieId,
@@ -221,7 +231,6 @@ class MovieDetail extends Component {
       date,
       // hour,
     } = this.state;
-    console.log(this.getDate(), new Date(this.state.date));
     return (
       <>
         <Navbar handleSetMovieId={this.setMovieId} />
@@ -325,7 +334,12 @@ class MovieDetail extends Component {
                 type="date"
                 value={date}
                 onChange={(e) =>
-                  this.setState({ ...this.state, date: e.target.value })
+                  this.setState({
+                    ...this.state,
+                    date: e.target.value,
+                    selectedHour: "",
+                    hour: "",
+                  })
                 }
               />
 
@@ -366,10 +380,12 @@ class MovieDetail extends Component {
                 </Dropdown.Menu>
               </Dropdown>
             </div>
-            <Row style={{ rowGap: "20px" }}>
+            <Row className="g-4">
               {premieres.map((item, index) => (
-                <Col className={styles.ticket} key={index}>
-                  <div className="h-100 d-flex flex-column justify-content-between">
+                <Col key={index}>
+                  <div
+                    className={`h-100 d-flex flex-column justify-content-between ${styles.ticket}`}
+                  >
                     <div>
                       <div className="d-flex flex-column flex-md-row">
                         <div
@@ -389,7 +405,9 @@ class MovieDetail extends Component {
                         <div
                           className={`d-flex flex-column justify-content-center text-center text-lg-left text-md-start ${styles.cinemaInfoGroup}`}
                         >
-                          <h3 className={styles.cinemaName}>CineOne21</h3>
+                          <h3 className={styles.cinemaName}>
+                            {item.premiere_name}
+                          </h3>
                           <p className={`m-0 ${styles.cinemaLocation}`}>
                             {item.location_address}, {item.location_city}
                           </p>
@@ -400,47 +418,16 @@ class MovieDetail extends Component {
                     <div>
                       <span className={styles.pickHour}>Pick hour</span>
                       <Row xs={4} className={`g-2 ${styles.hourGroup}`}>
-                        {item.schedule_clock.map((hour, index) => (
-                          <Col
-                            key={index}
-                            id={`${item.premiere_id}${index}`}
-                            title={hour}
-                            className={`${
-                              this.state.selectedHour ===
-                                `${item.premiere_id}${index}` && styles.selected
-                            } ${
-                              new Date(this.state.date) < this.getDate() &&
-                              this.getDate() >=
-                                this.getDate().setHours(
-                                  parseInt(hour.split(":")[0]),
-                                  parseInt(hour.split(":")[1]),
-                                  parseInt(hour.split(":")[2])
-                                )
-                                ? styles.disabled
-                                : null
-                            } ${styles.hour}`}
-                            onClick={(e) => {
-                              this.setState({
-                                ...this.state,
-                                selectedHour: e.target.id,
-                                hour: e.target.title,
-                              });
-                            }}
-                          >
-                            <span
-                              id={`${item.premiere_id}${index}`}
-                              title={hour}
-                              className="p-0"
-                            >
-                              {moment(`2021-12-12 ${hour}`)
-                                .format("LT")
-                                .toLowerCase()}
-                            </span>
-                          </Col>
-                        ))}
+                        <ItemHours
+                          list={item.schedule_clock}
+                          premiereId={item.premiere_id}
+                          selectedHour={this.state.selectedHour}
+                          selectedDate={this.state.date}
+                          handleSelectHour={this.handleSelectHour}
+                        />
                       </Row>
                     </div>
-                    <div>
+                    <div className="mt-3">
                       <div
                         className={`d-flex justify-content-between align-items-center ${styles.priceGroup}`}
                       >

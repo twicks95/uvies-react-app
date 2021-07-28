@@ -522,7 +522,7 @@ const ManageSchedule = (props) => {
                     </Col>
                     <Col>
                       <div
-                        id="CineOne"
+                        id="CineOne21"
                         className={styles.premiereLogo}
                         onClick={(e) => setPremiere(e.target.id)}
                       >
