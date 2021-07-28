@@ -38,8 +38,8 @@ class SignUp extends Component {
     this.props
       .register(this.state.form)
       .then((result) => {
-        localStorage.setItem("user_email", result.data.user_email);
-        localStorage.setItem("user_activation", result.data.user_activation);
+        localStorage.setItem("user_email", this.props.auth.data.user_email);
+        localStorage.setItem("id", this.props.auth.data.id);
         this.props.history.push("/account/activation");
       })
       .catch(() => {
@@ -66,6 +66,7 @@ class SignUp extends Component {
             size="sm"
             role="status"
             aria-hidden="true"
+            className="me-2"
           />
           <span className="sr-only">Loading...</span>
         </Button>

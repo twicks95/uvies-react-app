@@ -19,6 +19,21 @@
 .rightSection {
   padding: 4em;
 }
+.rightSection h1 {
+  font-size: 4.2em;
+  font-weight: 700;
+  margin-bottom: 1em;
+  letter-spacing: 0.75px;
+}
+.rightSection p,
+.rightSection span,
+.rightSection a {
+  font-size: 1.6em;
+  letter-spacing: 0.25px;
+}
+.rightSection a {
+  font-weight: 600;
+}
 
 /* === */
 .leftBanner {
@@ -29,6 +44,8 @@
   padding: 0 112px;
   position: relative;
   z-index: -2;
+  padding-top: 5em;
+  padding-bottom: 5em;
 }
 
 .leftBanner::before {
@@ -48,7 +65,7 @@
 }
 
 .leftBanner .uviesLogo {
-  height: 104px;
+  height: 10em;
   width: 276px;
 }
 
@@ -119,7 +136,7 @@
 
 @media (max-width: 576px) {
   .brandForm {
-    height: 3em;
+    height: 2em;
   }
 }
 
