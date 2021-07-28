@@ -24,6 +24,7 @@ import Ebv from "../../../assets/img/ebu-id-logo.svg";
 import Hiflix from "../../../assets/img/hiflix-logo.svg";
 import CineOne from "../../../assets/img/cine-one-21-logo.svg";
 import { XCircleIcon } from "@heroicons/react/solid";
+import Loading from "../../../assets/icons/Ellipsis-1.4s-70px.svg";
 
 class MovieDetail extends Component {
   constructor(props) {
@@ -46,6 +47,7 @@ class MovieDetail extends Component {
       hour: "",
       showToast: false,
       movieId: this.props.match.params.id,
+      loading: false,
     };
   }
 
@@ -54,37 +56,33 @@ class MovieDetail extends Component {
   componentDidMount() {
     const { movieId } = this.state;
     this.getDataMovie(movieId);
+    this.setState({ ...this.state, loading: true });
 
     const reqEndpoint = this.getPremiere(this.state);
     reqEndpoint
-      .then((res) => {
-        this.setState({ ...this.state, premieres: res.data.data });
-      })
-      .catch((err) => {
-        this.setState({ ...this.state, premieres: [] });
-      });
+      .then((res) => this.setState({ ...this.state, premieres: res.data.data }))
+      .catch(() => this.setState({ ...this.state, premieres: [] }))
+      .finally(() => this.setState({ ...this.state, loading: false }));
+
     axiosApiInstances
       .get("premiere/location")
-      .then((res) => {
-        this.setState({ ...this.state, locationList: res.data.data });
-      })
-      .catch((err) => {
-        this.setState({ ...this.state, locationList: [] });
-      });
+      .then((res) =>
+        this.setState({ ...this.state, locationList: res.data.data })
+      )
+      .catch(() => this.setState({ ...this.state, locationList: [] }));
   }
 
   componentDidUpdate(prevProps, prevState) {
     const { date, location, limit, movieId } = this.state;
     const reqEndpoint = this.getPremiere(this.state);
-
     if (date !== prevState.date || location !== prevState.location) {
+      this.setState({ ...this.state, loading: true });
       reqEndpoint
-        .then((res) => {
-          this.setState({ ...this.state, premieres: res.data.data });
-        })
-        .catch((err) => {
-          this.setState({ ...this.state, premieres: [] });
-        });
+        .then((res) =>
+          this.setState({ ...this.state, premieres: res.data.data })
+        )
+        .catch(() => this.setState({ ...this.state, premieres: [] }))
+        .finally(() => this.setState({ ...this.state, loading: false }));
 
       if (date && location) {
         this.props.history.push(
@@ -99,22 +97,20 @@ class MovieDetail extends Component {
       }
     }
     if (limit !== prevState.limit) {
+      this.setState({ ...this.state, loading: true });
       reqEndpoint
-        .then((res) => {
-          this.setState({ ...this.state, premieres: res.data.data });
-        })
-        .catch((err) => {
-          this.setState({ ...this.state, premieres: [] });
-        });
+        .then((res) =>
+          this.setState({ ...this.state, premieres: res.data.data })
+        )
+        .catch(() => this.setState({ ...this.state, premieres: [] }))
+        .finally(() => this.setState({ ...this.state, loading: false }));
     }
     if (movieId !== prevState.movieId) {
       this.getDataMovie(movieId);
     }
   }
 
-  setMovieId = (id) => {
-    this.setState({ ...this.state, movieId: id });
-  };
+  setMovieId = (id) => this.setState({ ...this.state, movieId: id });
 
   getDataMovie = (id) => {
     axiosApiInstances
@@ -213,7 +209,6 @@ class MovieDetail extends Component {
   };
 
   render() {
-    console.log(this.state.hour);
     const role = this.props.auth.data.user_role;
     const {
       // movieId,
@@ -229,6 +224,7 @@ class MovieDetail extends Component {
       premieres,
       showToast,
       date,
+      loading,
       // hour,
     } = this.state;
     return (
@@ -380,87 +376,88 @@ class MovieDetail extends Component {
                 </Dropdown.Menu>
               </Dropdown>
             </div>
-            <Row className="g-4">
-              {premieres.map((item, index) => (
-                <Col key={index}>
-                  <div
-                    className={`h-100 d-flex flex-column justify-content-between ${styles.ticket}`}
-                  >
-                    <div>
-                      <div className="d-flex flex-column flex-md-row">
-                        <div
-                          className={`d-flex align-items-center ${styles.cinemaLogoContainer}`}
-                        >
-                          <img
-                            src={
-                              item.premiere_name === "Ebv.id"
-                                ? Ebv
-                                : item.premiere_name === "Hiflix"
-                                ? Hiflix
-                                : CineOne
-                            }
-                            alt={item.premiere_name}
+            <Row className="g-4 justify-content-center">
+              {loading ? (
+                <img src={Loading} alt="loading" style={{ height: "5em" }} />
+              ) : premieres.length > 0 ? (
+                premieres.map((item, index) => (
+                  <Col key={index}>
+                    <div
+                      className={`h-100 d-flex flex-column justify-content-between ${styles.ticket}`}
+                    >
+                      <div>
+                        <div className="d-flex flex-column flex-md-row">
+                          <div
+                            className={`d-flex align-items-center ${styles.cinemaLogoContainer}`}
+                          >
+                            <img
+                              src={
+                                item.premiere_name === "Ebv.id"
+                                  ? Ebv
+                                  : item.premiere_name === "Hiflix"
+                                  ? Hiflix
+                                  : CineOne
+                              }
+                              alt={item.premiere_name}
+                            />
+                          </div>
+                          <div
+                            className={`d-flex flex-column justify-content-center text-center text-lg-left text-md-start ${styles.cinemaInfoGroup}`}
+                          >
+                            <h3 className={styles.cinemaName}>
+                              {item.premiere_name}
+                            </h3>
+                            <p className={`m-0 ${styles.cinemaLocation}`}>
+                              {item.location_address}, {item.location_city}
+                            </p>
+                          </div>
+                        </div>
+                        <div className={styles.separator}></div>
+                      </div>
+                      <div>
+                        <span className={styles.pickHour}>Pick hour</span>
+                        <Row xs={4} className={`g-2 ${styles.hourGroup}`}>
+                          <ItemHours
+                            list={item.schedule_clock}
+                            premiereId={item.premiere_id}
+                            selectedHour={this.state.selectedHour}
+                            selectedDate={this.state.date}
+                            handleSelectHour={this.handleSelectHour}
                           />
-                        </div>
+                        </Row>
+                      </div>
+                      <div className="mt-3">
                         <div
-                          className={`d-flex flex-column justify-content-center text-center text-lg-left text-md-start ${styles.cinemaInfoGroup}`}
+                          className={`d-flex justify-content-between align-items-center ${styles.priceGroup}`}
                         >
-                          <h3 className={styles.cinemaName}>
-                            {item.premiere_name}
-                          </h3>
-                          <p className={`m-0 ${styles.cinemaLocation}`}>
-                            {item.location_address}, {item.location_city}
-                          </p>
+                          <p className="m-0">Price</p>
+                          <span className={styles.price}>
+                            IDR{item.premiere_price.toLocaleString("id-ID")}
+                            /seat
+                          </span>
                         </div>
+                        {role !== "admin" && (
+                          <Button
+                            variant="primary"
+                            className="w-100"
+                            onClick={() => {
+                              this.handleBook(item);
+                            }}
+                          >
+                            Book now
+                          </Button>
+                        )}
                       </div>
-                      <div className={styles.separator}></div>
                     </div>
-                    <div>
-                      <span className={styles.pickHour}>Pick hour</span>
-                      <Row xs={4} className={`g-2 ${styles.hourGroup}`}>
-                        <ItemHours
-                          list={item.schedule_clock}
-                          premiereId={item.premiere_id}
-                          selectedHour={this.state.selectedHour}
-                          selectedDate={this.state.date}
-                          handleSelectHour={this.handleSelectHour}
-                        />
-                      </Row>
-                    </div>
-                    <div className="mt-3">
-                      <div
-                        className={`d-flex justify-content-between align-items-center ${styles.priceGroup}`}
-                      >
-                        <p className="m-0">Price</p>
-                        <span className={styles.price}>
-                          IDR{item.premiere_price.toLocaleString("id-ID")}
-                          /seat
-                        </span>
-                      </div>
-                      {role !== "admin" && (
-                        <Button
-                          variant="primary"
-                          className="w-100"
-                          onClick={() => {
-                            this.handleBook(item);
-                          }}
-                        >
-                          Book now
-                        </Button>
-                      )}
-                    </div>
-                  </div>
-                </Col>
-              ))}
-            </Row>
-            {!premieres.length > 0 && (
-              <>
+                  </Col>
+                ))
+              ) : (
                 <span className={styles.emptyMessage}>
-                  Sorry, there are no schedules for the selected date or
+                  Sorry! There are no schedules for the selected date or
                   location.
                 </span>
-              </>
-            )}
+              )}
+            </Row>
             {/* <div
               className={`d-flex align-items-center justify-content-center w-100 ${styles.viewMore}`}
             >
