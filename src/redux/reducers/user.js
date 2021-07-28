@@ -38,21 +38,21 @@ const user = (state = initialState, action) => {
     case "UPDATE_USER_DATA_PENDING":
       return {
         ...state,
-        updatingData: true,
+        updatingDetail: true,
         isUpdateDataError: false,
       };
     case "UPDATE_USER_DATA_FULFILLED":
       return {
         ...state,
         data: { ...state.data, ...action.payload.data.data },
-        updatingData: false,
+        updatingDetail: false,
         isUpdateDataError: false,
         msg: action.payload.data.msg,
       };
     case "UPDATE_USER_DATA_REJECTED":
       return {
         ...state,
-        updatingData: false,
+        updatingDetail: false,
         isUpdateDataError: true,
         msg: action.payload.response.data.msg,
       };
