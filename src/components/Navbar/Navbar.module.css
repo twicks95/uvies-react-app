@@ -27,6 +27,12 @@
   object-fit: cover;
 }
 
+.imagePlaceholder {
+  background-color: #ffffff;
+  border-radius: 50%;
+  color: #5f2eea;
+}
+
 @media (max-width: 576px) {
   .navigationBar {
     padding-right: 5% !important;

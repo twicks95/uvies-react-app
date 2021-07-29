@@ -7,7 +7,7 @@ import BrandLogo from "../../assets/icons/uvies-blue.svg";
 import styles from "./Navbar.module.css";
 import UserNavigation from "./UserNavigation/UserNavigation";
 import DropdownNavigation from "./DropdownNavigation/DropdownNavigation";
-import { UserCircleIcon } from "@heroicons/react/outline";
+import { UserCircleIcon } from "@heroicons/react/solid";
 
 class NavigationBar extends Component {
   handleSignUp = () => {
@@ -39,7 +39,7 @@ class NavigationBar extends Component {
               className={`${styles.userAvatar}`}
             />
           ) : (
-            <UserCircleIcon />
+            <UserCircleIcon className={styles.imagePlaceholder} />
           )}
         </Button>
       );
