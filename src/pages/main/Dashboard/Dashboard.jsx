@@ -119,7 +119,7 @@ const Dashboard = (props) => {
                     setMovie({ id: e.target.id, name: e.target.name })
                   }
                 >
-                  All
+                  <span>All</span>
                 </Dropdown.Item>
                 {props.movie.movies.map((item, index) => (
                   <Dropdown.Item
@@ -141,7 +141,7 @@ const Dashboard = (props) => {
                 className={styles.filter}
               >
                 <Dropdown.Item id="" onClick={(e) => setPremiere(e.target.id)}>
-                  All
+                  <span style={{ fontWeight: "700" }}>All</span>
                 </Dropdown.Item>
                 <Dropdown.Item
                   id="CineOne21"

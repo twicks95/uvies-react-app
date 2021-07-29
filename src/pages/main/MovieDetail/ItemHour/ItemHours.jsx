@@ -26,22 +26,31 @@ export default function ItemHour(props) {
   return (
     <>
       {props.list.map((hour, index) => (
-        <Col key={index} id={`${props.premiereId}${index}`} title={hour}>
+        <Col
+          key={index}
+          className={` ${
+            isYesterday() || havePastTheCurrentTime(hour)
+              ? styles.disabled
+              : null
+          }`}
+          onClick={() =>
+            props.handleSelectHour(`${props.premiereId}${index}`, hour)
+          }
+        >
           <div
             className={`${styles.hour} ${
               props.selectedHour === `${props.premiereId}${index}` &&
               styles.selected
-            } ${
-              isYesterday() || havePastTheCurrentTime(hour)
-                ? styles.disabled
-                : null
             }`}
-            onClick={(e) => props.handleSelectHour(e)}
+            onClick={() =>
+              props.handleSelectHour(`${props.premiereId}${index}`, hour)
+            }
           >
             <span
-              id={`${props.premiereId}${index}`}
-              title={hour}
               className="p-0"
+              onClick={() =>
+                props.handleSelectHour(`${props.premiereId}${index}`, hour)
+              }
             >
               {moment(`2021-12-12 ${hour}`).format("LT").toLowerCase()}
             </span>

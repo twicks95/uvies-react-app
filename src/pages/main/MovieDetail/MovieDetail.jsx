@@ -200,18 +200,17 @@ class MovieDetail extends Component {
     }
   };
 
-  handleSelectHour = (e) => {
+  handleSelectHour = (selectedHour, hour) => {
     this.setState({
       ...this.state,
-      selectedHour: e.target.id,
-      hour: e.target.title,
+      selectedHour,
+      hour,
     });
   };
 
   render() {
     const role = this.props.auth.data.user_role;
     const {
-      // movieId,
       movieName,
       movieGenre,
       movieRelease,
@@ -225,7 +224,6 @@ class MovieDetail extends Component {
       showToast,
       date,
       loading,
-      // hour,
     } = this.state;
     return (
       <>

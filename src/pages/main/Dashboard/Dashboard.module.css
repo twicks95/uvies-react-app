@@ -4,7 +4,7 @@
   padding: 10em 10%;
 }
 
-h1 {
+.container h1 {
   font-size: 24px;
   font-weight: 700;
   letter-spacing: 0.25px;
@@ -86,4 +86,19 @@ h1 {
 
 .dropdownItem span {
   font-weight: 700;
+}
+
+@media (max-width: 576px) {
+  .container {
+    padding: 10em 5%;
+  }
+
+  .container h1 {
+    font-size: 1.6em;
+  }
+
+  .filter button,
+  .actionBtn {
+    font-size: 1.2em !important;
+  }
 }
