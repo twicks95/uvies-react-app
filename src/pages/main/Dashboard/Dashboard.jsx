@@ -15,6 +15,7 @@ const Dashboard = (props) => {
   const [location, setLocation] = useState({ id: "", name: "" });
   const [locationData, setLocationData] = useState([]);
   const [earnings, setEarnings] = useState([]);
+  const [dataChart, setDataChart] = useState([]);
 
   useEffect(() => {
     props.getMovies("", "", "", "");
@@ -31,6 +32,16 @@ const Dashboard = (props) => {
   }, []);
 
   useEffect(() => {
+    setChartData();
+  }, [earnings]);
+
+  const setChartData = () => {
+    const initialData = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+    earnings.forEach((el) => (initialData[el.month - 1] = el.total));
+    setDataChart(initialData);
+  };
+
+  const handleFilter = () => {
     axiosApiInstances
       .get(
         `booking/data/dashboard?movieId=${movie.id}&premiere=${premiere}&locationId=${location.id}`
@@ -38,66 +49,40 @@ const Dashboard = (props) => {
       .then((res) => {
         setEarnings(res.data.data);
       });
-  }, [movie.id, premiere, location.id]);
+  };
 
-  // const handleFilter = () => {};
+  const handleReset = () => {
+    setMovie({ ...movie, id: "", name: "" });
+    setLocation({ ...location, id: "", name: "" });
+    setPremiere("");
+    axiosApiInstances
+      .get(
+        `booking/data/dashboard?movieId=${movie.id}&premiere=${premiere}&locationId=${location.id}`
+      )
+      .then((res) => {
+        setEarnings(res.data.data);
+      });
+  };
 
   const data = {
     labels: [
-      "January",
-      "February",
-      "March",
-      "April",
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
       "May",
-      "June",
-      "July",
-      "August",
-      "September",
-      "October",
-      "November",
-      "Desember",
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sep",
+      "Oct",
+      "Nov",
+      "Des",
     ],
     datasets: [
       {
         label: "#total income",
-        data: [
-          earnings.length > 0 && earnings[0].month === 1
-            ? earnings[0].total
-            : 0,
-          earnings.length > 0 && earnings[0].month === 2
-            ? earnings[0].total
-            : 0,
-          earnings.length > 0 && earnings[0].month === 3
-            ? earnings[0].total
-            : 0,
-          earnings.length > 0 && earnings[0].month === 4
-            ? earnings[0].total
-            : 0,
-          earnings.length > 0 && earnings[0].month === 5
-            ? earnings[0].total
-            : 0,
-          earnings.length > 0 && earnings[0].month === 6
-            ? earnings[0].total
-            : 0,
-          earnings.length > 0 && earnings[0].month === 7
-            ? earnings[0].total
-            : 0,
-          earnings.length > 0 && earnings[0].month === 8
-            ? earnings[0].total
-            : 0,
-          earnings.length > 0 && earnings[0].month === 9
-            ? earnings[0].total
-            : 0,
-          earnings.length > 0 && earnings[0].month === 10
-            ? earnings[0].total
-            : 0,
-          earnings.length > 0 && earnings[0].month === 11
-            ? earnings[0].total
-            : 0,
-          earnings.length > 0 && earnings[0].month === 12
-            ? earnings[0].total
-            : 0,
-        ],
+        data: dataChart,
         fill: false,
         backgroundColor: "#5f2eea",
         borderColor: "rgba(96, 46, 234, 0.302)",
@@ -105,18 +90,6 @@ const Dashboard = (props) => {
     ],
   };
 
-  const options = {
-    scales: {
-      yAxes: [
-        {
-          ticks: {
-            beginAtZero: true,
-          },
-        },
-      ],
-    },
-  };
-  console.log({ premiere, locationData, location, movie, earnings });
   return (
     <>
       <Navbar />
@@ -125,7 +98,7 @@ const Dashboard = (props) => {
           <Col xs={12} md={9}>
             <h1>Dashboard</h1>
             <div className={styles.contentWrapper}>
-              <Line data={data} options={options} />
+              <Line data={data} />
             </div>
           </Col>
           <Col xs={12} md={3} style={{ height: "400px" }}>
@@ -207,11 +180,12 @@ const Dashboard = (props) => {
                 {locationData.map((item, index) => (
                   <Dropdown.Item
                     key={index}
-                    id={item.location_id}
-                    name={item.location_city}
                     className={styles.dropdownItem}
                     onClick={(e) =>
-                      setLocation({ id: e.target.id, name: e.target.name })
+                      setLocation({
+                        id: item.location_id,
+                        name: item.location_city,
+                      })
                     }
                   >
                     <span>{item.location_city}</span>
@@ -220,8 +194,12 @@ const Dashboard = (props) => {
                 ))}
               </DropdownButton>
               <div className="d-flex flex-column gap-2">
-                <Button className={styles.actionBtn}>Filter</Button>
-                <Button className={styles.actionBtn}>Reset</Button>
+                <Button className={styles.actionBtn} onClick={handleFilter}>
+                  Filter
+                </Button>
+                <Button className={styles.actionBtn} onClick={handleReset}>
+                  Reset
+                </Button>
               </div>
             </div>
           </Col>
