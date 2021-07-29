@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
 import moment from "moment";
+import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import {
   getUserData,
@@ -8,33 +8,20 @@ import {
   updateUserImage,
   updateUserPassword,
 } from "../../../redux/actions/user";
-import {
-  Alert,
-  Button,
-  Col,
-  Container,
-  Form,
-  FormControl,
-  InputGroup,
-  Row,
-  Spinner,
-  Toast,
-} from "react-bootstrap";
+import { Button, Col, Container, Row, Spinner, Toast } from "react-bootstrap";
 import styles from "./ProfilePage.module.css";
 import Navbar from "../../../components/Navbar/Navbar";
 import Footer from "../../../components/Footer/Footer";
 import { PencilAltIcon } from "@heroicons/react/outline";
 import {
   CheckCircleIcon,
-  ChevronDownIcon,
   LogoutIcon,
   UploadIcon,
   UserCircleIcon,
   XCircleIcon,
 } from "@heroicons/react/solid";
-import Ebv from "../../../assets/img/ebu-id-logo.svg";
-import CineOne from "../../../assets/img/cine-one-21-logo.svg";
-import Hiflix from "../../../assets/img/hiflix-logo.svg";
+import BookingHistory from "./BookingHistory/BookingHistory";
+import AccountSettings from "./AccountSettings/AccountSettings";
 import axiosApiInstances from "../../../utils/axios";
 
 class ProfilePage extends Component {
@@ -202,17 +189,25 @@ class ProfilePage extends Component {
     this.props.history.push("/");
   };
 
+  handleViewMore = () => {
+    this.setState({
+      ...this.state,
+      limit: parseInt(this.state.limit) + 2,
+    });
+  };
+
+  handleViewLess = () => {
+    this.setState({
+      ...this.state,
+      limit: "2",
+    });
+  };
+
   render() {
     const { settings, history } = this.state.menu;
     const { firstName, lastName, phoneNumber, newPassword, confirmPassword } =
       this.state.form;
-    const {
-      user_email,
-      user_name,
-      user_profile_picture,
-      user_role,
-      user_verification,
-    } = this.props.user.data;
+    const { user_name, user_profile_picture, user_role } = this.props.user.data;
     const {
       image,
       isUpdateDataSuccess,
@@ -223,15 +218,7 @@ class ProfilePage extends Component {
       limit,
       totalBooking,
     } = this.state;
-    const {
-      updatingDetail,
-      updatingPassword,
-      isUpdateDataError,
-      isUpdatePasswordError,
-      isUpdateImageError,
-      updatedAt,
-      msg,
-    } = this.props.user;
+    const { isUpdateImageError, updatedAt, msg } = this.props.user;
     return (
       <>
         <Navbar />
@@ -338,7 +325,6 @@ class ProfilePage extends Component {
               <div
                 className={`d-flex align-items-center gap-5 justify-content-center justify-content-md-start ${styles.wrapper} ${styles.profileNavigation}`}
               >
-                {/* <div className={`d-flex h-100`}> */}
                 <Link
                   to="/profile?menu=settings"
                   name="settings"
@@ -387,386 +373,28 @@ class ProfilePage extends Component {
                 ) : (
                   <></>
                 )}
-                {/* </div> */}
               </div>
               {this.state.menu.settings ? (
-                <>
-                  <form name="updateUserData" onSubmit={this.handleUpdate}>
-                    <div className={`mt-5 ${styles.wrapper}`}>
-                      {(isUpdateDataSuccess && (
-                        <Alert
-                          variant="success"
-                          className="d-flex align-items-center mb-4"
-                        >
-                          <CheckCircleIcon
-                            style={{ height: "20px", marginRight: "5px" }}
-                          />
-                          Success update your detail information
-                        </Alert>
-                      )) ||
-                        (isUpdateDataError && (
-                          <Alert
-                            variant="danger"
-                            className="d-flex align-items-center mb-4"
-                          >
-                            <XCircleIcon
-                              style={{ height: "20px", marginRight: "5px" }}
-                            />
-                            {msg}
-                          </Alert>
-                        ))}
-                      <h6>Details Information</h6>
-                      <hr className={`mb-5`} />
-                      <Row xs={1} md={2}>
-                        <Col>
-                          <Form.Group
-                            controlId="firstName"
-                            className={styles.formGroup}
-                          >
-                            <Form.Label>
-                              First Name{" "}
-                              <span
-                                className={
-                                  !firstName ? styles.show : styles.hide
-                                }
-                              >
-                                (Required field)
-                              </span>
-                            </Form.Label>
-                            <Form.Control
-                              type="text"
-                              placeholder="My first name"
-                              name="firstName"
-                              value={firstName}
-                              className={!firstName ? styles.redBorder : ""}
-                              onChange={(e) => this.changeStateForm(e)}
-                            />
-                          </Form.Group>
-                          <Form.Group
-                            controlId="emailAddress"
-                            className={styles.formGroup}
-                          >
-                            <Form.Label>
-                              E-mail{" "}
-                              {user_verification === "0" ? (
-                                <span
-                                  style={{
-                                    color: "#ea2e2e",
-                                    fontSize: "12px",
-                                    fontWeight: "600",
-                                    marginLeft: "5px",
-                                  }}
-                                >
-                                  (Not verified)
-                                </span>
-                              ) : (
-                                <span
-                                  style={{
-                                    color: "#2f702f",
-                                    fontSize: "12px",
-                                    fontWeight: "600",
-                                    marginLeft: "5px",
-                                  }}
-                                >
-                                  (Verified)
-                                </span>
-                              )}
-                            </Form.Label>
-                            <Form.Control
-                              type="email"
-                              placeholder="My email address"
-                              name="email"
-                              value={user_email}
-                              className={
-                                user_verification === "1"
-                                  ? styles.verified
-                                  : styles.unverified
-                              }
-                              disabled
-                            />
-                          </Form.Group>
-                        </Col>
-                        <Col>
-                          <Form.Group
-                            controlId="lastName"
-                            className={styles.formGroup}
-                          >
-                            <Form.Label>
-                              Last Name{" "}
-                              <span
-                                className={
-                                  !lastName ? styles.show : styles.hide
-                                }
-                              >
-                                (Required field)
-                              </span>
-                            </Form.Label>
-                            <Form.Control
-                              type="text"
-                              placeholder="My last name"
-                              name="lastName"
-                              value={lastName}
-                              className={!lastName ? styles.redBorder : ""}
-                              onChange={(e) => this.changeStateForm(e)}
-                            />
-                          </Form.Group>
-                          {user_role === "user" ? (
-                            <Form.Group
-                              controlId="phoneNumber"
-                              className={styles.formGroup}
-                            >
-                              <Form.Label>Phone Number</Form.Label>
-                              <InputGroup className="mb-3">
-                                <InputGroup.Prepend>
-                                  <InputGroup.Text
-                                    id="basic-addon1"
-                                    className={`${styles.phoneCodeRegion}`}
-                                  >
-                                    +62
-                                  </InputGroup.Text>
-                                </InputGroup.Prepend>
-                                <FormControl
-                                  placeholder="82323xxxxxx"
-                                  aria-label="Username"
-                                  aria-describedby="basic-addon1"
-                                  name="phoneNumber"
-                                  value={phoneNumber}
-                                  className={`${styles.phoneInput}`}
-                                  onChange={(e) => this.changeStateForm(e)}
-                                />
-                              </InputGroup>
-                            </Form.Group>
-                          ) : (
-                            <></>
-                          )}
-                        </Col>
-                      </Row>
-                    </div>
-                    {updatingDetail ? (
-                      <Button
-                        variant="primary"
-                        className={`mt-3 ${styles.updateChangesButton}`}
-                        disabled
-                      >
-                        <Spinner
-                          as="span"
-                          animation="border"
-                          size="sm"
-                          role="status"
-                          aria-hidden="true"
-                          className="me-2"
-                        />
-                        <span className="sr-only">Updating...</span>
-                      </Button>
-                    ) : (
-                      <Button
-                        type="submit"
-                        className={`mt-3 ${styles.updateChangesButton}`}
-                      >
-                        Update my detail information
-                      </Button>
-                    )}
-                  </form>
-                  <form name="updateUserPassword" onSubmit={this.handleUpdate}>
-                    <div className={`mt-5 ${styles.wrapper}`}>
-                      {(isUpdatePasswordSuccess && (
-                        <Alert
-                          variant="success"
-                          className="d-flex align-items-center mb-4"
-                        >
-                          <CheckCircleIcon
-                            style={{ height: "20px", marginRight: "5px" }}
-                          />
-                          {msg}
-                        </Alert>
-                      )) ||
-                        (isUpdatePasswordError && (
-                          <Alert
-                            variant="danger"
-                            className="d-flex align-items-center mb-4"
-                          >
-                            <XCircleIcon
-                              style={{ height: "20px", marginRight: "5px" }}
-                            />
-                            {msg}
-                          </Alert>
-                        ))}
-                      <h6>Change Password</h6>
-                      <hr className={`mb-5`} />
-                      <Row xs={1} sm={2}>
-                        <Col>
-                          <Form.Group
-                            controlId="newPassword"
-                            className={styles.formGroup}
-                          >
-                            <Form.Label>
-                              New Password{" "}
-                              <span
-                                className={
-                                  !newPassword ? styles.show : styles.hide
-                                }
-                              >
-                                (Required field)
-                              </span>
-                            </Form.Label>
-                            <Form.Control
-                              type="password"
-                              placeholder="My new password"
-                              name="newPassword"
-                              value={newPassword}
-                              className={!newPassword ? styles.redBorder : ""}
-                              onChange={(e) => this.changeStateForm(e)}
-                            />
-                          </Form.Group>
-                        </Col>
-                        <Col>
-                          <Form.Group
-                            controlId="confirmPassword"
-                            className={styles.formGroup}
-                          >
-                            <Form.Label>
-                              Confirm Password{" "}
-                              <span
-                                className={
-                                  !confirmPassword ? styles.show : styles.hide
-                                }
-                              >
-                                (Required field)
-                              </span>
-                            </Form.Label>
-                            <Form.Control
-                              type="password"
-                              placeholder="Confirm my new password"
-                              name="confirmPassword"
-                              value={confirmPassword}
-                              className={
-                                !confirmPassword ? styles.redBorder : ""
-                              }
-                              onChange={(e) => this.changeStateForm(e)}
-                            />
-                          </Form.Group>
-                        </Col>
-                      </Row>
-                    </div>
-                    {updatingPassword ? (
-                      <Button
-                        variant="primary"
-                        className={`mt-3 ${styles.updateChangesButton}`}
-                        disabled
-                      >
-                        <Spinner
-                          as="span"
-                          animation="border"
-                          size="sm"
-                          role="status"
-                          aria-hidden="true"
-                          className="me-2"
-                        />
-                        <span className="sr-only">Changing password...</span>
-                      </Button>
-                    ) : (
-                      <Button
-                        type="submit"
-                        className={`mt-3 ${styles.updateChangesButton}`}
-                      >
-                        Change my password
-                      </Button>
-                    )}
-                  </form>{" "}
-                </>
+                <AccountSettings
+                  isUpdateDataSuccess={isUpdateDataSuccess}
+                  isUpdatePasswordSuccess={isUpdatePasswordSuccess}
+                  msg={msg}
+                  firstName={firstName}
+                  lastName={lastName}
+                  phoneNumber={phoneNumber}
+                  newPassword={newPassword}
+                  confirmPassword={confirmPassword}
+                  handleUpdate={this.handleUpdate}
+                  changeStateForm={this.changeStateForm}
+                />
               ) : (
-                <div className={`mt-5 ${styles.wrapper}`}>
-                  <Row xs={1}>
-                    {bookingHistory.length > 0 ? (
-                      bookingHistory.map((item, index) => (
-                        <Col className={styles.historyCard} key={index}>
-                          <div className="d-flex align-items-center justify-content-between">
-                            <div>
-                              <span className={styles.timeStamp}>
-                                {moment(item.booking_for_date).format(
-                                  "dddd, DD MMMM YYYY"
-                                )}
-                                -{" "}
-                                {moment(
-                                  `2021-12-12 ${item.schedule_clock}`
-                                ).format("LT")}
-                              </span>
-                              <h5>{item.movie_name}</h5>
-                            </div>
-                            <div>
-                              <img
-                                src={
-                                  item.premiere_name === "Ebv.id"
-                                    ? Ebv
-                                    : item.premiere_name === "Hiflix"
-                                    ? Hiflix
-                                    : CineOne
-                                }
-                                alt="premiere"
-                                style={
-                                  item.premiere_name === "CineOne21"
-                                    ? { width: "100px" }
-                                    : { height: "30px" }
-                                }
-                              />
-                            </div>
-                          </div>
-                          <hr />
-                          <div className="d-flex align-items-center justify-content-between">
-                            <Button
-                              onClick={() =>
-                                this.props.history.push(
-                                  `/user/booking/ticket?bookingId=${item.booking_id}`
-                                )
-                              }
-                            >
-                              Show ticket
-                            </Button>
-                            <span className={styles.showDetails}>
-                              Show details{" "}
-                              <ChevronDownIcon style={{ height: "10px" }} />
-                            </span>
-                          </div>
-                        </Col>
-                      ))
-                    ) : (
-                      <Col className="d-flex align-items-center justify-content-center">
-                        <p style={{ fontWeight: "700" }}>No Booking History</p>
-                      </Col>
-                    )}
-                  </Row>
-                  {limit < totalBooking ? (
-                    <div className="d-flex align-items-center justify-content-center mt-5">
-                      <Link
-                        className={styles.viewMore}
-                        onClick={() =>
-                          this.setState({
-                            ...this.state,
-                            limit: parseInt(limit) + 2,
-                          })
-                        }
-                      >
-                        View More
-                      </Link>
-                    </div>
-                  ) : limit >= totalBooking && totalBooking > 2 ? (
-                    <div className="d-flex align-items-center justify-content-center mt-5">
-                      <Link
-                        className={styles.viewLess}
-                        onClick={() =>
-                          this.setState({
-                            ...this.state,
-                            limit: "2",
-                          })
-                        }
-                      >
-                        View Less
-                      </Link>
-                    </div>
-                  ) : (
-                    <></>
-                  )}
-                </div>
+                <BookingHistory
+                  bookingHistory={bookingHistory}
+                  limit={limit}
+                  totalBooking={totalBooking}
+                  handleViewMore={this.handleViewMore}
+                  handleViewLess={this.handleViewLess}
+                />
               )}
             </Col>
           </Row>

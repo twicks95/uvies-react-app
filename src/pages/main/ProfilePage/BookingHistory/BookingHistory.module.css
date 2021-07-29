@@ -1,0 +1,68 @@
+.wrapper {
+  background-color: #ffffff;
+  border-radius: 24px;
+  padding: 7% 5%;
+  filter: drop-shadow(0px 8px 16px rgba(73, 83, 99, 0.24));
+}
+
+.historyCard:not(:last-child) {
+  margin-bottom: 80px;
+}
+
+.historyCard button {
+  border-radius: 12px;
+  padding: 2% 10%;
+  letter-spacing: 0.75px;
+  font-weight: 700;
+  font-size: 12px !important;
+}
+
+.historyCard hr {
+  margin: 20px 0;
+}
+
+.historyCard:not(:last-child) {
+  margin-bottom: 40px;
+}
+
+.historyCard h5 {
+  font-size: 16px;
+}
+
+.historyCard img {
+  height: 20px !important;
+}
+
+.historyCard button {
+  font-size: 10px !important;
+}
+
+.historyCard .showDetails {
+  font-size: 12px;
+}
+
+.timeStamp {
+  font-size: 14px;
+  color: #aaaaaa;
+  margin-bottom: 5px;
+  display: inline-block;
+}
+
+.viewMore,
+.viewLess {
+  text-decoration: none;
+  color: #5f2eea;
+  font-weight: 700;
+  font-size: 14px;
+  transition: all 0.2s ease-in-out;
+}
+.viewMore:hover,
+.viewLess:hover {
+  color: #4421a5;
+}
+
+@media (max-width: 576px) {
+  .timeStamp {
+    font-size: 10px;
+  }
+}

@@ -1,0 +1,70 @@
+.wrapper {
+  background-color: #ffffff;
+  border-radius: 24px;
+  padding: 7% 5%;
+  filter: drop-shadow(0px 8px 16px rgba(73, 83, 99, 0.24));
+}
+
+.wrapper h6 {
+  color: #14142b;
+  font-weight: 600;
+  letter-spacing: 0.75px;
+}
+
+.formGroup {
+  margin-bottom: 20px;
+}
+
+.phoneCodeRegion {
+  background-color: #ffffff;
+  border-radius: 16px 0 0 16px;
+  height: 100%;
+}
+
+.phoneInput {
+  border-top-left-radius: 0 !important;
+  border-bottom-left-radius: 0 !important;
+}
+
+.updateChangesButton {
+  /* margin: 0 5%; */
+  width: 100%;
+  height: 56px;
+  border-radius: 16px;
+}
+
+.hide {
+  color: #ea2e2e00;
+  font-size: 12px;
+  font-weight: 600;
+  margin-left: 5px;
+  transition: color 0.2s ease-in-out;
+}
+
+.show {
+  color: #ea2e2e;
+  font-size: 12px;
+  font-weight: 600;
+  margin-left: 5px;
+  transition: color 0.2s ease-in-out;
+}
+
+.verified {
+  color: rgb(14, 53, 14);
+  background-color: rgb(202, 255, 202) !important;
+}
+.unverified {
+  color: rgb(53, 14, 14);
+  background-color: rgb(255, 202, 202) !important;
+}
+
+.redBorder {
+  box-shadow: 0 0 0 1px #ea2e2e;
+  transition: all 0.2s ease-in-out;
+}
+
+@media (max-width: 576px) {
+  .updateChangesButton {
+    font-size: 12px !important;
+  }
+}
