@@ -1,5 +1,11 @@
+import moment from "moment";
+import { useEffect, useState } from "react";
+import { connect } from "react-redux";
+import { resetBooking } from "../../../redux/actions/booking";
+import axiosApiInstances from "../../../utils/axios";
 import Navbar from "../../../components/Navbar/Navbar";
 import Footer from "../../../components/Footer/Footer";
+import PaymentMethod from "./PaymentMethod/PaymentMethod";
 import styles from "./PaymentPage.module.css";
 import {
   Button,
@@ -10,20 +16,8 @@ import {
   Modal,
   Row,
 } from "react-bootstrap";
-import googlePayLogo from "../../../assets/img/gplay-logo.svg";
-import visaLogo from "../../../assets/img/visa-logo.svg";
-import gopayLogo from "../../../assets/img/gopay-logo.svg";
-import paypalLogo from "../../../assets/img/paypal-logo.svg";
-import danaLogo from "../../../assets/img/dana-logo.svg";
-import bcaLogo from "../../../assets/img/bca-logo.svg";
-import briLogo from "../../../assets/img/bri-logo.svg";
-import ovoLogo from "../../../assets/img/ovo-logo.svg";
-import { useEffect, useState } from "react";
-import { connect } from "react-redux";
-import moment from "moment";
-import axiosApiInstances from "../../../utils/axios";
 import { CheckCircleIcon } from "@heroicons/react/solid";
-import { resetBooking } from "../../../redux/actions/booking";
+import { TicketIcon } from "@heroicons/react/outline";
 
 const PaymentPage = (props) => {
   const [name, setName] = useState(props.user.data.user_name);
@@ -78,28 +72,36 @@ const PaymentPage = (props) => {
   return (
     <>
       <Modal size="md" show={showModal} centered>
-        <Modal.Body className="d-flex flex-column align-items-center justify-content-center pt-0 pb-5">
-          <h4
-            style={{
-              fontSize: "28px",
-              fontWeight: "700",
-              letterSpacing: "2px",
-            }}
-          >
-            SUCCESS
-          </h4>
-          <CheckCircleIcon
-            style={{
-              color: "#2f702f",
-              height: "50px",
-              marginBottom: "20px",
-              marginTop: "20px",
-            }}
-          />
+        <Modal.Body className="d-flex flex-column align-items-center justify-content-center py-5">
+          <div className="d-flex align-items-center">
+            <h4
+              style={{
+                fontSize: "28px",
+                fontWeight: "700",
+                letterSpacing: ".75px",
+                margin: "0",
+              }}
+            >
+              Success
+            </h4>
+            <span>
+              <CheckCircleIcon
+                style={{
+                  color: "#2f702f",
+                  height: "22px",
+                  marginRight: "5px",
+                  position: "relative",
+                  top: "-16px",
+                }}
+              />
+            </span>
+          </div>
+
+          <TicketIcon className={`my-4 ${styles.ticketIcon}`} />
           <p style={{ textAlign: "center", width: "80%" }}>
             You have just booked your ticket and your payment is in process.
           </p>
-          <span>Thank you!</span>
+          <span style={{ fontWeight: "600" }}>Thank you!</span>
         </Modal.Body>
       </Modal>
       <Navbar />
@@ -108,18 +110,18 @@ const PaymentPage = (props) => {
         as={"main"}
         className={`p-0 ${styles.paymentDetailContainer}`}
       >
-        <Row xs={1} lg={2}>
-          <Col xs={12} lg={7} className={`p-0 ${styles.paymentColumn}`}>
-            <div className={`${styles.paymentInfoContainer}`}>
+        <Row xs={1} lg={2} className="g-5">
+          <Col xs={12} lg={7} className={styles.paymentColumn}>
+            <div className={styles.paymentInfoContainer}>
               <h4>Payment Info</h4>
-              <Card className={`${styles.paymentInfo}`}>
+              <Card className={styles.paymentInfo}>
                 <ListGroup as="ul">
                   <ListGroup.Item
                     as="li"
-                    className={`d-flex justify-content-between align-items-center px-0 ${styles.listGroupItem}`}
+                    className={`d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center px-0 ${styles.listGroupItem}`}
                   >
                     {`Date & time`}
-                    <span className={`${styles.detail}`}>
+                    <span className={styles.detail}>
                       {schedule
                         ? moment(schedule).format("dddd, DD MMMM YYYY")
                         : "-"}{" "}
@@ -133,242 +135,124 @@ const PaymentPage = (props) => {
                   </ListGroup.Item>
                   <ListGroup.Item
                     as="li"
-                    className={`d-flex justify-content-between align-items-center px-0 ${styles.listGroupItem}`}
+                    className={`d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center px-0 ${styles.listGroupItem}`}
                   >
                     Movie title
-                    <span className={`${styles.detail}`}>
+                    <span className={styles.detail}>
                       {movieName ? movieName : "No Movie Selected"}
                     </span>
                   </ListGroup.Item>
                   <ListGroup.Item
                     as="li"
-                    className={`d-flex justify-content-between align-items-center px-0 ${styles.listGroupItem}`}
+                    className={`d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center px-0 ${styles.listGroupItem}`}
                   >
                     Cinema name
-                    <span className={`${styles.detail}`}>
+                    <span className={styles.detail}>
                       {premiereName ? premiereName : "-"} Cinema
                     </span>
                   </ListGroup.Item>
                   <ListGroup.Item
                     as="li"
-                    className={`d-flex justify-content-between align-items-center px-0 ${styles.listGroupItem}`}
+                    className={`d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center px-0 ${styles.listGroupItem}`}
                   >
                     Number of tickets
-                    <span className={`${styles.detail}`}>
+                    <span className={styles.detail}>
                       {seat.length > 0 ? seat.length : "0"} pieces
                     </span>
                   </ListGroup.Item>
                   <ListGroup.Item
                     as="li"
-                    className={`d-flex justify-content-between align-items-center px-0 ${styles.listGroupItem}`}
+                    className={`d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center px-0 ${styles.listGroupItem}`}
                   >
                     Total payment
-                    <span className={`${styles.detailPrice}`}>
+                    <span className={styles.detailPrice}>
                       IDR{parseInt(totalPayment).toLocaleString("id-ID")}
                     </span>
                   </ListGroup.Item>
                 </ListGroup>
               </Card>
             </div>
-            <div className={`${styles.paymentMethodContainer}`}>
-              <h4>Choose a Payment Method</h4>
-              <Card className={`${styles.paymentMethod}`}>
-                <Row xs={3} md={4} className={`${styles.aRow}`}>
-                  <Col className={`${styles.colPadding}`}>
-                    <div>
-                      <Button
-                        variant="outline-secondary"
-                        id="Google Pay"
-                        className={`d-flex align-items-center justify-content-center ${styles.payment}`}
-                        onClick={(e) => setPaymentMethod(e.target.id)}
-                      >
-                        <img
-                          id="Google Pay"
-                          src={googlePayLogo}
-                          alt="Google Play"
-                        ></img>
-                      </Button>
-                    </div>
-                  </Col>
-                  <Col className={`${styles.colPadding}`}>
-                    <div>
-                      <Button
-                        variant="outline-secondary"
-                        id="VISA"
-                        className={`d-flex align-items-center justify-content-center ${styles.payment}`}
-                        onClick={(e) => setPaymentMethod(e.target.id)}
-                      >
-                        <img id="VISA" src={visaLogo} alt="Google Play"></img>
-                      </Button>
-                    </div>
-                  </Col>
-                  <Col className={`${styles.colPadding}`}>
-                    <div>
-                      <Button
-                        variant="outline-secondary"
-                        id="GoPay"
-                        className={`d-flex align-items-center justify-content-center ${styles.payment}`}
-                        onClick={(e) => setPaymentMethod(e.target.id)}
-                      >
-                        <img id="GoPay" src={gopayLogo} alt="Google Play"></img>
-                      </Button>
-                    </div>
-                  </Col>
-                  <Col className={`${styles.colPadding}`}>
-                    <div>
-                      <Button
-                        variant="outline-secondary"
-                        id="Paypal"
-                        className={`d-flex align-items-center justify-content-center ${styles.payment}`}
-                        onClick={(e) => setPaymentMethod(e.target.id)}
-                      >
-                        <img
-                          id="Paypal"
-                          src={paypalLogo}
-                          alt="Google Play"
-                        ></img>
-                      </Button>
-                    </div>
-                  </Col>
-                  <Col className={`${styles.colPadding}`}>
-                    <div>
-                      <Button
-                        variant="outline-secondary"
-                        id="Dana"
-                        className={`d-flex align-items-center justify-content-center ${styles.payment}`}
-                        onClick={(e) => setPaymentMethod(e.target.id)}
-                      >
-                        <img id="Dana" src={danaLogo} alt="Google Play"></img>
-                      </Button>
-                    </div>
-                  </Col>
-                  <Col className={`${styles.colPadding}`}>
-                    <div>
-                      <Button
-                        variant="outline-secondary"
-                        id="BCA"
-                        className={`d-flex align-items-center justify-content-center ${styles.payment}`}
-                        onClick={(e) => setPaymentMethod(e.target.id)}
-                      >
-                        <img id="BCA" src={bcaLogo} alt="Google Play"></img>
-                      </Button>
-                    </div>
-                  </Col>
-                  <Col className={`${styles.colPadding}`}>
-                    <div>
-                      <Button
-                        variant="outline-secondary"
-                        id="BRI"
-                        className={`d-flex align-items-center justify-content-center ${styles.payment}`}
-                        onClick={(e) => setPaymentMethod(e.target.id)}
-                      >
-                        <img id="BRI" src={briLogo} alt="Google Play"></img>
-                      </Button>
-                    </div>
-                  </Col>
-                  <Col className={`${styles.colPadding}`}>
-                    <div>
-                      <Button
-                        variant="outline-secondary"
-                        id="OVO"
-                        className={`d-flex align-items-center justify-content-center ${styles.payment}`}
-                        onClick={(e) => setPaymentMethod(e.target.id)}
-                      >
-                        <img id="OVO" src={ovoLogo} alt="Google Play"></img>
-                      </Button>
-                    </div>
-                  </Col>
-                </Row>
-                <span
-                  className={`d-flex justify-content-center align-items-center ${styles.orSeparator}`}
-                >
-                  or
-                </span>
-                <p className="text-center">
-                  Pay via cash.
-                  <a className="text-decoration-none" href="/">
-                    {" "}
-                    See how it work
-                  </a>
-                </p>
-              </Card>
-              <div
-                className={`d-flex flex-column flex-lg-row justify-content-between gap-4 ${styles.btnPaymentGroup}`}
+            <PaymentMethod setPaymentMethod={setPaymentMethod} />
+            <div
+              className={`d-flex flex-column flex-lg-row justify-content-between gap-4 ${styles.btnPaymentGroup}`}
+            >
+              <Button
+                id="btn-previous"
+                variant={"outline-primary"}
+                onClick={() => props.history.push("/order")}
               >
-                <Button
-                  id="btn-previous"
-                  variant={"outline-primary"}
-                  onClick={() => props.history.push("/order")}
-                >
-                  Previous step
-                </Button>
-                <Button variant={"primary"} onClick={handlePay}>
-                  Pay your order
-                </Button>
-              </div>
+                Previous step
+              </Button>
+              <Button variant={"primary"} onClick={handlePay}>
+                Pay your order
+              </Button>
             </div>
           </Col>
 
-          <Col xs={12} lg={5} className={`p-0 ${styles.personalInfoContainer}`}>
-            <h4>Personal Info</h4>
-            <Card className={`${styles.personalInfo}`}>
-              <Container className={`p-0 ${styles.personalInfoFormContainer}`}>
-                <div>
-                  <label htmlFor="name" className="form-label">
-                    Full Name
-                  </label>
-                  <input
-                    type="text"
-                    className="form-control shadow-none"
-                    id="name"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                  />
-                </div>
-                <div>
-                  <label htmlFor="email" className="form-label">
-                    Email
-                  </label>
-                  <input
-                    type="email"
-                    className="form-control shadow-none"
-                    id="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                  />
-                </div>
-                <div>
-                  <label htmlFor="phone" className="form-label">
-                    Phone Number
-                  </label>
-                  <div className="input-group">
-                    <span
-                      className={`input-group-text bg-transparent ${styles.regionPhoneCode}`}
-                      id="basic-addon1"
-                    >
-                      +62
-                    </span>
+          <Col xs={12} lg={5} className={styles.personalInfoContainer}>
+            <div>
+              <h4>Personal Info</h4>
+              <Card className={styles.personalInfo}>
+                <Container
+                  className={`p-0 ${styles.personalInfoFormContainer}`}
+                >
+                  <div>
+                    <label htmlFor="name" className="form-label">
+                      Full Name
+                    </label>
                     <input
                       type="text"
-                      id="phone"
-                      pattern="0-9"
-                      className={`form-control shadow-none ${styles.phoneNumber}`}
-                      value={phone}
-                      onChange={(e) => setPhone(e.target.value)}
+                      className="form-control shadow-none"
+                      id="name"
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
                     />
                   </div>
-                </div>
-                <div
-                  className={`alert alert-warning m-0 ${styles.dataAlertMessage}`}
-                  role="alert"
-                >
-                  <i
-                    className={`bi bi-exclamation-triangle-fill text-warning ${styles.iWarning}`}
-                  ></i>
-                  Fill your data correctly.
-                </div>
-              </Container>
-            </Card>
+                  <div>
+                    <label htmlFor="email" className="form-label">
+                      Email
+                    </label>
+                    <input
+                      type="email"
+                      className="form-control shadow-none"
+                      id="email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="phone" className="form-label">
+                      Phone Number
+                    </label>
+                    <div className="input-group">
+                      <span
+                        className={`input-group-text bg-transparent ${styles.regionPhoneCode}`}
+                        id="basic-addon1"
+                      >
+                        +62
+                      </span>
+                      <input
+                        type="text"
+                        id="phone"
+                        pattern="0-9"
+                        className={`form-control shadow-none ${styles.phoneNumber}`}
+                        value={phone}
+                        onChange={(e) => setPhone(e.target.value)}
+                      />
+                    </div>
+                  </div>
+                  <div
+                    className={`alert alert-warning m-0 ${styles.dataAlertMessage}`}
+                    role="alert"
+                  >
+                    <i
+                      className={`bi bi-exclamation-triangle-fill text-warning ${styles.iWarning}`}
+                    ></i>
+                    Fill your data correctly.
+                  </div>
+                </Container>
+              </Card>
+            </div>
           </Col>
         </Row>
       </Container>
