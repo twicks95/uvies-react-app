@@ -11,6 +11,10 @@
   border: 1px solid gainsboro;
 }
 
+.seatAlphabet {
+  padding: 0;
+}
+
 .seatAvailable {
   background-color: #d6d8e7;
 }
@@ -28,5 +32,16 @@
   .seat {
     width: 20px;
     height: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .seat {
+    width: 13px;
+    height: 13px;
+  }
+  .seatAlphabet {
+    font-size: 0.5em;
+    font-weight: 700;
   }
 }

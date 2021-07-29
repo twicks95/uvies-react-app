@@ -37,7 +37,7 @@ export default class Seat extends Component {
     return (
       <>
         <Row className={`flex-nowrap align-items-center ${styles.seatRow}`}>
-          <Col>{seatAlphabet}</Col>
+          <Col className={styles.seatAlphabet}>{seatAlphabet}</Col>
           {seatA.map((item, index) => {
             return (
               <Col className={`p-0`} key={index}>
