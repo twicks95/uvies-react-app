@@ -23,12 +23,13 @@ import {
 import styles from "./ProfilePage.module.css";
 import Navbar from "../../../components/Navbar/Navbar";
 import Footer from "../../../components/Footer/Footer";
-import { PencilAltIcon, UserCircleIcon } from "@heroicons/react/outline";
+import { PencilAltIcon } from "@heroicons/react/outline";
 import {
   CheckCircleIcon,
   ChevronDownIcon,
   LogoutIcon,
   UploadIcon,
+  UserCircleIcon,
   XCircleIcon,
 } from "@heroicons/react/solid";
 import Ebv from "../../../assets/img/ebu-id-logo.svg";
@@ -246,12 +247,14 @@ class ProfilePage extends Component {
             <Toast
               onClose={() => this.setState({ ...this.state, showToast: false })}
               show={showToast}
-              delay={10000}
+              delay={7000}
               autohide
               className={styles.toastSuccess}
-              style={{ backgroundColor: "white", width: "400px" }}
+              style={{
+                backgroundColor: "white",
+              }}
             >
-              <Toast.Header>
+              <Toast.Header closeButton={false}>
                 {isUpdateImageError ? (
                   <XCircleIcon style={{ color: "#ea2e2e" }} />
                 ) : (
@@ -285,7 +288,7 @@ class ProfilePage extends Component {
                         alt="user pict"
                       />
                     ) : (
-                      <UserCircleIcon />
+                      <UserCircleIcon className={styles.imagePlaceholder} />
                     )}
                     {image ? (
                       <Button

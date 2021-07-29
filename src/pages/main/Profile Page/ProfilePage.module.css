@@ -282,6 +282,12 @@ input[type="file"] {
   color: #4421a5;
 }
 
+.imagePlaceholder {
+  background-color: #ffffff;
+  border-radius: 50%;
+  color: #5f2eea;
+}
+
 @media (max-width: 576px) {
   .updateChangesButton {
     font-size: 12px !important;
