@@ -12,7 +12,7 @@ import Home from "./pages/main/Home/Home";
 import MovieDetail from "./pages/main/MovieDetail/MovieDetail";
 import OrderPage from "./pages/main/OrderPage/OrderPage";
 import PaymentPage from "./pages/main/PaymentPage/PaymentPage";
-import ProfilePage from "./pages/main/Profile Page/ProfilePage";
+import ProfilePage from "./pages/main/ProfilePage/ProfilePage";
 import ManageMovie from "./pages/main/ManageMovie/ManageMovie";
 import ManageSchedule from "./pages/main/ManageSchedule/ManageSchedule";
 import Dashboard from "./pages/main/Dashboard/Dashboard";
