@@ -63,6 +63,5 @@ class Home extends Component {
   }
 }
 
-const mapStateToProps = (state) => ({ viewport: state.viewport });
-const mapDispatchToProps = { getNowShowingMovies, getViewportWidth };
-export default connect(mapStateToProps, mapDispatchToProps)(Home);
+const mapDispatchToProps = { getNowShowingMovies };
+export default connect(null, mapDispatchToProps)(Home);
