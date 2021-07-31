@@ -7,6 +7,7 @@ import Footer from "../../../components/Footer/Footer";
 import Styles from "./Home.module.css";
 import { connect } from "react-redux";
 import { getNowShowingMovies } from "../../../redux/actions/movie";
+import { getViewportWidth } from "../../../redux/actions/viewport";
 
 class Home extends Component {
   constructor(props) {
@@ -30,10 +31,14 @@ class Home extends Component {
   };
 
   render() {
+    console.log(this.props.viewport);
     return (
       <>
         <Navbar />
-        <div className={`${Styles.contentWrapper}`}>
+        <div
+          className={`${Styles.contentWrapper}`}
+          onresize={this.props.getViewportWidth}
+        >
           <div className={`${Styles.heroSection}`}>
             <div
               className={`d-flex align-items-lg-center justify-content-lg-center w-100 w-lg-50 ${Styles.leftSection}`}
@@ -61,6 +66,6 @@ class Home extends Component {
     );
   }
 }
-
-const mapDispatchToProps = { getNowShowingMovies };
-export default connect(null, mapDispatchToProps)(Home);
+const mapStateToProps = (state) => ({ viewport: state.viewport });
+const mapDispatchToProps = { getNowShowingMovies, getViewportWidth };
+export default connect(mapStateToProps, mapDispatchToProps)(Home);
