@@ -31,14 +31,10 @@ class Home extends Component {
   };
 
   render() {
-    console.log(this.props.viewport);
     return (
       <>
         <Navbar />
-        <div
-          className={`${Styles.contentWrapper}`}
-          onresize={this.props.getViewportWidth}
-        >
+        <div className={`${Styles.contentWrapper}`}>
           <div className={`${Styles.heroSection}`}>
             <div
               className={`d-flex align-items-lg-center justify-content-lg-center w-100 w-lg-50 ${Styles.leftSection}`}
@@ -66,6 +62,7 @@ class Home extends Component {
     );
   }
 }
+
 const mapStateToProps = (state) => ({ viewport: state.viewport });
 const mapDispatchToProps = { getNowShowingMovies, getViewportWidth };
 export default connect(mapStateToProps, mapDispatchToProps)(Home);
