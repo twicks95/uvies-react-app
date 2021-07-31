@@ -3,6 +3,13 @@
   background-color: #5f2eea !important;
 }
 
+.emptyMessage {
+  color: #8692a6;
+  width: 60%;
+  text-align: center;
+  margin: auto;
+}
+
 .upcomingMovies {
   margin-top: 208px;
   scrollbar-width: none;

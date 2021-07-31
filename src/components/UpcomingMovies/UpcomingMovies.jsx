@@ -142,15 +142,9 @@ class UpcomingMovies extends Component {
             Desember
           </Button>
         </div>
-        <div
-          className={`d-flex overflow-auto ${styles.upcomingList} ${
-            upcomingMovies.length < 1 || loading.upcoming
-              ? "justify-content-center"
-              : null
-          }`}
-        >
+        <div className={`d-flex overflow-auto ${styles.upcomingList}`}>
           {loading.upcoming ? (
-            <div>
+            <div style={{ margin: "auto" }}>
               <span>Loading </span>
               <img
                 src={Loading}
@@ -164,7 +158,7 @@ class UpcomingMovies extends Component {
               <MovieCard data={item} key={index} />
             ))
           ) : (
-            <h6 style={{ color: "#8692A6" }} className="text-center">
+            <h6 className={styles.emptyMessage}>
               There are no upcoming movies in {activeMonth}{" "}
               <FilmIcon
                 style={{ height: "1.2em", transform: "rotate(10deg)" }}
