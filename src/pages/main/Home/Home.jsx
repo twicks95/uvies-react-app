@@ -7,7 +7,6 @@ import Footer from "../../../components/Footer/Footer";
 import Styles from "./Home.module.css";
 import { connect } from "react-redux";
 import { getNowShowingMovies } from "../../../redux/actions/movie";
-import { getViewportWidth } from "../../../redux/actions/viewport";
 
 class Home extends Component {
   constructor(props) {
