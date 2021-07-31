@@ -4,6 +4,7 @@ import { getUpcomingMovies } from "../../redux/actions/movie";
 import styles from "./UpcomingMovies.module.css";
 import { Button } from "react-bootstrap";
 import MovieCard from "../MovieCard/MovieCard";
+import Loading from "../../assets/icons/Ellipsis-1.4s-70px.svg";
 
 class UpcomingMovies extends Component {
   constructor(props) {
@@ -25,6 +26,7 @@ class UpcomingMovies extends Component {
     this.currentMonth = new Date();
     this.state = {
       activeMonth: month[this.currentMonth.getMonth()],
+      upcomingMovies: this.props.movie.upcomingMovies,
     };
   }
 
@@ -41,21 +43,25 @@ class UpcomingMovies extends Component {
 
   renderUpcomingMovies = (month) => {
     const { upcomingMovies } = this.props.movie;
-    if (upcomingMovies && upcomingMovies.length > 0) {
+
+    if (upcomingMovies.length > 0) {
       return upcomingMovies.map((item, index) => {
         return <MovieCard data={item} key={index} />;
       });
     } else {
       return (
         <>
-          <h3>No upcoming movie in {month}</h3>
+          <h6>There are no upcoming movie in {month}</h6>
         </>
       );
     }
   };
 
   render() {
-    const { activeMonth } = this.state;
+    const { activeMonth, upcomingMovies } = this.state;
+    const { upcoming } = this.props.movie.isLoading;
+    const loading = { upcoming };
+
     return (
       <section className={`d-flex flex-column ${styles.upcomingMovies}`}>
         <div className={`d-flex align-items-end justify-content-between w-100`}>
@@ -150,8 +156,26 @@ class UpcomingMovies extends Component {
             Desember
           </Button>
         </div>
-        <div className={`d-flex overflow-auto ${styles.upcomingList}`}>
-          {this.renderUpcomingMovies(activeMonth)}
+        <div
+          className={`d-flex overflow-auto ${styles.upcomingList} ${
+            upcomingMovies.length < 1 || loading.upcoming
+              ? "justify-content-center"
+              : null
+          }`}
+        >
+          {loading.upcoming ? (
+            <div>
+              <span>Loading </span>
+              <img
+                src={Loading}
+                alt="loading"
+                style={{ height: "1em" }}
+                className="text-center"
+              />
+            </div>
+          ) : (
+            this.renderUpcomingMovies(activeMonth)
+          )}
         </div>
       </section>
     );
