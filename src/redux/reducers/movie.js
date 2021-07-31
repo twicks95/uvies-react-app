@@ -4,7 +4,7 @@ const initialState = {
   pagination: {},
   nowShowing: [],
   upcomingMovies: [],
-  isLoading: false,
+  isLoading: { nowShowing: false, upcoming: false },
   isError: false,
   createMsg: "",
   updateMsg: "",
@@ -40,14 +40,14 @@ const movie = (state = initialState, action) => {
     case "GET_NOW_SHOWING_MOVIES_PENDING":
       return {
         ...state,
-        isLoading: true,
+        isLoading: { ...state.isLoading, nowShowing: true },
         isError: false,
       };
     case "GET_NOW_SHOWING_MOVIES_FULFILLED":
       return {
         ...state,
         nowShowing: action.payload.data.data,
-        isLoading: false,
+        isLoading: { ...state.isLoading, nowShowing: false },
         isError: false,
         msg: action.payload.data.msg,
       };
@@ -55,21 +55,21 @@ const movie = (state = initialState, action) => {
       return {
         ...state,
         nowShowing: [],
-        isLoading: false,
+        isLoading: { ...state.isLoading, nowShowing: false },
         isError: true,
         msg: action.payload.response.data.msg,
       };
     case "GET_UPCOMING_MOVIES_PENDING":
       return {
         ...state,
-        isLoading: true,
+        isLoading: { ...state.isLoading, upcoming: true },
         isError: false,
       };
     case "GET_UPCOMING_MOVIES_FULFILLED":
       return {
         ...state,
         upcomingMovies: action.payload.data.data,
-        isLoading: false,
+        isLoading: { ...state.isLoading, upcoming: false },
         isError: false,
         msg: action.payload.data.msg,
       };
@@ -77,7 +77,7 @@ const movie = (state = initialState, action) => {
       return {
         ...state,
         upcomingMovies: [],
-        isLoading: false,
+        isLoading: { ...state.isLoading, upcoming: false },
         isError: true,
         msg: action.payload.response.data.msg,
       };
