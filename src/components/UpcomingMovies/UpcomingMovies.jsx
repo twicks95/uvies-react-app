@@ -43,10 +43,8 @@ class UpcomingMovies extends Component {
   };
 
   render() {
-    const { upcomingMovies } = this.props.movie;
+    const { upcomingMovies, isLoading } = this.props.movie;
     const { activeMonth } = this.state;
-    const { upcoming } = this.props.movie.isLoading;
-    const loading = { upcoming };
 
     return (
       <section className={`d-flex flex-column ${styles.upcomingMovies}`}>
@@ -143,7 +141,7 @@ class UpcomingMovies extends Component {
           </Button>
         </div>
         <div className={`d-flex overflow-auto ${styles.upcomingList}`}>
-          {loading.upcoming ? (
+          {isLoading.upcoming ? (
             <div style={{ margin: "auto" }}>
               <span>Loading </span>
               <img
