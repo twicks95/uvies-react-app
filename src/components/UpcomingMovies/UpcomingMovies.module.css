@@ -31,6 +31,10 @@
   flex: 0 0 auto;
 }
 
+.monthsList button:focus {
+  box-shadow: none !important;
+}
+
 .monthsList::-webkit-scrollbar,
 .upcomingList::-webkit-scrollbar {
   display: none;
