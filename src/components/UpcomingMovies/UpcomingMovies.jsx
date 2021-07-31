@@ -51,7 +51,9 @@ class UpcomingMovies extends Component {
     } else {
       return (
         <>
-          <h6>There are no upcoming movie in {month}</h6>
+          <h6 className="text-center">
+            There are no upcoming movie in {month}
+          </h6>
         </>
       );
     }
