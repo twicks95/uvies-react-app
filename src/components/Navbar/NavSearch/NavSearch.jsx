@@ -4,11 +4,22 @@ import { Button, Form, FormControl } from "react-bootstrap";
 import IconSearch from "../../../assets/icons/search-icon.svg";
 import styles from "./NavSearch.module.css";
 import axiosApiInstances from "../../../utils/axios";
+import Loading from "../../../assets/icons/Ellipsis-1.4s-70px.svg";
 
 const NavSearch = (props) => {
   const [show, setShow] = useState(false);
   const [result, setResult] = useState([]);
   const [keyword, setKeyword] = useState("");
+  const [width, setWidth] = useState("");
+  const [searching, setSearching] = useState(false);
+
+  useEffect(() => {
+    window.addEventListener("resize", handleResize);
+  }, []);
+
+  const handleResize = () => {
+    setWidth(window.innerWidth);
+  };
 
   useEffect(() => {
     !keyword && setResult([]);
@@ -18,9 +29,11 @@ const NavSearch = (props) => {
     e.preventDefault();
 
     if (keyword) {
-      axiosApiInstances.get(`movie?searchByName=${keyword}`).then((res) => {
-        setResult(res.data.data);
-      });
+      setSearching(true);
+      axiosApiInstances
+        .get(`movie?searchByName=${keyword}`)
+        .then((res) => setResult(res.data.data))
+        .finally(() => setSearching(false));
     } else {
       setResult([]);
     }
@@ -49,13 +62,18 @@ const NavSearch = (props) => {
           onChange={(e) => setKeyword(e.target.value)}
         />
         <Button
+          type={width < 992 ? "submit" : ""}
           variant="light"
           className={`shadow-none ${styles.btnSearch}`}
           onClick={() =>
             !show ? setShow(true) : (setShow(false), setResult([]))
           }
         >
-          <img src={IconSearch} alt="Search" />
+          <img
+            src={searching ? Loading : IconSearch}
+            alt="Search"
+            className={`${searching ? styles.loading : ""}`}
+          />
         </Button>
         {result.length > 0 && (
           <div className={styles.searchResult}>

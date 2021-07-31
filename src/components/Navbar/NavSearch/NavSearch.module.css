@@ -2,6 +2,7 @@
   display: flex;
   height: 40px;
   width: 100%;
+  align-items: center;
   justify-content: flex-end;
   margin-bottom: 10px;
   position: relative;
@@ -62,6 +63,12 @@
 
 .searchResult .list:hover {
   color: #5f2eea;
+}
+
+.loading {
+  /* position: absolute; */
+  /* left: 185px; */
+  height: 1.4em;
 }
 
 @media (min-width: 992px) {
