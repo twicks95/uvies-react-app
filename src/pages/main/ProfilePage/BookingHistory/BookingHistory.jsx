@@ -7,8 +7,31 @@ import CineOne from "../../../../assets/img/cine-one-21-logo.svg";
 import Hiflix from "../../../../assets/img/hiflix-logo.svg";
 import moment from "moment";
 import { Link, withRouter } from "react-router-dom";
+import Loading from "../../../../assets/icons/Ellipsis-1.4s-70px.svg";
+import { useState } from "react";
 
 const BookingHistory = (props) => {
+  const [showTicket, setShowTicket] = useState(false);
+
+  const getDateWithTimeReset = (date) => new Date(date).setHours(0, 0, 0, 0);
+  const getDateNow = () => new Date(Date.now());
+
+  const isYesterday = (date) => {
+    const dateShow = getDateWithTimeReset(date);
+    return dateShow < getDateNow().setHours(0, 0, 0, 0);
+  };
+
+  const havePastTheCurrentTime = (date, hour) => {
+    return (
+      getDateNow().setHours(
+        parseInt(hour.split(":")[0]),
+        parseInt(hour.split(":")[1]),
+        parseInt(hour.split(":")[2])
+      ) < getDateNow() &&
+      getDateWithTimeReset(date) === getDateNow().setHours(0, 0, 0, 0)
+    );
+  };
+
   return (
     <div className={`mt-5 ${styles.wrapper}`}>
       <Row xs={1}>
@@ -33,27 +56,41 @@ const BookingHistory = (props) => {
                         : CineOne
                     }
                     alt="premiere"
-                    style={
+                    className={
                       item.premiere_name === "CineOne21"
-                        ? { width: "100px" }
-                        : { height: "30px" }
+                        ? styles.cineOne21
+                        : null
                     }
                   />
                 </div>
               </div>
               <hr />
               <div className="d-flex align-items-center justify-content-between">
-                <Button
-                  onClick={() =>
-                    props.history.push(
-                      `/user/booking/ticket?bookingId=${item.booking_id}`
-                    )
-                  }
-                >
-                  Show ticket
-                </Button>
+                {isYesterday(item.booking_for_date) ||
+                havePastTheCurrentTime(
+                  item.booking_for_date,
+                  item.schedule_clock
+                ) ? (
+                  <Button className={styles.ticketUsed}>Ticket used</Button>
+                ) : (
+                  <Button
+                    className={styles.ticketActive}
+                    onMouseEnter={() => setShowTicket(true)}
+                    onMouseLeave={() => setShowTicket(false)}
+                    onClick={
+                      showTicket
+                        ? () =>
+                            props.history.push(
+                              `/user/booking/ticket?bookingId=${item.booking_id}`
+                            )
+                        : null
+                    }
+                  >
+                    {showTicket ? "Show ticket" : "Ticket in active"}
+                  </Button>
+                )}
                 <span className={styles.showDetails}>
-                  Show details <ChevronDownIcon style={{ height: "10px" }} />
+                  Show details <ChevronDownIcon />
                 </span>
               </div>
             </Col>
@@ -64,7 +101,11 @@ const BookingHistory = (props) => {
           </Col>
         )}
       </Row>
-      {props.limit < props.totalBooking ? (
+      {props.loading ? (
+        <div className="d-flex align-items-center justify-content-center mt-5">
+          <img src={Loading} alt="loading" style={{ height: "1.4em" }} />
+        </div>
+      ) : props.limit < props.totalBooking ? (
         <div className="d-flex align-items-center justify-content-center mt-5">
           <Link className={styles.viewMore} onClick={props.handleViewMore}>
             View More

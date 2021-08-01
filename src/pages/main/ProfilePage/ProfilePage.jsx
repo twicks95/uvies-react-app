@@ -44,6 +44,8 @@ class ProfilePage extends Component {
       bookingHistory: [],
       totalBooking: "",
       limit: "2",
+      loading: false,
+      viewLess: false,
     };
   }
 
@@ -64,16 +66,20 @@ class ProfilePage extends Component {
 
   componentDidUpdate(prevProps, prevState) {
     if (this.state.limit !== prevState.limit) {
-      this.props.history.push(
-        `/profile?menu=history&limit=${this.state.limit}`
-      );
-      axiosApiInstances
-        .get(
-          `booking/by/userId?userId=${this.props.auth.data.user_id}&limit=${this.state.limit}`
-        )
-        .then((res) => {
-          this.setState({ ...this.state, bookingHistory: res.data.data });
-        });
+      if (!this.state.viewLess) {
+        this.setState({ ...this.state, loading: true });
+        this.props.history.push(
+          `/profile?menu=history&limit=${this.state.limit}`
+        );
+        axiosApiInstances
+          .get(
+            `booking/by/userId?userId=${this.props.auth.data.user_id}&limit=${this.state.limit}`
+          )
+          .then((res) =>
+            this.setState({ ...this.state, bookingHistory: res.data.data })
+          )
+          .finally(() => this.setState({ ...this.state, loading: false }));
+      }
     }
   }
 
@@ -192,6 +198,7 @@ class ProfilePage extends Component {
   handleViewMore = () => {
     this.setState({
       ...this.state,
+      viewLess: false,
       limit: parseInt(this.state.limit) + 2,
     });
   };
@@ -199,7 +206,9 @@ class ProfilePage extends Component {
   handleViewLess = () => {
     this.setState({
       ...this.state,
+      viewLess: true,
       limit: "2",
+      bookingHistory: this.state.bookingHistory.splice(2),
     });
   };
 
@@ -217,6 +226,7 @@ class ProfilePage extends Component {
       bookingHistory,
       limit,
       totalBooking,
+      loading,
     } = this.state;
     const { isUpdateImageError, updatedAt, msg } = this.props.user;
     return (
@@ -328,7 +338,9 @@ class ProfilePage extends Component {
                 <Link
                   to="/profile?menu=settings"
                   name="settings"
-                  className={`d-block d-flex align-items-center position-relative text-decoration-none`}
+                  className={`d-block d-flex align-items-center position-relative text-decoration-none ${
+                    settings && styles.activeMenu
+                  }`}
                   onClick={(e) => {
                     this.setState({
                       ...this.state,
@@ -351,7 +363,9 @@ class ProfilePage extends Component {
                   <Link
                     to="/profile?menu=history"
                     name="history"
-                    className={`d-block d-flex align-items-center position-relative text-decoration-none`}
+                    className={`d-block d-flex align-items-center position-relative text-decoration-none ${
+                      history && styles.activeMenu
+                    }`}
                     onClick={(e) => {
                       this.setState({
                         ...this.state,
@@ -394,6 +408,7 @@ class ProfilePage extends Component {
                   totalBooking={totalBooking}
                   handleViewMore={this.handleViewMore}
                   handleViewLess={this.handleViewLess}
+                  loading={loading}
                 />
               )}
             </Col>

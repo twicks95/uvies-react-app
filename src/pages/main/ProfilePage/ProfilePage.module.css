@@ -54,9 +54,8 @@ h6 {
 
 .profileNavigation a {
   font-size: 18px;
-  font-weight: 600;
   letter-spacing: 0.75px;
-  color: #14142b;
+  color: #aaaaaa;
   position: relative;
   height: 100%;
 }
@@ -201,6 +200,10 @@ input[type="file"] {
   background-color: #ffffff;
   border-radius: 50%;
   color: #5f2eea;
+}
+
+.activeMenu {
+  color: #14142b !important;
 }
 
 @media (max-width: 576px) {
