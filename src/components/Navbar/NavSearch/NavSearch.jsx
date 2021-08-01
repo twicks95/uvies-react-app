@@ -14,10 +14,12 @@ const NavSearch = (props) => {
   const [searching, setSearching] = useState(false);
 
   useEffect(() => {
-    window.addEventListener("resize", handleResize);
+    resizeWindow();
+    window.addEventListener("resize", resizeWindow);
+    return () => window.removeEventListener("resize", resizeWindow);
   }, []);
 
-  const handleResize = () => {
+  const resizeWindow = () => {
     setWidth(window.innerWidth);
   };
 
